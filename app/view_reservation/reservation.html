@@ -1,0 +1,44 @@
+<div class="reservation-content">
+    <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+        <thead>
+        <tr>
+            <th>订单号</th>
+            <th>订单状态</th>
+            <th  st-sort="orderDate" st-sort-default="reverse">日期</th>
+            <th>时间</th>
+            <th>预订人信息</th>
+            <th>预定人数</th>
+            <th>订单总金额</th>
+            <th>用户备注</th>
+            <th>操作</th>
+        </tr>
+        <tr>
+            <th colspan="9"><input st-search="" class="form-control" placeholder="搜索 ..." type="text"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in displayedCollection">
+            <td>{{row.orderNum}}</td>
+            <td>{{row.orderState}}</td>
+            <td>{{row.orderDate}}</td>
+            <td>{{row.orderTime}}</td>
+            <td>{{row.orderInfo}}</td>
+            <td>{{row.orderPeopleNum}}</td>
+            <td>{{row.orderAmount}}</td>
+            <td>{{row.orderRemark}}</td>
+            <td>
+                <button ng-hide="row.orderHandle" type="button" ng-click="removeItem(row)" class="btn btn-sm btn-warning">
+                    <i class="glyphicon glyphicon-check">
+                    </i>
+                    一键接单
+                </button>
+                <button  ng-show="row.orderHandle" type="button" ng-click="removeItem(row)" class="btn btn-sm">
+                    <i class="glyphicon glyphicon-ok">
+                    </i>
+                    已接单
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

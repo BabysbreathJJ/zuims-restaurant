@@ -4,8 +4,9 @@
 angular.module('myApp', [
     'ui.router',
     'myApp.version',
-    'myApp.management'
+    'myApp.management',
+    'myApp.reservation'
 ]).
 config(['$urlRouterProvider', function ($urlRouterProvider) {
-    $urlRouterProvider.otherwise('/management');
+    $urlRouterProvider.otherwise('/reservation');
 }]);

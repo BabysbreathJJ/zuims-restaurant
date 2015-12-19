@@ -41,7 +41,7 @@ body a {
 nav.navbar.navbar-default {
     background: none;
     border: none;
-    padding: 1em 0;
+    padding: 0.2em 0;
     margin: 0;
     font-family: 'Comfortaa-Light', sans-serif;
 }
@@ -1498,7 +1498,7 @@ p.your-para {
     display: block;
     padding-top: 100px;
     float: left;
-    width: 13%;
+    width: 12%;
     position: fixed;
 }
 
@@ -1518,7 +1518,7 @@ p.your-para {
 
 }
 
-/* #3 Main menu */
+/* 左边导航 Main menu */
 
 .menu {
     list-style: none;
@@ -1533,7 +1533,7 @@ p.your-para {
     display: block;
     background: #52504b;
     color: #fff;
-    padding: 8px 0px 8px 26px;
+    padding: 6px 0px 4px 8px;
     font-family: 'Signika Negative', sans-serif;
     font-size: 16px;
     z-index: 10003;
@@ -1555,6 +1555,7 @@ p.your-para {
 
 .right-content {
     color: #5e5e5e;
+    overflow: auto;
 }
 
 .right-content h4 {
@@ -1565,6 +1566,7 @@ p.your-para {
     margin: 20px 0;
     margin-top: 10px;
     min-height: 300px;
+    height: auto;
     background-color: #FFFFFF;
     overflow: auto;
 }
@@ -1589,8 +1591,8 @@ h3.full-header {
     color: #ff6100;
     font-weight: normal;
     font-size: 22px;
-    margin: 20px 0px 10px 0px;
-    padding: 20px 40px;
+    margin: 10px 0;
+    padding: 15px 40px;
 }
 
 .full-header span {
@@ -1656,4 +1658,90 @@ h3.full-header {
     width: 640px;
     height: 360px;
     margin: 0 auto;
+}
+
+.image-upload{
+    margin: 10px;
+}
+
+.picDescription{
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 640px;
+
+}
+
+/*预订信息*/
+.reservation-content {
+    width: 80%;
+    min-height: 300px;
+    margin: 10px auto;
+    background-color: #FFFFFF;
+    overflow: auto;
+    text-align: center;
+}
+
+.reservation-content th {
+    text-align: center;
+    background-color: #3c3c3c !important;
+    color: white;
+}
+
+.reservation-content .btn {
+    width: 90px;
+}
+
+.btn-order {
+    background-color: #d58512;
+}
+
+.btn-sm {
+    padding: 5px 3px;
+}
+
+/*预定信息表单升序和降序图标*/
+.st-sort-ascent:before {
+    content: '\25B2';
+}
+
+.st-sort-descent:before {
+    content: '\25BC';
+}
+
+/*商户信息管理*/
+/*.table > tbody > tr > td,*/
+/*.table > tbody > tr > th,*/
+/*.table > tfoot > tr > td,*/
+/*.table > tfoot > tr > th,*/
+/*.table > thead > tr > td,*/
+/*.table > thead > tr > th {*/
+    /*vertical-align: middle;*/
+/*}*/
+/*上传图片样式*/
+
+.file {
+    position: relative;
+    display: inline-block;
+    background: #FF7F00;
+    border: 1px solid #FF7256;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #ec971f;
+    border-color: #d58512;
+    color: #FFFFFF;
+    text-decoration: none;
 }

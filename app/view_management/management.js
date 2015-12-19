@@ -15,33 +15,23 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop'])
 
 
     }])
-    .factory('ManagementService', ['$http', 'userBaseUrl', function ($http, userBaseUrl) {
-        //var baseUrl = "http://202.120.40.175:21102";
+    .factory('UploadService', ['$http', function ($http) {
+        var userBaseUrl = "http://202.120.40.175:21101";
 
-        var getUserInfolRequest = function (phone) {
+        var uploadPicRequest = function (imageInfo) {
             return $http({
-                method: 'GET',
-                url: userBaseUrl + '/users/userInfo?phone=' + phone,
+                method: 'POST',
+                url: userBaseUrl + '/users/uploadImage',
+                data: imageInfo,
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
                 crossDomain: true
             });
         };
 
-        var saveuserInfoRequest = function (phone, formData) {
-            return $http({
-                method: "POST",
-                url: userBaseUrl + '/users/userinfocomplete?phone=' + phone,
-                data: JSON.stringify(formData),
-                headers: {'Content-Type': 'application/json'},
-                crossDomain: true
-            });
-        };
 
         return {
-            getUserInfo: function (phone) {
-                return getUserInfolRequest(phone);
-            },
-            saveUserInfo: function (phone, formData) {
-                return saveuserInfoRequest(phone, formData);
+            uploadPic: function (imageInfo) {
+                return uploadPicRequest(imageInfo);
             }
         }
 
@@ -54,11 +44,11 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop'])
         };
 
     })
-    .controller('ImageRecommendCtrl', function ($scope) {
+    .controller('ImageRecommendCtrl', function ($scope, UploadService) {
 
 
         $scope.myRecommendImage = '';
-        $scope.myRecommendCroppedImage = '';
+        $scope.myRecommendCroppedPic = '';
 
         var handleFileSelect = function (evt) {
 
@@ -70,10 +60,23 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop'])
                 });
             };
             reader.readAsDataURL(file);
-
         };
         angular.element(document.querySelector('#fileInputRecommend')).on('change', handleFileSelect);
 
+        $scope.uploadPic = function () {
+            $scope.begin = $scope.myRecommendCroppedPic.indexOf("base64") + 7;
+            $scope.myUploadPic = $scope.myRecommendCroppedPic.substr($scope.begin, 20);
+            $scope.uploadPicInfo = {
+                "imageValue": $scope.myUploadPic,
+                "phoneId": "15601861921"
+            };
+            $scope.uploadInfo = JSON.stringify($scope.uploadPicInfo);
+            //alert($scope.uploadInfo);
+            UploadService.uploadPic($scope.uploadInfo)
+                .success(function (data, status) {
+                    console.log(data.success);
+                });
+        };
 
     })
     .controller('ImageDetailCtrl', function ($scope) {

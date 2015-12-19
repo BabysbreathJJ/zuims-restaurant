@@ -8,7 +8,7 @@
         <ul class="menu">
             <li><a href="" ng-click="goto('info-management')">商户信息管理</a></li>
             <li><a href="" ng-click="goto('data-statistics')">预定数据统计</a></li>
-            <li><a href="" ng-click="goto('#FAQ')">客服 FAQ</a></li>
+            <li><a href="" ng-click="goto('FAQ')">客服 FAQ</a></li>
             <!-- END .menu -->
         </ul>
         <!-- END .left-block -->
@@ -22,93 +22,88 @@
 
         <div id="basic-info">
             <h4>餐厅基本信息</h4>
-
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-md-1">
-                        餐厅名称
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="col-md-1">
+            <table class="table table-bordered" style="width: 90%; margin: 20px auto">
+                <tr>
+                    <td>
+                        <span>餐厅名称</span>
+                        <input type="text" class="form-control"></td>
+                    <td>
                         餐厅类型
-                    </div>
-                    <div class="col-md-1">
                         <select class="form-control">
                             <option value="">自助餐</option>
                             <option value="">下午茶</option>
                         </select>
-                    </div>
-
-                    <div class="col-md-1">
+                    </td>
+                    <td>
+                        餐厅价格
+                        <input class="form-control" type="number">
+                    </td>
+                    <td>
                         餐厅所在地
-                    </div>
-                    <div class="col-md-1">
                         <select class="form-control">
                             <option value="北京">北京</option>
                             <option value="上海">上海</option>
                             <option value="广州">广州</option>
                         </select>
-                    </div>
-                    <div class="col-md-1">
-                        餐厅电话
-                    </div>
-                    <div class="col-md-3">
-                        <input type="tel" class="form-control">
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-1 ">
-                        营业时间
-                    </div>
-                    <div class="col-md-2">
-                        <input type="datetime" class="form-control">
-                    </div>
-
-                    <div class="col-md-1 ">
-                        至
-                    </div>
-                    <div class="col-md-2">
-                        <input type="datetime" class="form-control">
-                    </div>
-                    <div class="col-md-5 ">
-                        <span>餐厅详细地址</span>
+                    </td>
+                    <td colspan="2">
+                        餐厅详细地址
                         <input type="datetime" class="form-control" placeholder="城市不用重复填写">
-                    </div>
-                    <div class="col-md-2">
-                        <span>免费泊车</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>餐厅电话
+                        <input type="tel" class="form-control">
+                    </td>
+                    <td>
+                        营业开始时间
+                        <input type="datetime" class="form-control">
+                    </td>
+                    <td>
+                        营业结束时间
+                        <input type="datetime" class="form-control">
+                    </td>
+                    <td>
+                        免费泊车
                         <select class="form-control">
                             <option value="">一小时</option>
                             <option value="">两小时</option>
                             <option value="">三小时</option>
                         </select>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+                    </td>
+                    <td>
+                        是否设有吸烟区
+                        <select class="form-control">
+                            <option value="">是</option>
+                            <option value="">否</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div id="image-upload">
             <h4>餐厅图文信息</h4>
 
             <div class="handle-image" ng-controller="ImageRecommendCtrl">
                 <div id="recommend-pic">
-                    平台首页展示餐厅照片
+                    平台首页展示餐厅照片(分辨率:720*960)
                     <div>
                         <div class="cropAreaRecommend">
                             <img-crop image="myRecommendImage" area-type="rectangle" aspect-ratio="0.8"
-                                      result-image="myRecommendCroppedImage"
-                                      result-image-size='{w: 750,h: 960}'></img-crop>
+                                      result-image-size='{w: 750,h: 960}'
+                                      result-image='myRecommendCroppedPic'
+
+                            ></img-crop>
                         </div>
-                        <div>图片预览:</div>
-                        <div class="croppedPic" style="display: none"><img ng-src="{{myRecommendCroppedImage}}"/></div>
+                        <!--<div>图片预览:</div>-->
+                        <!--<div class="croppedPic"><img ng-src="{{myRecommendCroppedPic}}"/></div>-->
                     </div>
-                    <div>
+                    <div class="image-upload">
                         <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择头像
                             <input type="file" accept="image/*" name="recommend" id="fileInputRecommend">
                         </a>
-                        <a href="javascript:;" class="file"><span class="glyphicon glyphicon-saved"></span>上传头像
+                        <a href="javascript:;" class="file" ng-click="uploadPic()"><span
+                                class="glyphicon glyphicon-saved"></span>上传头像
 
                         </a>
 
@@ -116,16 +111,22 @@
                     <div class="clearfix"></div>
                 </div>
                 <div id="detail-pic" ng-controller="ImageDetailCtrl">
+                    餐厅详情图文(分辨率:1280*720)
                     <div>
                         <div class="cropAreaDetail">
-                            <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.77"
-                                      result-image="myDetailCroppedImage"
-                                      result-image-size='{w: 1280,h: 720}'></img-crop>
+                            <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.8"
+                                      result-image-size='{w: 1280,h: 720}'
+                                      result-image='myDetailCroppedPic'
+                            ></img-crop>
+
                         </div>
-                        <div>图片预览:</div>
-                        <div class="croppedPic"><img ng-src="{{myDetailCroppedImage}}"/></div>
+                        <!--<div>图片预览:</div>-->
+                        <!--<div class="croppedPic"><img ng-src="{{myDetailCroppedPic}}"/></div>-->
+                        <div class="picDescription">
+                            <input class="form-control" type="text" placeholder="图片描述,限20个字"/>
+                        </div>
                     </div>
-                    <div>
+                    <div class="image-upload">
                         <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择头像
                             <input type="file" accept="image/*" name="detail" id="fileInputDetail">
                         </a>
