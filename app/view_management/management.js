@@ -100,7 +100,20 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
         angular.element(document.querySelector('#fileInputDetail')).on('change', handleFileSelect);
 
     })
-    .controller('ChartCtrl', function ($scope) {
+    .controller('ChartCtrl', function ($scope, $timeout) {
+
+        $scope.options = {
+            tooltipEvents: [],
+            showTooltips: true,
+            tooltipCaretSize: 0,
+            tooltipTemplate:"￥<%=value*5%>",
+            onAnimationComplete: function () {
+                console.log(this.datasets[0]);
+                this.showTooltip(this.datasets[0].points,true);
+            }
+        };
+
+
         $scope.month = "十二月";
         $scope.labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
         $scope.series = ['预定量'];
@@ -108,20 +121,26 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
             [65, 50, 80, 81, 56, 55]
 
         ];
-        $scope.total = [
+
+
+        $scope.totals = [
             [2000,3000,4000,2000,4000,5000]
         ];
-        $scope.onClick = function (points, evt) {
-            console.log(points, evt);
-        };
 
 
-        Chart.defaults.global.tooltipTemplate = function(value) {
-            if (value.label)  {
-                return "￥" + value.value;
-            } else {
-                return value.value;
-            }
-        };
+        //Chart.defaults.global.tooltipTemplate = function(value) {
+        //    if (value.label)  {
+        //        return "￥" + value.value;
+        //    } else {
+        //        return value.value;
+        //    }
+        //};
+
+        // Simulate async data update
+        $timeout(function () {
+            $scope.data = [
+                [28, 48, 40, 19, 86, 27, 90]
+            ];
+        }, 3000);
 
     });
