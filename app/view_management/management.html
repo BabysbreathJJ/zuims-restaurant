@@ -6,8 +6,8 @@
 
         <!-- BEGIN .menu -->
         <ul class="menu">
-            <li><a href="" ng-click="goto('info-management')">商户信息管理</a></li>
             <li><a href="" ng-click="goto('data-statistics')">预定数据统计</a></li>
+            <li><a href="" ng-click="goto('info-management')">商户信息管理</a></li>
             <li><a href="" ng-click="goto('FAQ')">客服 FAQ</a></li>
             <!-- END .menu -->
         </ul>
@@ -17,6 +17,31 @@
 </div>
 
 <div class="right-content">
+
+    <!--Data statistic chart begin-->
+    <div id="data-statistics" ng-controller="ChartCtrl">
+        <h3 class="full-header"><span>预定数据统计</span></h3>
+
+        <!--<div class="reservation-chart">-->
+        <!--<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"-->
+        <!--chart-legend="true" chart-series="series" chart-click="onClick"></canvas>-->
+        <!--</div>-->
+        <div class="panel panel-default reservation-chart">
+            <div class="panel-heading">
+                {{month}}-预定量走势图
+            </div>
+
+            <div class="panel-body">
+                <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true"
+                        chart-click="onClick"
+                        chart-series="series"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!--Data statistic chart end-->
+
+
     <div id="info-management">
         <h3 class="full-header"><span>商户信息管理</span></h3>
 
@@ -97,13 +122,16 @@
                         </div>
                         <!--<div>图片预览:</div>-->
                         <!--<div class="croppedPic"><img ng-src="{{myRecommendCroppedPic}}"/></div>-->
+                        <div class="picRecommendDescription">
+                            <input class="form-control" type="text" placeholder="图片描述,限20个字"/>
+                        </div>
                     </div>
                     <div class="image-upload">
-                        <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择头像
+                        <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片
                             <input type="file" accept="image/*" name="recommend" id="fileInputRecommend">
                         </a>
                         <a href="javascript:;" class="file" ng-click="uploadPic()"><span
-                                class="glyphicon glyphicon-saved"></span>上传头像
+                                class="glyphicon glyphicon-saved"></span>上传图片
 
                         </a>
 
@@ -122,15 +150,15 @@
                         </div>
                         <!--<div>图片预览:</div>-->
                         <!--<div class="croppedPic"><img ng-src="{{myDetailCroppedPic}}"/></div>-->
-                        <div class="picDescription">
+                        <div class="picDetailDescription">
                             <input class="form-control" type="text" placeholder="图片描述,限20个字"/>
                         </div>
                     </div>
                     <div class="image-upload">
-                        <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择头像
+                        <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片
                             <input type="file" accept="image/*" name="detail" id="fileInputDetail">
                         </a>
-                        <a href="javascript:;" class="file"><span class="glyphicon glyphicon-saved"></span>上传头像
+                        <a href="javascript:;" class="file"><span class="glyphicon glyphicon-saved"></span>上传图片
 
                         </a>
 
@@ -140,11 +168,6 @@
         </div>
     </div>
 
-
-    <div id="data-statistics">
-        <h3 class="full-header"><span>预定数据统计</span></h3>
-
-    </div>
     <div id="FAQ">
         <h3 class="full-header"><span>客服FAQ</span></h3>
     </div>

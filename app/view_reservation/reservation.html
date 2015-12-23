@@ -4,8 +4,8 @@
         <tr>
             <th>订单号</th>
             <th>订单状态</th>
-            <th  st-sort="orderDate" st-sort-default="reverse">日期</th>
-            <th>时间</th>
+            <th st-sort="orderDate" st-sort-default="reverse">预定时间</th>
+            <th>就餐时间</th>
             <th>预订人信息</th>
             <th>预定人数</th>
             <th>订单总金额</th>
@@ -27,18 +27,77 @@
             <td>{{row.orderAmount}}</td>
             <td>{{row.orderRemark}}</td>
             <td>
-                <button ng-hide="row.orderHandle" type="button" ng-click="removeItem(row)" class="btn btn-sm btn-warning">
+                <button ng-hide="row.orderHandle" type="button" ng-click="removeItem(row)"
+                        class="btn btn-sm btn-warning">
                     <i class="glyphicon glyphicon-check">
                     </i>
-                    一键接单
+                    完成该订单
                 </button>
-                <button  ng-show="row.orderHandle" type="button" ng-click="removeItem(row)" class="btn btn-sm">
+                <button ng-show="row.orderHandle" type="button" ng-click="notify()" class="btn btn-sm">
                     <i class="glyphicon glyphicon-ok">
                     </i>
-                    已接单
+                    订单已完成
                 </button>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<script type="text/ng-template" id="custom_template.html">
+    <div class="ui-notification warning custom-template">
+        <div class="message" ng-bind-html="message">
+
+        </div>
+        <div class="message">
+            <table class="table">
+                <tr>
+                    <td> 用户姓名</td>
+                    <td>{{message}}</td>
+                </tr>
+                <tr>
+                    <td> 用户手机号</td>
+                    <td>{{phone}}</td>
+                </tr>
+                <tr>
+                    <td>用户会员等级</td>
+                    <td>{{class}}</td>
+                </tr>
+                <tr>
+                    <td>预定日期</td>
+                    <td>{{date}}</td>
+                </tr>
+                <tr>
+                    <td>就餐时间</td>
+                    <td>{{time}}</td>
+                </tr>
+                <tr>
+                    <td>人数</td>
+                    <td>{{peopleNum}}</td>
+                </tr>
+                <tr>
+                    <td>订单总金额</td>
+                    <td>{{money}}</td>
+                </tr>
+                <tr>
+                    <td>用户备注</td>
+                    <td>{{remark}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="message">
+            <a class="btn btn-lg btn-accept btn-notification" ng-click="accept()">确定接单</a>
+        </div>
+        <div class="message" style="float: right">
+            <a class="btn btn-small btn-warning " ng-click="showConfirm()">无法接单</a>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="templateId">
+    <h1>提醒</h1>
+    <p>如无法接单,请立即与客人取得联系,说明原因并建议新的预约时间.</p>
+    <button class="btn-warning" ng-click="closeThisDialog()">返回再次查看订单信息</button>
+    <button ng-click="cancel()">联系过了,确认取消订单</button>
+</script>

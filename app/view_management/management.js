@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('myApp.management', ['ui.router', 'ngImgCrop'])
+angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
     .config(['$stateProvider', function ($stateProvider) {
 
         $stateProvider
@@ -98,5 +98,30 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop'])
 
         };
         angular.element(document.querySelector('#fileInputDetail')).on('change', handleFileSelect);
+
+    })
+    .controller('ChartCtrl', function ($scope) {
+        $scope.month = "十二月";
+        $scope.labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
+        $scope.series = ['预定量'];
+        $scope.data = [
+            [65, 50, 80, 81, 56, 55]
+
+        ];
+        $scope.total = [
+            [2000,3000,4000,2000,4000,5000]
+        ];
+        $scope.onClick = function (points, evt) {
+            console.log(points, evt);
+        };
+
+
+        Chart.defaults.global.tooltipTemplate = function(value) {
+            if (value.label)  {
+                return "￥" + value.value;
+            } else {
+                return value.value;
+            }
+        };
 
     });

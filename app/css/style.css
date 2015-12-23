@@ -1664,11 +1664,17 @@ h3.full-header {
     margin: 10px;
 }
 
-.picDescription{
+.picDetailDescription{
     margin: 0 auto;
     margin-top: 10px;
     width: 640px;
 
+}
+
+.picRecommendDescription{
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 350px;
 }
 
 /*预订信息*/
@@ -1744,4 +1750,12 @@ h3.full-header {
     border-color: #d58512;
     color: #FFFFFF;
     text-decoration: none;
+}
+
+/*数据图表*/
+.reservation-chart{
+    min-height: 300px;
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 30px;
 }
