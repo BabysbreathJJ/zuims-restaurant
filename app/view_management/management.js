@@ -106,15 +106,18 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
             tooltipEvents: [],
             showTooltips: true,
             tooltipCaretSize: 0,
+            tooltipTemplate: function(label){
+                return "￥" + getTotalSales(label.value);
+            },
             onAnimationComplete: function () {
                 console.log(this.datasets[0]);
                 this.showTooltip(this.datasets[0].points, true);
             }
         };
 
-        Chart.defaults.global.tooltipTemplate = function (label) {
-            return "￥" + getTotalSales(label.value);
-        };
+        //Chart.defaults.global.tooltipTemplate = function (label) {
+        //    return "￥" + getTotalSales(label.value);
+        //};
 
         $scope.month = "十二月";
         $scope.labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
