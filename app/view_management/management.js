@@ -106,10 +106,11 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
             tooltipEvents: [],
             showTooltips: true,
             tooltipCaretSize: 0,
-            tooltipTemplate:"￥<%=value*5%>",
+            tooltipTemplate: "￥<%=value*5%>",
+
             onAnimationComplete: function () {
                 console.log(this.datasets[0]);
-                this.showTooltip(this.datasets[0].points,true);
+                this.showTooltip(this.datasets[0].points, true);
             }
         };
 
@@ -119,22 +120,18 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
         $scope.series = ['预定量'];
         $scope.data = [
             [65, 50, 80, 81, 56, 55]
-
         ];
 
 
         $scope.totals = [
-            [2000,3000,4000,2000,4000,5000]
+            [2000, 3000, 4000, 2000, 4000, 5000]
         ];
 
-
-        //Chart.defaults.global.tooltipTemplate = function(value) {
-        //    if (value.label)  {
-        //        return "￥" + value.value;
-        //    } else {
-        //        return value.value;
-        //    }
-        //};
+        function getTotalSales(value)
+        {
+            console.log(value);
+            return parseInt(value)*10;
+        }
 
         // Simulate async data update
         $timeout(function () {

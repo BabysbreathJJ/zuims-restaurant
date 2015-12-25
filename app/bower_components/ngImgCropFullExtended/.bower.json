@@ -1,0 +1,15 @@
+{
+  "name": "ngImgCropFullExtended",
+  "homepage": "https://github.com/CrackerakiUA/ngImgCropExtended",
+  "version": "0.4.7",
+  "_release": "0.4.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.4.7",
+    "commit": "7cbc6d43bc27e6ccad8fc21023f6e523425f8033"
+  },
+  "_source": "git://github.com/CrackerakiUA/ngImgCropExtended.git",
+  "_target": "~0.4.7",
+  "_originalSource": "ngImgCropFullExtended",
+  "_direct": true
+}
