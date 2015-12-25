@@ -12,6 +12,10 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "angular-ui-notification": "~0.1.0",
-    "angular-chart.js": "~0.8.8"
+    "angular-chart.js": "~0.8.8",
+    "angular-smart-table": "~2.1.6",
+    "bootstrap": "~3.3.6",
+    "ngImgCropFullExtended":"~0.4.7"
+
   }
 }

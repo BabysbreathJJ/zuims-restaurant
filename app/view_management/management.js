@@ -106,14 +106,15 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
             tooltipEvents: [],
             showTooltips: true,
             tooltipCaretSize: 0,
-            tooltipTemplate: "￥<%=value*5%>",
-
             onAnimationComplete: function () {
                 console.log(this.datasets[0]);
                 this.showTooltip(this.datasets[0].points, true);
             }
         };
 
+        Chart.defaults.global.tooltipTemplate = function (label) {
+            return "￥" + getTotalSales(label.value);
+        };
 
         $scope.month = "十二月";
         $scope.labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
@@ -127,10 +128,9 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
             [2000, 3000, 4000, 2000, 4000, 5000]
         ];
 
-        function getTotalSales(value)
-        {
+        function getTotalSales(value) {
             console.log(value);
-            return parseInt(value)*10;
+            return parseInt(value) * 10;
         }
 
         // Simulate async data update

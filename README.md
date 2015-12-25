@@ -9,3 +9,23 @@ Type        |   Method
 chart-line  |  ·this.showTooltip(this.datasets[0].points,true);·
 chart-bar  |  ·this.showTooltip(this.datasets[0].bars, true);·
 chart-pie  |  ·this.showTooltip(this.segments, true);·
+
+- - -
+
+定制tooltip内容,单独写一个函数拿到chart上没有的数据
+
+<code>
+$scope.options = {
+            tooltipEvents: [],
+            showTooltips: true,
+            tooltipCaretSize: 0,
+            onAnimationComplete: function () {
+                console.log(this.datasets[0]);
+                this.showTooltip(this.datasets[0].points, true);
+            }
+        };
+        
+ Chart.defaults.global.tooltipTemplate = function (label) {
+            return "￥" + getTotalSales(label.value);
+        };
+</code>
