@@ -95,6 +95,7 @@ angular.module('notificationTest').controller('notificationController', function
 }
 ```
 
+
 ## Service
 
 Module name: "ui-notification"

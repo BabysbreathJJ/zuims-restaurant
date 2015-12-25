@@ -6,9 +6,9 @@
 
 Type        |   Method
 ----   |   ----
-chart-line  |  ·this.showTooltip(this.datasets[0].points,true);·
-chart-bar  |  ·this.showTooltip(this.datasets[0].bars, true);·
-chart-pie  |  ·this.showTooltip(this.segments, true);·
+chart-line  |  ```javascript this.showTooltip(this.datasets[0].points,true);```
+chart-bar  |   ```javascript this.showTooltip(this.datasets[0].bars, true);```
+chart-pie  |   ```javascript this.showTooltip(this.segments, true);```
 
 - - -
 
