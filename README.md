@@ -13,7 +13,6 @@ chart-pie  |  ·this.showTooltip(this.segments, true);·
 - - -
 
 定制tooltip内容,单独写一个函数拿到chart上没有的数据
-
 <code>
 
     $scope.options = {
@@ -29,5 +28,4 @@ chart-pie  |  ·this.showTooltip(this.segments, true);·
     Chart.defaults.global.tooltipTemplate = function (label) {
             return "￥" + getTotalSales(label.value);
         };
-        
 </code>
