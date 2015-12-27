@@ -8,6 +8,20 @@
 <!--[if gt IE 8]><!-->
 <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
 <head>
+
+    <!--[if lte IE 8]>
+    <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+    </script>
+    <![endif]-->
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>最美食商户管理</title>
