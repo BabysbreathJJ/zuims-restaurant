@@ -3,19 +3,13 @@
  */
 'use strict';
 
-angular.module("myApp.reservation", ['ui.router', 'smart-table', 'ui-notification', 'ngDialog'])
-    .config(['$stateProvider', function ($stateProvider) {
-
-        $stateProvider
-            .state('reservation', {
-                url: '/reservation',
-                templateUrl: 'view_reservation/reservation.html',
-                controller: 'ReservationCtrl'
-            })
-
-
+angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification', 'ngDialog'])
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider.when('/reservation', {
+            templateUrl: 'view_reservation/reservation.html',
+            controller: 'ReservationCtrl'
+        });
     }])
-
     .controller("ReservationCtrl", ["$scope", "Notification", "ngDialog", function ($scope, Notification, ngDialog) {
         var orderNum = [, 'SH00002', 'SH00003', 'SH00004'];
         var orderState = ['未完成', '未完成', '未完成'];

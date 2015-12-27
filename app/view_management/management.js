@@ -3,17 +3,12 @@
  */
 'use strict';
 
-angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
-    .config(['$stateProvider', function ($stateProvider) {
-
-        $stateProvider
-            .state('management', {
-                url: '/management',
-                templateUrl: 'view_management/management.html',
-                controller: 'ManagementCtrl'
-            })
-
-
+angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js'])
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/management', {
+            templateUrl: 'view_management/management.html',
+            controller: 'ManagementCtrl'
+        });
     }])
     .factory('UploadService', ['$http', function ($http) {
         var userBaseUrl = "http://202.120.40.175:21101";
@@ -42,6 +37,9 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
             $location.hash(id);
             $anchorScroll();
         };
+
+        $scope.reservationNum = 20;
+        $scope.advanceTime = 4;
 
     })
     .controller('ImageRecommendCtrl', function ($scope, UploadService) {
@@ -106,7 +104,7 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
             tooltipEvents: [],
             showTooltips: true,
             tooltipCaretSize: 0,
-            tooltipTemplate: function(label){
+            tooltipTemplate: function (label) {
                 return "￥" + getTotalSales(label.value);
             },
             onAnimationComplete: function () {
@@ -114,10 +112,6 @@ angular.module('myApp.management', ['ui.router', 'ngImgCrop', 'chart.js'])
                 this.showTooltip(this.datasets[0].points, true);
             }
         };
-
-        //Chart.defaults.global.tooltipTemplate = function (label) {
-        //    return "￥" + getTotalSales(label.value);
-        //};
 
         $scope.month = "十二月";
         $scope.labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
