@@ -7,9 +7,15 @@
 <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
-<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="myApp">
 <head>
 
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--[if IE 8]>
+    <script src="bower_components/es5-shim/es5-shim.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angularjs-ie8-build/dist/angular.min.js"></script>
     <script>
         document.createElement('ng-include');
         document.createElement('ng-pluralize');
@@ -21,8 +27,7 @@
         document.createElement('ng:view');
     </script>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <![endif]-->
     <title>最美食商户管理</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
