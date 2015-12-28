@@ -23,19 +23,19 @@
         <div id="data-statistics" ng-controller="ChartCtrl">
             <h3 class="full-header"><span>预定数据统计</span></h3>
 
-            <!--<div class="reservation-chart">-->
-            <!--<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels"-->
-            <!--chart-legend="true" chart-series="series" chart-click="onClick"></canvas>-->
-            <!--</div>-->
+            <div class="reservation-chart">
+                <canvas height="886" width="443" id="line" class="chart chart-line" chart-data="data" chart-labels="labels"
+                        chart-legend="true" chart-series="series" chart-click="onClick"></canvas>
+            </div>
             <div class="panel panel-default reservation-chart">
-                <div class="panel-heading" ng-bind="month">
+                <div class="panel-heading">
                     {{month}}-预定量走势图
                 </div>
 
                 <div class="panel-body">
-                    <canvas height="886" width="443" id="line" class="chart chart-line" chart-options="options" chart-data="data"
-                            chart-labels="labels" chart-legend="true" chart-colours="['#FF8800']"
-                            chart-series="series"></canvas>
+                    <!--<canvas height="886" width="443" id="line" class="chart chart-line" chart-options="options" chart-data="data"-->
+                            <!--chart-labels="labels" chart-legend="true" chart-colours="['#FF8800']"-->
+                            <!--chart-series="series"></canvas>-->
                 </div>
             </div>
         </div>
