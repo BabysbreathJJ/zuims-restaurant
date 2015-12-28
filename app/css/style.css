@@ -67,7 +67,7 @@ a.navbar-brand {
     padding: 0;
 }
 
-.navbar-nav li a:hover, .navbar-nav li a.active {
+.navbar-nav li a:hover, .navbar-nav li a.active, .navbar-nav li a:visited {
     color: #ff6b4a !important;
     background: none;
 }
