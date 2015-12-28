@@ -100,7 +100,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
 
             newScope.showConfirm = function () {
                 ngDialog.open({
-                    template: 'warning-message',
+                    templateUrl: 'warning_message.html',
                     scope: newScope
                 });
             };
