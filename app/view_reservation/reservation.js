@@ -10,6 +10,16 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             controller: 'ReservationCtrl'
         });
     }])
+    .config([
+        'ngDialogProvider',
+        function(ngDialogProvider) {
+            ngDialogProvider.setDefaults({
+                className: 'ngdialog-theme-default',
+                ariaAuto: false,
+                ariaRole: false
+            });
+        }
+    ])
     .controller("ReservationCtrl", ["$scope", "Notification", "ngDialog", function ($scope, Notification, ngDialog) {
         var orderNum = [, 'SH00002', 'SH00003', 'SH00004'];
         var orderState = ['未完成', '未完成', '未完成'];
