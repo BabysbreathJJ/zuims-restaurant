@@ -83,7 +83,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             //alertScope.title = 'Hello';
             newScope.name = "李菁菁" + $scope.notificationNum;
             newScope.phone = "156——" + $scope.notificationNum;
-            newScope.class = "白金" + $scope.notificationNum;
+            newScope.level = "白金" + $scope.notificationNum;
             newScope.date = "2015-12-22&" + $scope.notificationNum;
             newScope.time = "18:15&" + $scope.notificationNum;
             newScope.peopleNum = "3";
