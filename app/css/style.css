@@ -67,7 +67,7 @@ a.navbar-brand {
     padding: 0;
 }
 
-.navbar-nav li a:hover, .navbar-nav li a.active, .navbar-nav li a:focus {
+.navbar-nav li a:hover, .navbar-nav li a.active, .navbar-nav li a:active {
     color: #ff6b4a !important;
     background: none;
 }
@@ -96,7 +96,7 @@ a.navbar-brand {
 }
 
 .navbar-nav a:hover:before,
-.navbar-nav a:focus:before, .navbar-nav a.active::before {
+.navbar-nav a:focus:before, .navbar-nav a.active:before {
     color: #fff;
     text-shadow: 10px 0 #ff6b4a, -10px 0 #ff6b4a;
 }
