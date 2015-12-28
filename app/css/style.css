@@ -78,7 +78,7 @@ a.navbar-brand {
     transition: color 0.3s;
 }
 
-.navbar-nav a::before {
+.navbar-nav a:before {
     position: absolute;
     top: 65%;
     left: 50%;
@@ -95,8 +95,8 @@ a.navbar-brand {
     pointer-events: none;
 }
 
-.navbar-nav a:hover::before,
-.navbar-nav a:focus::before, .navbar-nav a.active::before {
+.navbar-nav a:hover:before,
+.navbar-nav a:focus:before, .navbar-nav a.active::before {
     color: #fff;
     text-shadow: 10px 0 #ff6b4a, -10px 0 #ff6b4a;
 }
