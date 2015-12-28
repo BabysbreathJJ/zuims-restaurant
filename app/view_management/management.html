@@ -33,9 +33,9 @@
                 </div>
 
                 <div class="panel-body">
-                    <canvas height="886" width="443" id="line" class="chart chart-line" chart-options="options" chart-data="data"
-                            chart-labels="labels" chart-legend="true" chart-colours="['#FF8800']"
-                            chart-series="series"></canvas>
+                    <!--<canvas height="886" width="443" id="line" class="chart chart-line" chart-options="options" chart-data="data"-->
+                            <!--chart-labels="labels" chart-legend="true" chart-colours="['#FF8800']"-->
+                            <!--chart-series="series"></canvas>-->
                 </div>
             </div>
         </div>
@@ -111,66 +111,66 @@
             <!--餐厅基本信息结束-->
 
             <!--餐厅图文上传开始-->
-            <div class="image-uploads">
-                <h4>餐厅图文信息</h4>
+            <!--<div class="image-uploads">-->
+                <!--<h4>餐厅图文信息</h4>-->
 
-                <div class="handle-image" ng-controller="ImageRecommendCtrl">
-                    <div id="recommend-pic">
-                        平台首页展示餐厅照片(分辨率:720*960)
-                        <div>
-                            <div class="cropAreaRecommend">
-                                <img-crop image="myRecommendImage" area-type="rectangle" aspect-ratio="0.8"
-                                          result-image-size='{w: 750,h: 960}'
-                                          result-image='myRecommendCroppedPic'
+                <!--<div class="handle-image" ng-controller="ImageRecommendCtrl">-->
+                    <!--<div id="recommend-pic">-->
+                        <!--平台首页展示餐厅照片(分辨率:720*960)-->
+                        <!--<div>-->
+                            <!--<div class="cropAreaRecommend">-->
+                                <!--<img-crop image="myRecommendImage" area-type="rectangle" aspect-ratio="0.8"-->
+                                          <!--result-image-size='{w: 750,h: 960}'-->
+                                          <!--result-image='myRecommendCroppedPic'-->
 
-                                ></img-crop>
-                            </div>
-                            <div>图片预览:</div>
-                            <div class="croppedPic"><img ng-src="{{myRecommendCroppedPic}}"/></div>
-                            <div class="picRecommendDescription">
-                                <input class="form-control" type="text" placeholder="图片描述,限20个字"/>
-                            </div>
-                        </div>
-                        <div class="image-upload">
-                            <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片
-                                <input type="file" accept="image/*" name="recommend" id="fileInputRecommend">
-                            </a>
-                            <a href="javascript:;" class="file" ng-click="uploadPic()"><span
-                                    class="glyphicon glyphicon-saved"></span>上传图片
+                                <!--&gt;</img-crop>-->
+                            <!--</div>-->
+                            <!--<div>图片预览:</div>-->
+                            <!--<div class="croppedPic"><img ng-src="{{myRecommendCroppedPic}}"/></div>-->
+                            <!--<div class="picRecommendDescription">-->
+                                <!--<input class="form-control" type="text" placeholder="图片描述,限20个字"/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="image-upload">-->
+                            <!--<a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片-->
+                                <!--<input type="file" accept="image/*" name="recommend" id="fileInputRecommend">-->
+                            <!--</a>-->
+                            <!--<a href="javascript:;" class="file" ng-click="uploadPic()"><span-->
+                                    <!--class="glyphicon glyphicon-saved"></span>上传图片-->
 
-                            </a>
+                            <!--</a>-->
 
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div id="detail-pic" ng-controller="ImageDetailCtrl">
-                        餐厅详情图文(分辨率:1280*720)
-                        <div>
-                            <div class="cropAreaDetail">
-                                <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.8"
-                                          result-image-size='{w: 1280,h: 720}'
-                                          result-image='myDetailCroppedPic'
-                                ></img-crop>
+                        <!--</div>-->
+                        <!--<div class="clearfix"></div>-->
+                    <!--</div>-->
+                    <!--<div id="detail-pic" ng-controller="ImageDetailCtrl">-->
+                        <!--餐厅详情图文(分辨率:1280*720)-->
+                        <!--<div>-->
+                            <!--<div class="cropAreaDetail">-->
+                                <!--<img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.8"-->
+                                          <!--result-image-size='{w: 1280,h: 720}'-->
+                                          <!--result-image='myDetailCroppedPic'-->
+                                <!--&gt;</img-crop>-->
 
-                            </div>
-                            <div>图片预览:</div>
-                            <div class="croppedPic"><img ng-src="{{myDetailCroppedPic}}"/></div>
-                            <div class="picDetailDescription">
-                                <input class="form-control" type="text" placeholder="图片描述,限20个字"/>
-                            </div>
-                        </div>
-                        <div class="image-upload">
-                            <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片
-                                <input type="file" accept="image/*" name="detail" id="fileInputDetail">
-                            </a>
-                            <a href="javascript:;" class="file"><span class="glyphicon glyphicon-saved"></span>上传图片
+                            <!--</div>-->
+                            <!--<div>图片预览:</div>-->
+                            <!--<div class="croppedPic"><img ng-src="{{myDetailCroppedPic}}"/></div>-->
+                            <!--<div class="picDetailDescription">-->
+                                <!--<input class="form-control" type="text" placeholder="图片描述,限20个字"/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="image-upload">-->
+                            <!--<a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片-->
+                                <!--<input type="file" accept="image/*" name="detail" id="fileInputDetail">-->
+                            <!--</a>-->
+                            <!--<a href="javascript:;" class="file"><span class="glyphicon glyphicon-saved"></span>上传图片-->
 
-                            </a>
+                            <!--</a>-->
 
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <!--餐厅图文上传结束-->
 
             <!--自动接单设置开始-->
