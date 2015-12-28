@@ -49,8 +49,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js'])
         $scope.myRecommendCroppedPic = '';
 
         var handleFileSelect = function (evt) {
+            var target = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;;
 
-            var file = evt.currentTarget.files[0];
+            var file = target.files[0];
             var reader = new FileReader();
             reader.onload = function (evt) {
                 $scope.$apply(function ($scope) {
@@ -84,8 +85,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js'])
         $scope.myDetailCroppedImage = '';
 
         var handleFileSelect = function (evt) {
+            var target = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;;
 
-            var file = evt.currentTarget.files[0];
+            var file = target.files[0];
             var reader = new FileReader();
             reader.onload = function (evt) {
                 $scope.$apply(function ($scope) {
