@@ -90,7 +90,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             newScope.money = "300";
             newScope.remark = "测试";
             newScope.cancel = function(){
-                console.log("id"+$scope.notificationNum);
+                //console.log("id"+$scope.notificationNum);
                 //发送请求,将订单ID作为参数,取消订单的接口
                 this.closeThisDialog();
                 newScope.notification.then(function (notification) {
