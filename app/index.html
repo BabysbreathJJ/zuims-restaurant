@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>最美食商户管理</title>
-    <!--[if lt IE9]>
+    <!--[if IE 8]>
     <script src="bower_components/es5-shim/es5-shim.min.js"></script>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script src="bower_components/respond/dest/respond.min.js"></script>
@@ -21,13 +21,20 @@
         document.createElement('ng-pluralize');
         document.createElement('ng-view');
         document.createElement('ng-dialog');
+        document.createElement('ng-show');
 
         // Optionally these for CSS
         document.createElement('ng:include');
         document.createElement('ng:pluralize');
         document.createElement('ng:view');
         document.createElement('ng:dialog');
+        document.createElement('ng:show');
     </script>
+    <style>
+        .ng-hide {
+            display: none !important;
+        }
+    </style>
     <![endif]-->
 
 
@@ -57,21 +64,21 @@
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
                         <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"-->
-                                <!--data-target="#bs-example-navbar-collapse-1">-->
-                            <!--<span class="sr-only">Toggle navigation</span>-->
-                            <!--<span class="icon-bar"></span>-->
-                            <!--<span class="icon-bar"></span>-->
+                        <!--data-target="#bs-example-navbar-collapse-1">-->
+                        <!--<span class="sr-only">Toggle navigation</span>-->
+                        <!--<span class="icon-bar"></span>-->
+                        <!--<span class="icon-bar"></span>-->
                         <!--</button>-->
                         <a class="navbar-brand" href="index.html"> <img src="images/logo.png" alt=""/> </a>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#/reservation">预定管理</a></li>
-                            <li><a href="#/management">商户后台管理</a></li>
-                        </ul>
-                    </div>
-                    <div class="clearfix"></div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#/reservation">预定管理</a></li>
+                        <li><a href="#/management">商户后台管理</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
                 <!--</div>-->
             </nav>
         </div>
