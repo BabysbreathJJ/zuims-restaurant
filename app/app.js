@@ -7,6 +7,6 @@ angular.module('myApp', [
     'myApp.management',
     'myApp.reservation'
 ]).
-config(['$routeProvider', function($routeProvider) {
-    $routeProvider.otherwise({redirectTo: '/management'});
+config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.otherwise({redirectTo: '/reservation'});
 }]);

@@ -18,22 +18,22 @@
         </thead>
         <tbody>
         <tr ng-repeat="row in displayedCollection">
-            <td>{{row.orderNum}}</td>
-            <td>{{row.orderState}}</td>
+            <td>{{row.orderId}}</td>
+            <td>{{row.state}}</td>
             <td>{{row.orderDate}}</td>
-            <td>{{row.orderTime}}</td>
-            <td>{{row.orderInfo}}</td>
-            <td>{{row.orderPeopleNum}}</td>
-            <td>{{row.orderAmount}}</td>
+            <td>{{row.orderTimer}}</td>
+            <td>{{row.userLastName}}{{row.userFirstName}},{{row.gender}},{{row.phoneId}},{{row.userVipLevel}}</td>
+            <td>{{row.dinerNum}}</td>
+            <td>{{row.dorderSum}}</td>
             <td>{{row.orderRemark}}</td>
             <td>
-                <button ng-hide="row.orderHandle" type="button" ng-click="removeItem(row)"
+                <button ng-show="!row.orderHandled" type="button" ng-click="completeOrder(row)"
                         class="btn btn-sm btn-warning">
                     <i class="glyphicon glyphicon-check">
                     </i>
                     完成该订单
                 </button>
-                <button ng-show="row.orderHandle" type="button" ng-click="notify()" class="btn btn-sm">
+                <button ng-show="row.orderHandled" type="button" class="btn btn-sm" disabled>
                     <i class="glyphicon glyphicon-ok">
                     </i>
                     订单已完成
@@ -46,14 +46,13 @@
 
 <script type="text/ng-template" id="custom_template.html">
     <div class="ui-notification warning custom-template">
-        <div class="message" ng-bind-html="message">
-
+        <div class="message" ng-bind-html="message" style="font-size: 20px;text-align: center">
         </div>
         <div class="message">
             <table class="table">
                 <tr>
                     <td> 用户姓名</td>
-                    <td>{{message}}</td>
+                    <td>{{name}}</td>
                 </tr>
                 <tr>
                     <td> 用户手机号</td>

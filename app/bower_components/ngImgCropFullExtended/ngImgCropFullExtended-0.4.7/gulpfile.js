@@ -37,7 +37,7 @@ var Config = {
       js:     'source/js',
       scss:   'source/scss'
     },
-    tmp: '.tmp/unminified',
+    tmp: '.temp/unminified',
     compileUnminified: {
       root:   'compile/unminified',
       js:     'compile/unminified',

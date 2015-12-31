@@ -24,8 +24,8 @@
             <h3 class="full-header"><span>预定数据统计</span></h3>
 
             <!--<div class="reservation-chart">-->
-                <!--<canvas height="886" width="443" id="line" class="chart chart-line" chart-data="data" chart-labels="labels"-->
-                        <!--chart-legend="true" chart-series="series" chart-click="onClick"></canvas>-->
+            <!--<canvas height="886" width="443" id="line" class="chart chart-line" chart-data="data" chart-labels="labels"-->
+            <!--chart-legend="true" chart-series="series" chart-click="onClick"></canvas>-->
             <!--</div>-->
             <div class="panel panel-default reservation-chart">
                 <div class="panel-heading">
@@ -33,7 +33,8 @@
                 </div>
 
                 <div class="panel-body">
-                    <canvas height="30" width="60" id="line" class="chart chart-line" chart-options="options" chart-data="data"
+                    <canvas height="30" width="60" id="line" class="chart chart-line" chart-options="options"
+                            chart-data="data"
                             chart-labels="labels" chart-legend="true" chart-colours="['#FF8800']"
                             chart-series="series"></canvas>
                 </div>
@@ -47,190 +48,232 @@
             <h3 class="full-header"><span>商户信息管理</span></h3>
 
             <!--餐厅基本信息开始-->
-            <div id="basic-info">
+            <div id="basic-info" class="separator" ng-controller="BasicInfoCtrl">
                 <h4>餐厅基本信息</h4>
-                <table class="table table-bordered" style="width: 90%; margin: 20px auto">
+                <table class="table table-bordered" style="width: 90%; margin: 0px auto">
                     <tr>
-                        <td>
-                            <span>餐厅名称</span>
-                            <input type="text" class="form-control"></td>
-                        <td>
-                            餐厅类型
-                            <select class="form-control">
-                                <option value="">自助餐</option>
-                                <option value="">下午茶</option>
-                            </select>
-                        </td>
-                        <td>
-                            餐厅价格
-                            <input class="form-control" type="number">
-                        </td>
-                        <td>
+                        <td width="10%">
                             餐厅所在地
-                            <select class="form-control">
+                            <select class="form-control" ng-model="restaurantInfo.city">
                                 <option value="北京">北京</option>
                                 <option value="上海">上海</option>
                                 <option value="广州">广州</option>
                             </select>
                         </td>
-                        <td colspan="2">
-                            餐厅详细地址
-                            <input type="datetime" class="form-control" placeholder="城市不用重复填写">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>餐厅电话
-                            <input type="tel" class="form-control">
-                        </td>
+                        <td width="30%">
+                            <span>餐厅名称</span>
+                            <input type="text" class="form-control" ng-model="basicInfo.restaurantName"></td>
                         <td>
-                            营业开始时间
-                            <input type="datetime" class="form-control">
-                        </td>
-                        <td>
-                            营业结束时间
-                            <input type="datetime" class="form-control">
-                        </td>
-                        <td>
-                            免费泊车
-                            <select class="form-control">
-                                <option value="">一小时</option>
-                                <option value="">两小时</option>
-                                <option value="">三小时</option>
+                            餐厅类型
+                            <select class="form-control" ng-model="basicInfo.restaurantType">
+                                <option value="自助餐">自助餐</option>
+                                <option value="下午茶">下午茶</option>
+                                <option value="大堂吧">大堂吧</option>
+                                <option value="商务套餐">商务套餐</option>
+                                <option value="酒廊">酒廊</option>
                             </select>
                         </td>
                         <td>
-                            是否设有吸烟区
-                            <select class="form-control">
-                                <option value="">是</option>
-                                <option value="">否</option>
+                            优惠类型
+                            <select class="form-control" ng-model="basicInfo.discountType[0]">
+                                <option value="discount">三免一</option>
+                                <option value="none">暂无</option>
+                            </select>
+                        </td>
+                        <td width="10%">
+                            人均价格
+                            <input class="form-control" type="number" ng-model="basicInfo.averagePrice">
+                        </td>
+                        <td>
+                            免费泊车
+                            <select class="form-control" ng-model="basicInfo.park">
+                                <option value="无停车位">无停车位</option>
+                                <option value="停车收费">停车收费</option>
+                                <option value="免费停车">免费停车</option>
                             </select>
                         </td>
                     </tr>
                 </table>
+                <table class="table table-bordered" style="width: 90%; margin: 0px auto;margin-bottom: 20px">
+                    <tr>
+                        <td colspan="3">
+                            餐厅详细地址<span class="explain" style="padding-left: 10px"><i>城市不用重复填写</i></span>
+                            <input type="datetime" class="form-control" placeholder="城市不用重复填写"
+                                   ng-model="basicInfo.restaurantAddress" disabled/>
+                        </td>
+
+                        <td>餐厅电话<span class="explain" style="padding-left: 10px"><i>若有多个电话号码,用一个空格分开</i></span>
+                            <input type="tel" class="form-control" ng-model="basicInfo.restaurantTele">
+                        </td>
+                        <td colspan="2">
+                            营业时间<span class="explain" style="padding-left: 10px"><i>格式:
+                            11:30-14:30,17:30-22:00</i></span>
+                            <input type="text" class="form-control" ng-model="basicInfo.restaurantOpenTime">
+                        </td>
+                    </tr>
+
+                </table>
+
+                <div class="save-btn">
+                    <button class="btn btn-warning" ng-click="saveBasicInfo()"><span
+                            class="glyphicon glyphicon-ok"></span>保存餐厅基本信息
+                    </button>
+                </div>
             </div>
             <!--餐厅基本信息结束-->
 
             <!--餐厅图文上传开始-->
-            <!--<div class="image-uploads">-->
-                <!--<h4>餐厅图文信息</h4>-->
+            <div class="image-uploads separator">
+                <h4>餐厅图文信息<span style="padding-left: 40px"></span></h4>
 
-                <!--<div class="handle-image" ng-controller="ImageRecommendCtrl">-->
-                    <!--<div id="recommend-pic">-->
-                        <!--平台首页展示餐厅照片(分辨率:720*960)-->
-                        <!--<div>-->
-                            <!--<div class="cropAreaRecommend">-->
-                                <!--<img-crop image="myRecommendImage" area-type="rectangle" aspect-ratio="0.8"-->
-                                          <!--result-image-size='{w: 750,h: 960}'-->
-                                          <!--result-image='myRecommendCroppedPic'-->
+                <div class="handle-image" ng-controller="ImageRecommendCtrl">
+                    <div id="recommend-pic">
+                        平台首页展示餐厅照片<span class="explain"><i>分辨率:720*960</i></span>
 
-                                <!--&gt;</img-crop>-->
-                            <!--</div>-->
+                        <div ng-show="homePageShow">
+                            <div class="cropAreaRecommend">
+                                <img-crop image="myRecommendImage" area-type="rectangle" aspect-ratio="0.8"
+                                          result-image-size='{w: 750,h: 960}'
+                                          result-image='myRecommendCroppedPic'
+
+                                ></img-crop>
+                            </div>
                             <!--<div>图片预览:</div>-->
-                            <!--<div class="croppedPic"><img ng-src="{{myRecommendCroppedPic}}"/></div>-->
-                            <!--<div class="picRecommendDescription">-->
-                                <!--<input class="form-control" type="text" placeholder="图片描述,限20个字"/>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="image-upload">-->
-                            <!--<a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片-->
-                                <!--<input type="file" accept="image/*" name="recommend" id="fileInputRecommend">-->
-                            <!--</a>-->
-                            <!--<a href="javascript:;" class="file" ng-click="uploadPic()"><span-->
-                                    <!--class="glyphicon glyphicon-saved"></span>上传图片-->
+                            <div class="croppedPic" style="display: none"><img ng-src="{{myRecommendCroppedPic}}"/>
+                            </div>
+                            <div class="picRecommendDescription">
+                                <input class="form-control" type="text" placeholder="图片描述,限20个字" ng-model="picDescription"/>
+                            </div>
+                            <div class="image-upload">
+                                <a href="javascript:;" class="file" ng-click="uploadPic()"><span
+                                        class="glyphicon glyphicon-saved"></span>上传图片
+                                </a>
+                                <a href="javascript:;" class="file-cancel" ng-click="removePic()"><span
+                                        class="glyphicon glyphicon-remove"></span>取消上传
+                                </a>
+                            </div>
+                        </div>
+                        <div class="image-upload" ng-hide="homePageShow">
+                            <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片
+                                <input type="file" accept="image/*" name="recommend" id="fileInputRecommend">
+                            </a>
+                            <a href="javascript:;" class="file btn-warning" ng-click="previewHomePage()"><span
+                                    class="glyphicon glyphicon-search"></span>首页图文信息预览
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="detail-pic" ng-controller="ImageDetailCtrl">
+                        餐厅详情图文<span class="explain"><i>分辨率:1280*720</i></span>
 
-                            <!--</a>-->
+                        <div ng-show="detailPicShow">
+                            <div class="cropAreaDetail">
+                                <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.8"
+                                          result-image-size='{w: 1280,h: 720}'
+                                          result-image='myDetailCroppedPic'
+                                ></img-crop>
 
-                        <!--</div>-->
-                        <!--<div class="clearfix"></div>-->
-                    <!--</div>-->
-                    <!--<div id="detail-pic" ng-controller="ImageDetailCtrl">-->
-                        <!--餐厅详情图文(分辨率:1280*720)-->
-                        <!--<div>-->
-                            <!--<div class="cropAreaDetail">-->
-                                <!--<img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.8"-->
-                                          <!--result-image-size='{w: 1280,h: 720}'-->
-                                          <!--result-image='myDetailCroppedPic'-->
-                                <!--&gt;</img-crop>-->
-
-                            <!--</div>-->
+                            </div>
                             <!--<div>图片预览:</div>-->
-                            <!--<div class="croppedPic"><img ng-src="{{myDetailCroppedPic}}"/></div>-->
-                            <!--<div class="picDetailDescription">-->
-                                <!--<input class="form-control" type="text" placeholder="图片描述,限20个字"/>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="image-upload">-->
-                            <!--<a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片-->
-                                <!--<input type="file" accept="image/*" name="detail" id="fileInputDetail">-->
-                            <!--</a>-->
-                            <!--<a href="javascript:;" class="file"><span class="glyphicon glyphicon-saved"></span>上传图片-->
-
-                            <!--</a>-->
-
-                        <!--</div>-->
-                    <!--</div>-->
+                            <div class="croppedPic" style="display: none"><img ng-src="{{myDetailCroppedPic}}"/></div>
+                            <div class="picDetailDescription">
+                                <input class="form-control" type="text" placeholder="图片描述,限20个字" ng-model="picDescription"/>
+                            </div>
+                            <div class="image-upload">
+                                <a href="javascript:;" class="file" ng-click="uploadPic()"><span
+                                        class="glyphicon glyphicon-saved"></span>上传图片
+                                </a>
+                                <a href="javascript:;" class="file-cancel" ng-click="removePic()"><span
+                                        class="glyphicon glyphicon-remove"></span>取消上传
+                                </a>
+                            </div>
+                        </div>
+                        <div class="image-upload" ng-hide="detailPicShow">
+                            <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片
+                                <input type="file" accept="image/*" name="detail" id="fileInputDetail">
+                            </a>
+                            <a href="javascript:;" class="file btn-warning" ng-click="previewDetail()"><span
+                                    class="glyphicon glyphicon-search"></span>餐厅详细图文信息预览
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="save-btn">-->
+                <!--<button class="btn btn-warning" ng-click="previewHomePage()"><span-->
+                <!--class="glyphicon glyphicon-search"></span>图文信息预览-->
+                <!--</button>-->
                 <!--</div>-->
-            <!--</div>-->
+            </div>
             <!--餐厅图文上传结束-->
 
             <!--自动接单设置开始-->
-            <div class="autoAccept">
+            <div class="autoAccept separator" ng-controller="PersistInfoCtrl">
                 <h4>自动接单设置</h4>
 
                 <div class="autoAcceptConfig">
                     <div class="config-item">
-                        餐厅为最美食会员预留桌数最大值<input class="config-input" type="number" ng-model="reservationNum">
-                        <span class="explain">(说明:如果系统内当日未完成预定超过预设值,则自动转为人工接单)</span>
+                        餐厅为最美食会员预留桌数最大值<input class="config-input" type="number" ng-model="persistInfo.persistTable">
+                        <span class="explain"><i>(说明:如果系统内当日未完成预定超过预设值,则自动转为人工接单)</i></span>
                     </div>
                     <div class="config-item">
-                        用户发起预定时距离时间大于<input type="number" class="config-input" ng-model="advanceTime">小时的订单,系统自动订单.
+                        用户发起预定时距离时间大于<input type="number" class="config-input" ng-model="persistInfo.persistTime">小时的订单,系统自动订单.
                     </div>
                     <div class="config-item">
-                        <span class="explain">自动接单:在指定时间范围内的订单系统自动为商户确定订单,在指定时间范围外的订单需要餐厅联系人进行人工确认接单.</span>
+                        <span class="explain"><i>自动接单:在指定时间范围内的订单系统自动为商户确定订单,在指定时间范围外的订单需要餐厅联系人进行人工确认接单.</i></span>
                     </div>
+                </div>
+                <div class="save-btn">
+                    <button class="btn btn-warning" ng-click="savePersistInfo()"><span
+                            class="glyphicon glyphicon-ok"></span>保存自动接单设置
+                    </button>
                 </div>
             </div>
             <!--自动接单设置结束-->
 
             <!--餐厅联系人设置开始-->
-            <div class="contacts">
-                <h4>餐厅联系人设置 <span class="explain" style="padding-left: 20px;font-weight: 200; font-size: 16px">至少两位联系人,请填写有效联系方式,否则系统无法正常传递预定信息</span>
+            <div class="contacts" ng-controller="ContactCtrl" >
+                <h4>餐厅联系人设置 <span class="explain"
+                                  style="padding-left: 20px;"><i>至少两位联系人,请填写有效联系方式,否则系统无法正常传递预定信息</i></span>
                 </h4>
 
                 <div class="contacts-infos">
                     <div class="contact">
-                        餐厅经理:
+                        联系人1:
                     </div>
                     <div class="contact-info">
-                        姓名:<input type="text" class="contact-input" ng-model="contactName1" style="width: 100px">
-                        手机号:<input type="tel" class="contact-input" ng-model="contact1Tel1" style="width: 120px">
-                        Email:<input type="email" class="contact-input" ng-model="contactEmail1">
-                        职位:<input type="text" class="contact-input" ng-model="contact1Position1" style="width: 80px">
-                        <input type="radio" ng-model="selectContact" value="contact1" ng-checked="true">预定信息优先通知给他/她
+                        姓名:<input type="text" class="contact-input" ng-model="contact[0].linkmanName" style="width: 100px">
+                        手机号:<input type="tel" class="contact-input" ng-model="contact[0].linkmanPhone" style="width: 120px">
+                        Email:<input type="email" class="contact-input" ng-model="contact[0].linkmanEmail">
+                        职位:<input type="text" class="contact-input" ng-model="contact[0].position" style="width: 80px">
+                        <input type="radio" name="contact0" ng-model="selectContact" value="contactFirst0">预定信息优先通知给他/她
                     </div>
 
                     <div class="contact">
                         联系人2:
                     </div>
                     <div class="contact-info">
-                        姓名:<input type="text" class="contact-input" ng-model="contactName2" style="width: 100px">
-                        手机号:<input type="tel" class="contact-input" ng-model="contact1Tel2" style="width: 120px">
-                        Email:<input type="email" class="contact-input" ng-model="contactEmail2">
-                        职位:<input type="text" class="contact-input" ng-model="contact1Position2" style="width: 80px">
-                        <input type="radio" ng-model="selectContact" value="contact2">预定信息优先通知给他/她
+                        姓名:<input type="text" class="contact-input" ng-model="contact[1].linkmanName" style="width: 100px">
+                        手机号:<input type="tel" class="contact-input" ng-model="contact[1].linkmanPhone" style="width: 120px">
+                        Email:<input type="email" class="contact-input" ng-model="contact[1].linkmanEmail">
+                        职位:<input type="text" class="contact-input" ng-model="contact[1].position" style="width: 80px">
+                        <input type="radio" name="contact1" ng-model="selectContact" value="contactFirst1">预定信息优先通知给他/她
                     </div>
 
                     <div class="contact">
                         联系人3:
                     </div>
                     <div class="contact-info">
-                        姓名:<input type="text" class="contact-input" ng-model="contactName3" style="width: 100px">
-                        手机号:<input type="tel" class="contact-input" ng-model="contact1Tel3" style="width: 120px">
-                        Email:<input type="email" class="contact-input" ng-model="contactEmail3">
-                        职位:<input type="text" class="contact-input" ng-model="contact1Position3" style="width: 80px">
-                        <input type="radio" ng-model="selectContact" value="contact3">预定信息优先通知给他/她
+                        姓名:<input type="text" class="contact-input" ng-model="contact[2].linkmanName" style="width: 100px">
+                        手机号:<input type="tel" class="contact-input" ng-model="contact[2].linkmanPhone" style="width: 120px">
+                        Email:<input type="email" class="contact-input" ng-model="contact[2].linkmanEmail">
+                        职位:<input type="text" class="contact-input" ng-model="contact[2].position" style="width: 80px">
+                        <input type="radio" name="contact2" ng-model="selectContact" value="contactFirst2">预定信息优先通知给他/她
                     </div>
-
+                </div>
+                <div class="save-btn">
+                    <button class="btn btn-warning" ng-click="updateContactInfo()"><span
+                            class="glyphicon glyphicon-ok"></span>保存餐厅联系人设置
+                    </button>
                 </div>
             </div>
             <!--餐厅联系人设置结束-->
@@ -242,3 +285,103 @@
         </div>
     </div>
 </div>
+<script type="text/ng-template" id="homePic.html">
+    <h2>首页图文展示</h2>
+    <!--餐厅介绍开始-->
+    <div class="w-300 r-active">
+        <div class="pos-r overflow-h">
+            <img ng-src="{{restaurantInfo.homePagePic}}" class="img-responsive">
+
+            <div class="pos-a font-white bg-orange transform45 smy" ng-show="discount">三免一</div>
+            <div class="pos-a tc per100 bottom20">
+                <p class="bg-t display-ib per100 l-ht30 font-white">{{description}}</p>
+            </div>
+        </div>
+        <div class="introduce">
+            <p class="tc mt16"><b class="font16">{{restaurantInfo.restaurantName}}</b><i class="font-c-f8 ml10">hot</i>
+            </p>
+
+            <p>
+                <span class="font-c-8f">每位：</span>
+                <span class="font-c-40">￥{{restaurantInfo.averagePrice}}（含15%服务费）</span>
+            </p>
+
+            <p>
+                <span class="font-c-8f">地址 ：</span>
+                <span class="font-c-40">{{restaurantInfo.restaurantAddress}}</span>
+            </p>
+
+            <p>
+                <span class="font-c-8f">电话 ：</span>
+                        <span class="font-c-40"><span ng-repeat=" tel in restaurantInfo.restaurantTeles">
+                            <a class="font-c-40" href="tel:{{tel}}">{{tel}}</a></span> </span>
+            </p>
+
+        </div>
+    </div>
+    <!--餐厅介绍结束-->
+</script>
+
+
+<script type="text/ng-template" id="detailPic.html">
+    <!--内容开始-->
+    <div class="pd15 mt70" style="margin-top: 20px">
+        <div class="border border-r-5 bg-white padding">
+            <div class="pos-r">
+                <img src="{{details[0].picname}}" class="per100" id="d-img">
+
+                <div class="pos-a tc per100 bottom20">
+                    <p class="bg-t display-ib per90 ht40 l-ht40 font-white" id="description">{{description}}</p>
+                </div>
+            </div>
+            <!--图片列表开始-->
+            <div class="overflow-x-auto carousel" >
+                <ul class="list-unstyled pr10 ht70 img-list mt10 pos-r overflow-h">
+                    <li class="fl pl10 border-r-5" ng-repeat="detail in details">
+                        <img src="{{detail.picname}}" class="per100 small-pic" change-pic description="{{detail.introduction}}">
+                    </li>
+                </ul>
+            </div>
+            <!--图片列表结束-->
+            <!--餐厅介绍开始-->
+            <div class="pl10 pr10 pos-r">
+                <div class="mb16">
+                    <b class="font16">{{restaurantInfo.restaurantName}}</b>
+                    <span class="display-ib ht20 l-ht20 pl5 pr5 border ml10" ng-show="discount">三免一餐厅</span>
+                </div>
+                <p>
+                    <span class="font-c-8f">地址 ：</span>
+                    <span class="font-c-40">{{restaurantInfo.restaurantAddress}}</span>
+                </p>
+
+                <p>
+                    <span class="font-c-8f">电话 ：</span>
+                    <span class="font-c-40">{{restaurantInfo.restaurantTele}}</span>
+                </p>
+
+                <p>
+                    <span class="font-c-8f">每位：</span>
+                    <!--<span class="font-c-8f text-d-lt">￥200</span>-->
+                    <span class="font-c-40">￥{{restaurantInfo.averagePrice}}（含15%服务费）</span>
+                </p>
+
+                <p>
+                    <span class="font-c-8f">餐厅类别：</span>
+                    <span class="font-c-40">{{restaurantInfo.restaurantType}}</span>
+                </p>
+
+                <p>
+                    <span class="font-c-8f">停车泊位：</span>
+                    <span class="font-c-40">{{resaturantInfo.park}}</span>
+                </p>
+
+                <p>
+                    <span class="font-c-8f">营业时间：</span>
+                    <span class="font-c-40">{{restaurantInfo.restaurantOpenTime}}</span>
+                </p>
+
+            </div>
+            <!--餐厅介绍结束-->
+        </div>
+    </div>
+</script>
