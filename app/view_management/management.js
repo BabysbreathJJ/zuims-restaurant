@@ -138,7 +138,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
     }])
     .controller('ManagementCtrl', function ($scope, $location, $anchorScroll, ManageService, ngDialog) {
         if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
-            //alert($location.host());
             window.location = "/";
         }
         ManageService.getRestaurantInfo($.cookie("restaurantId"))
