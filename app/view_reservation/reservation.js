@@ -58,6 +58,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
     }])
     .controller("ReservationCtrl", ["$scope", "Notification", "ngDialog", "OrderService", "$location", function ($scope, Notification, ngDialog, OrderService, $location) {
 
+        alert($.cookie("restaurantId"));
         if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == "" || $.cookie("restaurantId" == undefined)) {
             //alert($location.host());
             window.location = "/";
