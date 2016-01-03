@@ -18,7 +18,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                     var imageList = angular.element(document.querySelector('#d-img'));
                     imageList.attr("src", attr.src);
                     scope.$apply(function () {
-                        console.log(attr.description);
                         var description = angular.element(document.querySelector('#description'));
                         description.text(attr.description);
                     });
@@ -77,6 +76,13 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
             });
         };
 
+        var getChartInfoRequest = function (id, date) {
+            return $http({
+                method: "GET",
+                url: restaurantBaseUrl + '/order/orderCountInfo?restaurantId=' + id + '&date=' + date,
+            });
+        };
+
         var updateLinkmanInfoRequest = function (linkmanInfo) {
             return $http({
                 method: "POST",
@@ -106,6 +112,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         };
 
         return {
+            getChartInfo: function (id, date) {
+                return getChartInfoRequest(id, date);
+            },
             uploadHomePagePic: function (imageInfo) {
                 return uploadHomePagePicRequest(imageInfo);
             },
@@ -304,6 +313,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
 
 
         $scope.updateContactInfo = function () {
+            $scope.newContact = $scope.contact;
             for (var i = 0; i < $scope.contact.length; i++) {
                 $scope.contact[i].restaurantId = parseInt($.cookie("restaurantId"));
                 if (i == $scope.selectContact)
@@ -311,31 +321,31 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                 else
                     $scope.contact[i].priority = 2;
                 delete $scope.contact[i].linkmanId;
+
+                if ($scope.contact[i].linkmanPhone == "" || $scope.contact[i].linkmanName == "" || $scope.contact[i].linkmanEmail == "") {
+                    $scope.newContact.splice(i, 1);
+                }
             }
 
-            console.log($scope.contact.length);
-            console.log($scope.contact);
-            if($scope.contact.length < 2)
-            {
-                alert("至少填写两位联系人信息!");
+            console.log($scope.newContact);
+            if ($scope.newContact.length < 2) {
+                alert("至少填写两位联系人详细信息!");
                 return;
             }
 
-            //ManageService.updateLinkmanInfo($scope.contact)
-            //    .success(function (data) {
-            //        alert("保存联系人信息成功!");
-            //    });
+            ManageService.updateLinkmanInfo($scope.contact)
+                .success(function (data) {
+                    alert("保存联系人信息成功!");
+                });
         };
 
     })
     .controller('BasicInfoCtrl', function ($scope, ManageService) {
 
         $scope.saveBasicInfo = function () {
-            console.log($scope.basicInfo.discountType);
             $scope.temp = [];
             $scope.temp.push($scope.basicInfo.discountType);
             $scope.basicInfo.discountType = $scope.temp;
-            console.log($scope.basicInfo);
             ManageService.updateBasicInfo($scope.basicInfo)
                 .success(function (data) {
                     alert("信息保存成功!");
@@ -345,7 +355,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
     .controller('PersistInfoCtrl', function ($scope, ManageService) {
 
         $scope.savePersistInfo = function () {
-            console.log($scope.persistInfo);
 
             $scope.newPersistInfo = {
                 "persistTable": $scope.persistInfo.persistTable,
@@ -359,14 +368,14 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         };
 
     })
-    .controller('ChartCtrl', function ($scope, $timeout) {
+    .controller('ChartCtrl', function ($scope, $timeout, ManageService) {
 
         $scope.options = {
             tooltipEvents: [],
             showTooltips: true,
             tooltipCaretSize: 0,
             tooltipTemplate: function (label) {
-                return "￥" + getTotalSales(label.value);
+                return "￥" + getTotalSales(label.label);
             },
             onAnimationComplete: function () {
                 this.showTooltip(this.datasets[0].points, true);
@@ -424,27 +433,81 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         };
 
         $scope.date = new Date();
+        $scope.year = $scope.date.getFullYear();
         $scope.initialMonth = $scope.date.getMonth();
 
 
         $scope.month = $scope.ChartDate.getMonth($scope.initialMonth);
         $scope.labels = $scope.ChartDate.getDay($scope.initialMonth);
 
-
-        $scope.series = ['预定量'];
-        $scope.data = [
-            [65, 50, 80, 81, 56, 55]
-        ];
-
-        function getTotalSales(value) {
-            return parseInt(value) * 10;
+        function formatDate() {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            if (month < 10)
+                month = '0' + month;
+            if (day < 10)
+                day = '0' + day;
+            var formatDate = year + '-' + month + '-' + day;
+            return formatDate;
         }
 
-        // Simulate async data update
-        $timeout(function () {
-            $scope.data = [
-                [28, 48, 40, 19, 86, 27, 90]
-            ];
-        }, 3000);
+        $scope.queryDate = formatDate();
+
+        function getDateDay(inputDate) {
+            var day = inputDate.split('-')[2];
+            if (day[0] == '0')
+                day = parseInt(day[1]);
+            else day = parseInt(day);
+            return day;
+        }
+
+        $scope.data = [];
+        $scope.totalSale = [];
+        $scope.firstData = [];
+
+        ManageService.getChartInfo($.cookie('restaurantId'), $scope.queryDate)
+            .success(function (data) {
+
+                var now = new Date();
+                var today = now.getDate();
+                //var today = '16';
+
+                //循环得到具体是几号
+                for (var j = 0; j < data.length; j++) {
+                    data[j].indexDay = getDateDay(data[j].dorderDate);
+                }
+
+                //循环将两个数组(销售量和销售金额)初始化
+                for (var i = 0; i < today; i++) {
+                    $scope.firstData[i] = 0;
+                    $scope.totalSale[i] = 0;
+                }
+
+                //循环将指定是几号的信息进行填充
+                for (var h = 0; h < data.length; h++) {
+                    $scope.firstData[data[h].indexDay-1] = data[h].dorderNum;
+                    $scope.totalSale[data[h].indexDay-1] = data[h].income;
+                }
+
+                $scope.data[0] = $scope.firstData;
+
+            });
+
+
+        $scope.series = ['预定量'];
+
+
+        function getTotalSales(value) {
+            return $scope.totalSale[value-1];
+        }
+
+        //// Simulate async data update
+        //$timeout(function () {
+        //    $scope.data = [
+        //        [28, 48, 40, 19, 86, 27, 90]
+        //    ];
+        //}, 3000);
 
     });

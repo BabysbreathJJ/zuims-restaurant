@@ -40,7 +40,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
         var acceptOrderRequest = function (orderId, opt) {
             return $http({
                 method: 'GET',
-                url: restaurantBaseUrl + '/order/comfirmOrder?orderId=' + orderId + "&opt=" + opt
+                url: restaurantBaseUrl + '/order/confirmOrder?orderId=' + orderId + "&opt=" + opt
             });
         };
         return {
@@ -67,7 +67,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
 
         OrderService.getOrderInfo($.cookie("restaurantId"))
             .success(function (data) {
-                console.log("所有数据---" + data);
+                //console.log("所有数据---" + data);
                 $scope.myNotifications = [];
                 $scope.removeIndex = [];
                 for (var i = 0; i < data.length; i++) {
@@ -80,17 +80,17 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                         data[i].gender = "男";
                     }
                     data[i].orderDate = dateTime[0];
-                    data[i].orderTimer = dateTime[1];
+                    data[i].orderTimer = dateTime[1].substr(0,5);
 
                     if (data[i].state == "已完成") {
                         data[i].orderHandled = true;
-                        console.log("已完成——" + data[i]);
+                        //console.log("已完成——" + data[i]);
                     }
                     else if (data[i].state == "未确认") {
                         var index = data.indexOf(data[i]);
                         $scope.myNotifications.push(data[i]);
                         $scope.removeIndex.push(index);
-                        console.log("未确认——" + data[i]);
+                        //console.log("未确认——" + data[i]);
                         continue;
                     }
                     else if (data[i].state == "已拒绝") {
@@ -98,7 +98,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                     }
                     else {
                         data[i].orderHandled = false;
-                        console.log("未完成-" + data[i].orderHandled);
+                        //console.log("未完成-" + data[i].orderHandled);
                     }
 
                     $scope.rowCollection.push(data[i]);
@@ -127,7 +127,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             var index = $scope.rowCollection.indexOf(row);
             if (index !== -1) {
                 $scope.rowCollection.splice(index, 1);
-                console.log($scope.rowCollection);
+                //console.log($scope.rowCollection);
             }
             OrderService.updateOrderState(row.orderId)
                 .success(function (data) {
@@ -142,7 +142,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
         $scope.notifications = [];
         $scope.notificationNum = 1;
         $scope.close = function () {
-            console.log($scope.notifications.length);
+            //console.log($scope.notifications.length);
             $scope.notifications[$scope.notifications.length - 1].then(function (notification) {
                 notification.kill(true);
                 $scope.notificationNum--;
@@ -190,7 +190,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             //else{
             //    newScope.gender = "男";
             //}
-            console.log(newScope.gender);
+            //console.log(newScope.gender);
             newScope.cancel = function () {
                 //发送请求,将订单ID作为参数,取消订单的接口
                 OrderService.acceptOrder(order.orderId, 0)
@@ -200,7 +200,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                         data.orderTimer = dateTime[1];
                         data.orderHandled = true;
                         data.state = "已拒绝";
-                        console.log("已拒绝——" + data);
+                        //console.log("已拒绝——" + data);
                         $scope.rowCollection.push(data);
                         newScope.notification.then(function (notification) {
                             notification.kill(true);
