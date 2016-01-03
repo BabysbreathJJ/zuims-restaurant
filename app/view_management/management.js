@@ -80,7 +80,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         var updateLinkmanInfoRequest = function (linkmanInfo) {
             return $http({
                 method: "POST",
-                url: restaurantBaseUrl + '/restaurant/linkman/add',
+                url: restaurantBaseUrl + '/restaurant/linkman/update',
                 data: linkmanInfo,
                 dataType: {'Content-Type': 'application/json;charset=UTF-8'},
                 crossDomain: true
@@ -294,18 +294,37 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
     .controller('ContactCtrl', function ($scope, ManageService) {
         ManageService.getLinkmanInfo($.cookie("restaurantId"))
             .success(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].priority == 1) {
+                        $scope.selectContact = i;
+                    }
+                }
                 $scope.contact = data;
             });
 
+
         $scope.updateContactInfo = function () {
             for (var i = 0; i < $scope.contact.length; i++) {
-                $scope.contact[i].restaurantId = $.cookie("restaurantId");
+                $scope.contact[i].restaurantId = parseInt($.cookie("restaurantId"));
+                if (i == $scope.selectContact)
+                    $scope.contact[$scope.selectContact].priority = 1;
+                else
+                    $scope.contact[i].priority = 2;
+                delete $scope.contact[i].linkmanId;
             }
+
+            console.log($scope.contact.length);
             console.log($scope.contact);
-            ManageService.updateLinkmanInfo($scope.contact)
-                .success(function (data) {
-                    alert("保存联系人信息成功!");
-                });
+            if($scope.contact.length < 2)
+            {
+                alert("至少填写两位联系人信息!");
+                return;
+            }
+
+            //ManageService.updateLinkmanInfo($scope.contact)
+            //    .success(function (data) {
+            //        alert("保存联系人信息成功!");
+            //    });
         };
 
     })
@@ -350,25 +369,74 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                 return "￥" + getTotalSales(label.value);
             },
             onAnimationComplete: function () {
-                //console.log(this.datasets[0]);
                 this.showTooltip(this.datasets[0].points, true);
             }
         };
 
-        $scope.month = "十二月";
-        $scope.labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
+        $scope.ChartDate = {
+            getDay: function (month) {
+                if (month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9 || month == 11) {
+                    return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
+                }
+                else if (month == 1) {
+                    var date = new Date();
+                    var year = date.getFullYear();
+                    if ((year % 100 !== 0 && year % 4 == 0) || (year % 100 == 0 && year % 400 == 0))
+                        return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"];
+                    else {
+                        return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28"];
+                    }
+                }
+                else {
+                    return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"];
+                }
+
+            },
+            getMonth: function (month) {
+                switch (month) {
+                    case 0 :
+                        return "一月";
+                    case 1:
+                        return "二月";
+                    case 2:
+                        return "三月";
+                    case 3:
+                        return "四月";
+                    case 4:
+                        return "五月";
+                    case 5:
+                        return "六月";
+                    case 6:
+                        return "七月";
+                    case 7:
+                        return "八月";
+                    case 8:
+                        return "九月";
+                    case 9:
+                        return "十月";
+                    case 10:
+                        return "十一月";
+                    case 11:
+                        return "十二月";
+                }
+            }
+
+        };
+
+        $scope.date = new Date();
+        $scope.initialMonth = $scope.date.getMonth();
+
+
+        $scope.month = $scope.ChartDate.getMonth($scope.initialMonth);
+        $scope.labels = $scope.ChartDate.getDay($scope.initialMonth);
+
+
         $scope.series = ['预定量'];
         $scope.data = [
             [65, 50, 80, 81, 56, 55]
         ];
 
-
-        $scope.totals = [
-            [2000, 3000, 4000, 2000, 4000, 5000]
-        ];
-
         function getTotalSales(value) {
-            //console.log(value);
             return parseInt(value) * 10;
         }
 
