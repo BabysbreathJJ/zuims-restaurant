@@ -142,7 +142,7 @@
                             <div class="croppedPic" style="display: none"><img ng-src="{{myRecommendCroppedPic}}"/>
                             </div>
                             <div class="picRecommendDescription">
-                                <input class="form-control" type="text" placeholder="图片描述,限20个字"
+                                <input class="form-control" type="text" placeholder="图片描述,限20字,与图片同时显示在用户手机上"
                                        ng-model="picDescription"/>
                             </div>
                             <div class="image-upload">
@@ -178,7 +178,7 @@
                             <!--<div>图片预览:</div>-->
                             <div class="croppedPic" style="display: none"><img ng-src="{{myDetailCroppedPic}}"/></div>
                             <div class="picDetailDescription">
-                                <input class="form-control" type="text" placeholder="图片描述,限20个字"
+                                <input class="form-control" type="text" placeholder="图片描述,限20字,与图片同时显示在用户手机上"
                                        ng-model="picDescription"/>
                             </div>
                             <div class="image-upload">
@@ -191,9 +191,12 @@
                             </div>
                         </div>
                         <div class="image-upload" ng-hide="detailPicShow">
-                            <a href="javascript:;" class="file"><span class="glyphicon glyphicon-picture"></span>选择图片
-                                <input type="file" accept="image/*" name="detail" id="fileInputDetail">
+                            <a href="javascript:;" class="file"><span
+                                    class="glyphicon glyphicon-picture"></span>选择图片
+                                <input type="file" accept="image/*" name="detail" id="fileInputDetail"
+                                >
                             </a>
+
                             <a href="javascript:;" class="file btn-warning" ng-click="previewDetail()"><span
                                     class="glyphicon glyphicon-search"></span>餐厅详细图文信息预览
                             </a>
@@ -289,6 +292,7 @@
             <!--餐厅登录密码修改开始-->
             <div ng-controller="PwdCtrl">
                 <h4>登录密码修改</h4>
+
                 <div class="changePwd">
                     旧密码:<input type="password" class="pwd-input" ng-model="oldPwd"/>
                     新密码:<input type="password" class="pwd-input" ng-model="newPwd"/>
@@ -409,3 +413,22 @@
         </div>
     </div>
 </script>
+
+
+<!--<script type="text/ng-template" id="deleteDetailPic.html">-->
+<!--&lt;!&ndash;内容开始&ndash;&gt;-->
+<!--<div class="pd15 mt70" style="margin-top: 20px">-->
+<!--<div class="border border-r-5 bg-white padding">-->
+<!--<div class="pos-r">-->
+<!--<div ng-repeat="detail in details" style="position: relative">-->
+
+<!--<img src="{{detail.picname}}" class="per100">-->
+
+<!--<div class="pos-a tc per100 bottom20">-->
+<!--<p class="bg-t display-ib per90 ht40 l-ht40 font-white">{{detail.introduction}}</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</script>-->

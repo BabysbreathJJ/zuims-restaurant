@@ -226,7 +226,13 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         $scope.uploadPic = function () {
             $scope.begin = $scope.myRecommendCroppedPic.indexOf("base64") + 7;
             $scope.myUploadPic = $scope.myRecommendCroppedPic.substr($scope.begin);
-            //alert(typeof($.cookie("restaurantId")));
+
+
+            if ($scope.picDescription.length > 20) {
+                alert('图片描述不能超过20个字!');
+                return;
+            }
+
             $scope.uploadPicInfo = {
                 "imageValue": $scope.myUploadPic,
                 "restaurantId": parseInt($.cookie("restaurantId")),
@@ -245,34 +251,54 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         $scope.removePic = function () {
             $scope.homePageShow = false;
             $scope.myRecommendImage = '';
+            $scope.picDescription='';
             $scope.myRecommendCroppedPic = '';
 
         };
 
     })
-    .controller('ImageDetailCtrl', function ($scope, ManageService) {
+    .controller('ImageDetailCtrl', function ($scope, ManageService, ngDialog) {
 
         $scope.myDetailImage = '';
         $scope.myDetailCroppedImage = '';
         $scope.detailPicShow = false;
 
+        //详情图文信息预览
+        ManageService.getDetail($.cookie("restaurantId"))
+            .success(function (data) {
+                $scope.details = data;
+            });
 
         //详情图文信息预览
         $scope.previewDetail = function () {
-            ManageService.getDetail($.cookie("restaurantId"))
-                .success(function (data) {
-                    $scope.details = data;
-                    $scope.discount = true;
-                    $scope.description = data[0].introduction;
-                    ngDialog.open({
-                        templateUrl: 'detailPic.html',
-                        scope: $scope
-                    });
-                });
+            $scope.discount = true;
+            $scope.description = $scope.details[0].introduction;
+            console.log($scope.details);
+            $scope.picLen = $scope.details.length;
+            if ($scope.picLen > 5)
+                $scope.details = $scope.details.slice(-5);
+            ngDialog.open({
+                templateUrl: 'detailPic.html',
+                scope: $scope
+            });
         };
 
 
+        //$scope.selectDetailPic = function(){
+        //    if ($scope.details.length > 5) {
+        //        ngDialog.open({
+        //            templateUrl: 'deleteDetailPic.html',
+        //            scope: $scope
+        //        });
+        //        return;
+        //    }
+        //    else{
+        //        angular.element(document.querySelector('#fileInputDetail')).click();
+        //    }
+        //};
+
         var handleFileSelect = function (evt) {
+
             var target = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
 
             var file = target.files[0];
@@ -291,11 +317,18 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         $scope.uploadPic = function () {
             $scope.begin = $scope.myDetailCroppedPic.indexOf("base64") + 7;
             $scope.myUploadPic = $scope.myDetailCroppedPic.substr($scope.begin);
+
+            if ($scope.picDescription.length > 20) {
+                alert('图片描述不能超过20个字!');
+                return;
+            }
+
             $scope.uploadPicInfo = {
                 "imageValue": $scope.myUploadPic,
                 "restaurantId": parseInt($.cookie("restaurantId")),
                 "pictureIntro": $scope.picDescription
             };
+
             $scope.uploadInfo = JSON.stringify($scope.uploadPicInfo);
             //alert($scope.uploadInfo);
             ManageService.uploadDetailPic($scope.uploadInfo)
@@ -310,6 +343,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         $scope.removePic = function () {
             $scope.myDetailImage = '';
             $scope.myDetailCroppedImage = '';
+            $scope.picDescription = '';
             $scope.detailPicShow = false;
         };
 
@@ -319,7 +353,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         function checkMobile(phone) {
             var sMobile = phone;
             if (!(/^1\d{10}$/.test(sMobile))) {
-                alert(sMobile+"不是完整的11位手机号或者正确的手机号");
+                alert(sMobile + "不是完整的11位手机号或者正确的手机号");
                 return false;
             }
             return true;
@@ -330,7 +364,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
             //对电子邮件的验证
             var myreg = /^[0-9a-z][_.0-9a-z-]{0,31}@([0-9a-z][0-9a-z-]{0,30}[0-9a-z]\.){1,4}[a-z]{2,4}$/;
             if (!myreg.test(temp)) {
-                alert('提示\n请输入有效的邮箱址！\n'+ temp+'不是正确的邮箱地址');
+                alert('提示\n请输入有效的邮箱址！\n' + temp + '不是正确的邮箱地址');
                 return false;
             }
             return true;
@@ -362,11 +396,11 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                 }
 
                 //邮箱验证
-                if(!checkEMail($scope.contact[i].linkmanEmail))
-                return;
+                if (!checkEMail($scope.contact[i].linkmanEmail))
+                    return;
                 //手机号码验证
-                if(!checkMobile($scope.contact[i].linkmanPhone))
-                return;
+                if (!checkMobile($scope.contact[i].linkmanPhone))
+                    return;
             }
 
             if ($scope.newContact.length < 2) {
