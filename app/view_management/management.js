@@ -189,9 +189,15 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         $scope.previewHomePage = function () {
             ManageService.getHomePage($.cookie("restaurantId"))
                 .success(function (data) {
+
                     $scope.restaurantInfo.homePagePic = data.picname;
                     $scope.restaurantInfo.restaurantTeles = $scope.restaurantInfo.restaurantTele.split(" ");
                     $scope.description = data.introduction;
+
+                    if (data.picname == "" || data.picname == null)
+                        $scope.restaurantInfo.homePagePic = "http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture.jpg";
+
+
                     $scope.discount = true;
                     ngDialog.open({
                         templateUrl: 'homePic.html',
@@ -251,7 +257,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         $scope.removePic = function () {
             $scope.homePageShow = false;
             $scope.myRecommendImage = '';
-            $scope.picDescription='';
+            $scope.picDescription = '';
             $scope.myRecommendCroppedPic = '';
 
         };
@@ -271,10 +277,14 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
 
         //详情图文信息预览
         $scope.previewDetail = function () {
-            $scope.discount = true;
-            $scope.description = $scope.details[0].introduction;
-            console.log($scope.details);
             $scope.picLen = $scope.details.length;
+            if ($scope.picLen > 0) {
+                $scope.discount = true;
+                $scope.description = $scope.details[0].introduction;
+            }
+            else {
+                $scope.details[0].picname = 'http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture2.jpg';
+            }
             if ($scope.picLen > 5)
                 $scope.details = $scope.details.slice(-5);
             ngDialog.open({

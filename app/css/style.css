@@ -797,12 +797,12 @@ ul li, ol li {
 
 /*修改密码*/
 .changePwd {
-    width:90%;
+    width: 90%;
     /*text-align: center;*/
     margin: 0 auto;
 }
 
-.pwd-input{
+.pwd-input {
     border-radius: 3px;
     margin-right: 10px;
     margin-left: 5px;
@@ -810,4 +810,16 @@ ul li, ol li {
     height: 30px;
     padding: 5px;
 
+}
+
+.question {
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.answer {
+    margin: 0 20px;
+    margin-bottom: 10px;
 }
