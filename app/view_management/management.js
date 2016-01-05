@@ -201,20 +201,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         };
 
 
-        //详情图文信息预览
-        $scope.previewDetail = function () {
-            ManageService.getDetail($.cookie("restaurantId"))
-                .success(function (data) {
-                    $scope.details = data;
-                    $scope.discount = true;
-                    $scope.description = data[0].introduction;
-                    ngDialog.open({
-                        templateUrl: 'detailPic.html',
-                        scope: $scope
-                    });
-                });
-        };
-
     })
     .controller('ImageRecommendCtrl', function ($scope, ManageService) {
 
@@ -269,6 +255,22 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         $scope.myDetailImage = '';
         $scope.myDetailCroppedImage = '';
         $scope.detailPicShow = false;
+
+
+        //详情图文信息预览
+        $scope.previewDetail = function () {
+            ManageService.getDetail($.cookie("restaurantId"))
+                .success(function (data) {
+                    $scope.details = data;
+                    $scope.discount = true;
+                    $scope.description = data[0].introduction;
+                    ngDialog.open({
+                        templateUrl: 'detailPic.html',
+                        scope: $scope
+                    });
+                });
+        };
+
 
         var handleFileSelect = function (evt) {
             var target = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
