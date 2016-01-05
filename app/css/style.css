@@ -748,36 +748,66 @@ ul li, ol li {
 .per90 {
     width: 90%;
 }
+
 .l-ht40 {
     line-height: 40px;
 }
+
 .ht40 {
     height: 40px;
 }
+
 .display-ib {
     display: inline-block;
 }
+
 .mb16 {
     margin-bottom: 16px !important;
 }
+
 .border {
     border: 1px solid #ccc;
 }
+
 .pl5 {
     padding-left: 5px !important;
 }
+
 .pr5 {
     padding-right: 5px !important;
 }
+
 .ml10 {
     margin-left: 10px !important;
 }
+
 .l-ht20 {
     line-height: 20px;
 }
+
 .ht20 {
     height: 20px;
 }
+
 .display-ib {
     display: inline-block;
+}
+
+/*图文信息展示结束*/
+
+/*修改密码*/
+.changePwd {
+    width:90%;
+    /*text-align: center;*/
+    margin: 0 auto;
+}
+
+.pwd-input{
+    border-radius: 3px;
+    margin-right: 10px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    height: 30px;
+    padding: 5px;
+
 }

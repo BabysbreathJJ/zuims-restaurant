@@ -111,7 +111,19 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
             });
         };
 
+        var updatePwdRequest = function (pwdInfo) {
+            return $http({
+                method: "POST",
+                url: restaurantBaseUrl + '/restaurant/changepwd',
+                data: pwdInfo,
+                crossDomain: true
+            });
+        };
+
         return {
+            updatePwd: function (pwdInfo) {
+                return updatePwdRequest(pwdInfo);
+            },
             getChartInfo: function (id, date) {
                 return getChartInfoRequest(id, date);
             },
@@ -301,6 +313,27 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
 
     })
     .controller('ContactCtrl', function ($scope, ManageService) {
+
+        function checkMobile(phone) {
+            var sMobile = phone;
+            if (!(/^1\d{10}$/.test(sMobile))) {
+                alert(sMobile+"不是完整的11位手机号或者正确的手机号");
+                return false;
+            }
+            return true;
+        }
+
+        function checkEMail(email) {
+            var temp = email;
+            //对电子邮件的验证
+            var myreg = /^[0-9a-z][_.0-9a-z-]{0,31}@([0-9a-z][0-9a-z-]{0,30}[0-9a-z]\.){1,4}[a-z]{2,4}$/;
+            if (!myreg.test(temp)) {
+                alert('提示\n请输入有效的邮箱址！\n'+ temp+'不是正确的邮箱地址');
+                return false;
+            }
+            return true;
+        }
+
         ManageService.getLinkmanInfo($.cookie("restaurantId"))
             .success(function (data) {
                 for (var i = 0; i < data.length; i++) {
@@ -325,13 +358,20 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                 if ($scope.contact[i].linkmanPhone == "" || $scope.contact[i].linkmanName == "" || $scope.contact[i].linkmanEmail == "") {
                     $scope.newContact.splice(i, 1);
                 }
+
+                //邮箱验证
+                if(!checkEMail($scope.contact[i].linkmanEmail))
+                return;
+                //手机号码验证
+                if(!checkMobile($scope.contact[i].linkmanPhone))
+                return;
             }
 
-            console.log($scope.newContact);
             if ($scope.newContact.length < 2) {
                 alert("至少填写两位联系人详细信息!");
                 return;
             }
+
 
             ManageService.updateLinkmanInfo($scope.contact)
                 .success(function (data) {
@@ -365,6 +405,41 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                 .success(function (data) {
                     alert("自动接单设置保存成功!");
                 });
+        };
+
+    })
+    .controller('PwdCtrl', function ($scope, ManageService) {
+
+
+        $scope.updatePwd = function () {
+            if ($scope.newPwd !== $scope.newPwdRepeat) {
+                console.log($scope.newPwd);
+                console.log($scope.newPwdRepeat);
+                alert("两次新密码输入不一致!");
+                return;
+            }
+
+            $scope.pwdInfo = {
+                'restaurantId': parseInt($.cookie('restaurantId')),
+                'newpwd': $scope.newPwd,
+                'oldpwd': $scope.oldPwd
+            };
+
+            ManageService.updatePwd($scope.pwdInfo)
+                .success(function (data) {
+                    if (data.success == true) {
+                        alert("密码修改成功!");
+                        $scope.oldPwd = "";
+                        $scope.newPwd = "";
+                        $scope.newPwdRepeat = "";
+                    }
+
+
+                })
+                .error(function (error) {
+                    alert(error.message);
+                })
+            ;
         };
 
     })
@@ -487,8 +562,8 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
 
                 //循环将指定是几号的信息进行填充
                 for (var h = 0; h < data.length; h++) {
-                    $scope.firstData[data[h].indexDay-1] = data[h].dorderNum;
-                    $scope.totalSale[data[h].indexDay-1] = data[h].income;
+                    $scope.firstData[data[h].indexDay - 1] = data[h].dorderNum;
+                    $scope.totalSale[data[h].indexDay - 1] = data[h].income;
                 }
 
                 $scope.data[0] = $scope.firstData;
@@ -500,7 +575,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
 
 
         function getTotalSales(value) {
-            return $scope.totalSale[value-1];
+            return $scope.totalSale[value - 1];
         }
 
         //// Simulate async data update

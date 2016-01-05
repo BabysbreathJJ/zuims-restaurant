@@ -142,7 +142,8 @@
                             <div class="croppedPic" style="display: none"><img ng-src="{{myRecommendCroppedPic}}"/>
                             </div>
                             <div class="picRecommendDescription">
-                                <input class="form-control" type="text" placeholder="图片描述,限20个字" ng-model="picDescription"/>
+                                <input class="form-control" type="text" placeholder="图片描述,限20个字"
+                                       ng-model="picDescription"/>
                             </div>
                             <div class="image-upload">
                                 <a href="javascript:;" class="file" ng-click="uploadPic()"><span
@@ -177,7 +178,8 @@
                             <!--<div>图片预览:</div>-->
                             <div class="croppedPic" style="display: none"><img ng-src="{{myDetailCroppedPic}}"/></div>
                             <div class="picDetailDescription">
-                                <input class="form-control" type="text" placeholder="图片描述,限20个字" ng-model="picDescription"/>
+                                <input class="form-control" type="text" placeholder="图片描述,限20个字"
+                                       ng-model="picDescription"/>
                             </div>
                             <div class="image-upload">
                                 <a href="javascript:;" class="file" ng-click="uploadPic()"><span
@@ -231,7 +233,7 @@
             <!--自动接单设置结束-->
 
             <!--餐厅联系人设置开始-->
-            <div class="contacts" ng-controller="ContactCtrl" >
+            <div class="contacts separator" ng-controller="ContactCtrl">
                 <h4>餐厅联系人设置 <span class="explain"
                                   style="padding-left: 20px;"><i>至少两位联系人,请填写有效联系方式,否则系统无法正常传递预定信息</i></span>
                 </h4>
@@ -241,8 +243,10 @@
                         联系人1:
                     </div>
                     <div class="contact-info">
-                        姓名:<input type="text" class="contact-input" ng-model="contact[0].linkmanName" style="width: 100px">
-                        手机号:<input type="tel" class="contact-input" ng-model="contact[0].linkmanPhone" style="width: 120px">
+                        姓名:<input type="text" class="contact-input" ng-model="contact[0].linkmanName"
+                                  style="width: 100px">
+                        手机号:<input type="tel" class="contact-input" ng-model="contact[0].linkmanPhone"
+                                   style="width: 120px">
                         Email:<input type="email" class="contact-input" ng-model="contact[0].linkmanEmail">
                         职位:<input type="text" class="contact-input" ng-model="contact[0].position" style="width: 80px">
                         <input type="radio" name="contact0" ng-model="selectContact" value="0">预定信息优先通知给他/她
@@ -252,8 +256,10 @@
                         联系人2:
                     </div>
                     <div class="contact-info">
-                        姓名:<input type="text" class="contact-input" ng-model="contact[1].linkmanName" style="width: 100px">
-                        手机号:<input type="tel" class="contact-input" ng-model="contact[1].linkmanPhone" style="width: 120px">
+                        姓名:<input type="text" class="contact-input" ng-model="contact[1].linkmanName"
+                                  style="width: 100px">
+                        手机号:<input type="tel" class="contact-input" ng-model="contact[1].linkmanPhone"
+                                   style="width: 120px">
                         Email:<input type="email" class="contact-input" ng-model="contact[1].linkmanEmail">
                         职位:<input type="text" class="contact-input" ng-model="contact[1].position" style="width: 80px">
                         <input type="radio" name="contact1" ng-model="selectContact" value="1">预定信息优先通知给他/她
@@ -263,9 +269,12 @@
                         联系人3:
                     </div>
                     <div class="contact-info">
-                        姓名:<input type="text" class="contact-input" ng-model="contact[2].linkmanName" style="width: 100px">
-                        手机号:<input type="tel" class="contact-input" ng-model="contact[2].linkmanPhone" style="width: 120px">
+                        姓名:<input type="text" class="contact-input" ng-model="contact[2].linkmanName"
+                                  style="width: 100px">
+                        手机号:<input type="tel" class="contact-input" ng-model="contact[2].linkmanPhone"
+                                   style="width: 120px">
                         Email:<input type="email" class="contact-input" ng-model="contact[2].linkmanEmail">
+
                         职位:<input type="text" class="contact-input" ng-model="contact[2].position" style="width: 80px">
                         <input type="radio" name="contact2" ng-model="selectContact" value="2">预定信息优先通知给他/她
                     </div>
@@ -277,6 +286,19 @@
                 </div>
             </div>
             <!--餐厅联系人设置结束-->
+            <!--餐厅登录密码修改开始-->
+            <div ng-controller="PwdCtrl">
+                <h4>登录密码修改</h4>
+                <div class="changePwd">
+                    旧密码:<input type="password" class="pwd-input" ng-model="oldPwd"/>
+                    新密码:<input type="password" class="pwd-input" ng-model="newPwd"/>
+                    重复新密码:<input type="password" class="pwd-input" ng-model="newPwdRepeat"/>
+                    <button style="margin-left: 10px" class="btn btn-warning" ng-click="updatePwd()"><span
+                            class="glyphicon glyphicon-ok"></span>修改密码
+                    </button>
+                </div>
+            </div>
+            <!--餐厅登录密码修改结束-->
 
         </div>
 
@@ -335,10 +357,11 @@
                 </div>
             </div>
             <!--图片列表开始-->
-            <div class="overflow-x-auto carousel" >
+            <div class="overflow-x-auto carousel">
                 <ul class="list-unstyled pr10 ht70 img-list mt10 pos-r overflow-h">
                     <li class="fl pl10 border-r-5" ng-repeat="detail in details">
-                        <img src="{{detail.picname}}" class="per100 small-pic" change-pic description="{{detail.introduction}}">
+                        <img src="{{detail.picname}}" class="per100 small-pic" change-pic
+                             description="{{detail.introduction}}">
                     </li>
                 </ul>
             </div>
@@ -382,6 +405,7 @@
 
             </div>
             <!--餐厅介绍结束-->
+
         </div>
     </div>
 </script>
