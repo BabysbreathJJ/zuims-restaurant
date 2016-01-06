@@ -195,10 +195,10 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                     $scope.description = data.introduction;
 
                     if (data.picname == "" || data.picname == null)
-                        $scope.restaurantInfo.homePagePic = "http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture.jpg";
+                        $scope.restaurantInfo.homePagePic = "http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture1.jpg";
 
 
-                    $scope.discount = true;
+                    $scope.discount = $scope.restaurantInfo.discountType == 'discount' ? true : false;
                     ngDialog.open({
                         templateUrl: 'homePic.html',
                         scope: $scope
@@ -279,10 +279,11 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         $scope.previewDetail = function () {
             $scope.picLen = $scope.details.length;
             if ($scope.picLen > 0) {
-                $scope.discount = true;
+                $scope.discount = $scope.basicInfo.discountType == 'discount' ? true : false;
                 $scope.description = $scope.details[0].introduction;
             }
             else {
+                $scope.details = [];
                 $scope.details[0].picname = 'http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture2.jpg';
             }
             if ($scope.picLen > 5)
@@ -292,20 +293,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                 scope: $scope
             });
         };
-
-
-        //$scope.selectDetailPic = function(){
-        //    if ($scope.details.length > 5) {
-        //        ngDialog.open({
-        //            templateUrl: 'deleteDetailPic.html',
-        //            scope: $scope
-        //        });
-        //        return;
-        //    }
-        //    else{
-        //        angular.element(document.querySelector('#fileInputDetail')).click();
-        //    }
-        //};
 
         var handleFileSelect = function (evt) {
 
@@ -429,9 +416,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
     .controller('BasicInfoCtrl', function ($scope, ManageService) {
 
         $scope.saveBasicInfo = function () {
-            $scope.temp = [];
-            $scope.temp.push($scope.basicInfo.discountType);
-            $scope.basicInfo.discountType = $scope.temp;
             ManageService.updateBasicInfo($scope.basicInfo)
                 .success(function (data) {
                     alert("信息保存成功!");

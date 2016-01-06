@@ -302,8 +302,8 @@ h3.full-header {
 .cropAreaRecommend {
     background: #E4E4E4;
     overflow: hidden;
-    width: 350px;
-    height: 450px;
+    width: 318px;
+    height: 429px;
     margin: 0 auto;
 }
 
@@ -311,7 +311,7 @@ h3.full-header {
     background: #E4E4E4;
     overflow: hidden;
     width: 640px;
-    height: 360px;
+    height: 420px;
     margin: 0 auto;
 }
 

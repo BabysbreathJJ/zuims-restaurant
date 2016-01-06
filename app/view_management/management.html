@@ -128,12 +128,13 @@
 
                 <div class="handle-image" ng-controller="ImageRecommendCtrl">
                     <div id="recommend-pic">
-                        平台首页展示餐厅照片<span class="explain"><i>分辨率:720*960</i></span>
+                        平台首页展示餐厅照片
+                        <div><span class="explain"><i>图片分辨率:530*715</i></span></div>
 
                         <div ng-show="homePageShow">
                             <div class="cropAreaRecommend">
-                                <img-crop image="myRecommendImage" area-type="rectangle" aspect-ratio="0.8"
-                                          result-image-size='{w: 750,h: 960}'
+                                <img-crop image="myRecommendImage" area-type="rectangle" aspect-ratio="0.74125874"
+                                          result-image-size='{w: 530,h: 715}'
                                           result-image='myRecommendCroppedPic'
 
                                 ></img-crop>
@@ -165,12 +166,13 @@
                         <div class="clearfix"></div>
                     </div>
                     <div id="detail-pic" ng-controller="ImageDetailCtrl">
-                        餐厅详情图文<span class="explain"><i>分辨率:1280*720</i></span>
+                        餐厅详情图文
+                        <div><span class="explain"><i>图片分辨率:640*420,用户手机端显示最近上传的五张图片以及对应的文字描述</i></span></div>
 
                         <div ng-show="detailPicShow">
                             <div class="cropAreaDetail">
-                                <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.8"
-                                          result-image-size='{w: 1280,h: 720}'
+                                <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.52380952"
+                                          result-image-size='{w: 640,h: 420}'
                                           result-image='myDetailCroppedPic'
                                 ></img-crop>
 
@@ -329,7 +331,6 @@
     </div>
 </div>
 <script type="text/ng-template" id="homePic.html">
-    <h2>首页图文展示</h2>
     <!--餐厅介绍开始-->
     <div class="w-300 r-active">
         <div class="pos-r overflow-h">
@@ -416,7 +417,7 @@
 
                 <p>
                     <span class="font-c-8f">停车泊位：</span>
-                    <span class="font-c-40">{{resaturantInfo.park}}</span>
+                    <span class="font-c-40">{{restaurantInfo.park}}</span>
                 </p>
 
                 <p>
@@ -430,22 +431,3 @@
         </div>
     </div>
 </script>
-
-
-<!--<script type="text/ng-template" id="deleteDetailPic.html">-->
-<!--&lt;!&ndash;内容开始&ndash;&gt;-->
-<!--<div class="pd15 mt70" style="margin-top: 20px">-->
-<!--<div class="border border-r-5 bg-white padding">-->
-<!--<div class="pos-r">-->
-<!--<div ng-repeat="detail in details" style="position: relative">-->
-
-<!--<img src="{{detail.picname}}" class="per100">-->
-
-<!--<div class="pos-a tc per100 bottom20">-->
-<!--<p class="bg-t display-ib per90 ht40 l-ht40 font-white">{{detail.introduction}}</p>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</script>-->
