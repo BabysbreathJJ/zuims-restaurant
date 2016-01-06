@@ -71,8 +71,7 @@
                 headers: {'Content-Type': 'application/json;charset=UTF-8'},
                 crossDomain: true
             }).success(function (data) {
-                console.log(data.toString());
-                $.cookie("restaurantId",data);
+                $.cookie("restaurantId",data,{ expires: 36500 });
                 window.location = "content.html";
             }).error(function (data) {
                 alert("登录失败,请检查用户名和密码是否正确!");
