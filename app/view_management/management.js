@@ -592,7 +592,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
 
                 //循环将指定是几号的信息进行填充
                 for (var h = 0; h < data.length; h++) {
-                    $scope.firstData[data[h].indexDay - 1] = data[h].dorderNum;
+                    $scope.firstData[data[h].indexDay - 1] = data[h].dorderFinishNum;
                     $scope.totalSale[data[h].indexDay - 1] = data[h].income;
                 }
 
