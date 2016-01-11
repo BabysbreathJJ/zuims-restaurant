@@ -177,6 +177,12 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                 data.order.orderDate = data.order.orderTime.split(" ")[0];
                 data.order.orderTimer = data.order.orderTime.split(" ")[1].substr(0, 5);
                 data.order.orderHandled = false;
+                if (data.order.gender == 0) {
+                    data.order.gender = "女";
+                }
+                else {
+                    data.order.gender = "男";
+                }
                 $scope.rowCollection.push(data.order);
                 $scope.$apply();
             }
