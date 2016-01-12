@@ -277,21 +277,26 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
 
         //详情图文信息预览
         $scope.previewDetail = function () {
-            $scope.picLen = $scope.details.length;
-            if ($scope.picLen > 0) {
-                $scope.discount = $scope.basicInfo.discountType == 'discount' ? true : false;
-                $scope.description = $scope.details[0].introduction;
-            }
-            else {
-                $scope.details = [];
-                $scope.details[0].picname = 'http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture2.jpg';
-            }
-            if ($scope.picLen > 5)
-                $scope.details = $scope.details.slice(-5);
-            ngDialog.open({
-                templateUrl: 'detailPic.html',
-                scope: $scope
-            });
+            ManageService.getDetail($.cookie("restaurantId"))
+                .success(function (data) {
+                    $scope.details = data;
+
+                    $scope.picLen = $scope.details.length;
+                    if ($scope.picLen > 0) {
+                        $scope.discount = $scope.basicInfo.discountType == 'discount' ? true : false;
+                        $scope.description = $scope.details[0].introduction;
+                    }
+                    else {
+                        $scope.details = [];
+                        $scope.details[0].picname = 'http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture2.jpg';
+                    }
+                    if ($scope.picLen > 5)
+                        $scope.details = $scope.details.slice(-5);
+                    ngDialog.open({
+                        templateUrl: 'detailPic.html',
+                        scope: $scope
+                    });
+                });
         };
 
         var handleFileSelect = function (evt) {
