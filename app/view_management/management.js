@@ -282,6 +282,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                     $scope.details = data;
 
                     $scope.picLen = $scope.details.length;
+
+                    if ($scope.picLen > 5)
+                        $scope.details = $scope.details.slice(-5);
                     if ($scope.picLen > 0) {
                         $scope.discount = $scope.basicInfo.discountType == 'discount' ? true : false;
                         $scope.description = $scope.details[0].introduction;
@@ -290,8 +293,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                         $scope.details = [];
                         $scope.details[0].picname = 'http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture2.jpg';
                     }
-                    if ($scope.picLen > 5)
-                        $scope.details = $scope.details.slice(-5);
+
                     ngDialog.open({
                         templateUrl: 'detailPic.html',
                         scope: $scope
