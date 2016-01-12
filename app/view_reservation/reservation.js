@@ -229,6 +229,12 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                         data.orderDate = dateTime[0];
                         data.orderTimer = dateTime[1].substr(0, 5);
                         data.orderHandled = false;
+                        if (data.gender == 0) {
+                            data.gender = "女";
+                        }
+                        else {
+                            data.gender = "男";
+                        }
                         $scope.rowCollection.push(data);
                         newScope.notification.then(function (notification) {
                             notification.kill(true);
