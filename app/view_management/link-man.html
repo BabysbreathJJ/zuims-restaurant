@@ -1,0 +1,46 @@
+<div class="contacts-infos">
+    <div class="contact">
+        联系人1:
+    </div>
+    <div class="contact-info">
+        姓名:<input type="text" class="contact-input" ng-model="contact[0].linkmanName"
+                  style="width: 100px">
+        手机号:<input type="tel" class="contact-input" ng-model="contact[0].linkmanPhone"
+                   style="width: 120px">
+        Email:<input type="email" class="contact-input" ng-model="contact[0].linkmanEmail">
+        职位:<input type="text" class="contact-input" ng-model="contact[0].position" style="width: 80px">
+        <input type="radio" name="contact0" ng-model="selectContact" value="0">预定信息优先通知给他/她
+    </div>
+
+    <div class="contact">
+        联系人2:
+    </div>
+    <div class="contact-info">
+        姓名:<input type="text" class="contact-input" ng-model="contact[1].linkmanName"
+                  style="width: 100px">
+        手机号:<input type="tel" class="contact-input" ng-model="contact[1].linkmanPhone"
+                   style="width: 120px">
+        Email:<input type="email" class="contact-input" ng-model="contact[1].linkmanEmail">
+        职位:<input type="text" class="contact-input" ng-model="contact[1].position" style="width: 80px">
+        <input type="radio" name="contact1" ng-model="selectContact" value="1">预定信息优先通知给他/她
+    </div>
+
+    <div class="contact">
+        联系人3:
+    </div>
+    <div class="contact-info">
+        姓名:<input type="text" class="contact-input" ng-model="contact[2].linkmanName"
+                  style="width: 100px">
+        手机号:<input type="tel" class="contact-input" ng-model="contact[2].linkmanPhone"
+                   style="width: 120px">
+        Email:<input type="email" class="contact-input" ng-model="contact[2].linkmanEmail">
+
+        职位:<input type="text" class="contact-input" ng-model="contact[2].position" style="width: 80px">
+        <input type="radio" name="contact2" ng-model="selectContact" value="2">预定信息优先通知给他/她
+    </div>
+</div>
+<div class="save-btn">
+    <button class="btn btn-warning" ng-click="updateContactInfo()"><span
+            class="glyphicon glyphicon-ok"></span>保存餐厅联系人设置
+    </button>
+</div>

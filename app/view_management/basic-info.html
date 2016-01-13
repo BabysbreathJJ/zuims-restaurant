@@ -1,0 +1,73 @@
+<!--餐厅基本信息开始-->
+<div id="basic-info" class="separator" ng-controller="BasicInfoCtrl">
+    <h4>餐厅基本信息</h4>
+    <table class="table table-bordered" style="width: 90%; margin: 0px auto">
+        <tr>
+            <td width="10%">
+                餐厅所在地
+                <select class="form-control" ng-model="restaurantInfo.city">
+                    <option value="北京">北京</option>
+                    <option value="上海">上海</option>
+                    <option value="广州">广州</option>
+                </select>
+            </td>
+            <td width="30%">
+                <span>餐厅名称</span>
+                <input type="text" class="form-control" ng-model="basicInfo.restaurantName"></td>
+            <td>
+                餐厅类型
+                <select class="form-control" ng-model="basicInfo.restaurantType">
+                    <option value="自助餐">自助餐</option>
+                    <option value="下午茶">下午茶</option>
+                    <option value="大堂吧">大堂吧</option>
+                    <option value="商务套餐">商务套餐</option>
+                    <option value="酒廊">酒廊</option>
+                </select>
+            </td>
+            <td>
+                优惠类型
+                <select class="form-control" ng-model="basicInfo.discountType[0]">
+                    <option value="discount">三免一</option>
+                    <option value="none">暂无</option>
+                </select>
+            </td>
+            <td width="10%">
+                人均价格
+                <input class="form-control" type="number" ng-model="basicInfo.averagePrice">
+            </td>
+            <td>
+                免费泊车
+                <select class="form-control" ng-model="basicInfo.park">
+                    <option value="无停车位">无停车位</option>
+                    <option value="停车收费">停车收费</option>
+                    <option value="免费停车">免费停车</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered" style="width: 90%; margin: 0px auto;margin-bottom: 20px">
+        <tr>
+            <td colspan="3">
+                餐厅详细地址<span class="explain" style="padding-left: 10px"><i>城市不用重复填写</i></span>
+                <input type="datetime" class="form-control" placeholder="城市不用重复填写"
+                       ng-model="basicInfo.restaurantAddress" disabled/>
+            </td>
+
+            <td>餐厅电话<span class="explain" style="padding-left: 10px"><i>若有多个电话号码,用一个空格分开</i></span>
+                <input type="tel" class="form-control" ng-model="basicInfo.restaurantTele">
+            </td>
+            <td colspan="2">
+                营业时间<span class="explain" style="padding-left: 10px"><i>格式:
+                11:30-14:30,17:30-22:00</i></span>
+                <input type="text" class="form-control" ng-model="basicInfo.restaurantOpenTime">
+            </td>
+        </tr>
+
+    </table>
+
+    <div class="save-btn">
+        <button class="btn btn-warning" ng-click="saveBasicInfo()"><span
+                class="glyphicon glyphicon-ok"></span>保存餐厅基本信息
+        </button>
+    </div>
+</div>

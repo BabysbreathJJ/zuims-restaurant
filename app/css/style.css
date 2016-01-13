@@ -144,8 +144,8 @@ a.navbar-brand {
     display: block;
     float: right;
     width: 85%;
-    margin-right: 20px;
-    margin-top: 10px;
+    /*margin-right: 20px;*/
+    /*margin-top: 10px;*/
 }
 
 .left-block {
@@ -168,11 +168,11 @@ a.navbar-brand {
     list-style: none;
 }
 
-.menu li a {
+.menu li span {
     display: block;
     background: #52504b;
     color: #fff;
-    padding: 6px 0px 4px 8px;
+    padding: 10px 10px 14px 18px;
     font-family: 'Signika Negative', sans-serif;
     font-size: 16px;
     z-index: 10003;
@@ -180,9 +180,10 @@ a.navbar-brand {
     -webkit-transition: background 0.25s ease-out;
     -o-transition: background 0.25s ease-out;
     text-decoration: none;
+    cursor: pointer;
 }
 
-.menu li a:hover, .menu li a:active {
+.menu li span:hover, .menu li span:active {
     background: #ff6100;
     -webkit-transition: background 0.10s ease-in;
     -o-transition: background 0.10s ease-in;
@@ -190,6 +191,12 @@ a.navbar-brand {
 
 .menu li {
     position: relative;
+}
+
+.orange-sidebar {
+    background: #ff6100;
+    -webkit-transition: background 0.10s ease-in;
+    -o-transition: background 0.10s ease-in;
 }
 
 /*左边导航结束*/
@@ -204,29 +211,34 @@ a.navbar-brand {
     padding-left: 15px;
 }
 
-#info-management {
+.right-bg {
     margin: 20px 0;
-    margin-top: 10px;
     min-height: 300px;
-    height: auto;
     background-color: #FFFFFF;
     overflow: auto;
+}
+
+.incomplete {
+    background: orange;
+    color: white;
+}
+
+#info-management {
+    margin-top: 10px;
 }
 
 #data-statistics {
-    margin: 20px 0;
-    min-height: 300px;
-    background-color: #FFFFFF;
-    overflow: auto;
     margin-top: 0;
+    min-height: 995px;
 }
 
-#FAQ {
-    margin: 20px 0;
-    min-height: 300px;
-    background-color: #FFFFFF;
-    overflow: auto;
+#faq {
+
     margin-bottom: 70px;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    vertical-align: middle;
 }
 
 /*右边内容区域结束*/
@@ -336,18 +348,37 @@ h3.full-header {
 
 /*餐厅图文信息结束*/
 
-/*预订信息*/
+/*预定信息table开始*/
+
+#reservation-table {
+    margin: 20px 0;
+    min-height: 900px;
+    background-color: #FFFFFF;
+    overflow: auto;
+    margin-top: 0;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #FF7F00;
+    border-color: #d58512;
+}
+
+/*预定信息table结束*/
+/*预订信息图标*/
 .reservation-content {
-    width: 90%;
+    width: 99%;
     /*min-height: 700px;*/
     min-height: 100%;
     height: auto !important;
     height: 100%;
-    margin: 50px auto;
+    margin: 0 auto;
     background-color: #FFFFFF;
     overflow: auto;
     text-align: center;
-    padding-bottom: 60px;
+    /*padding-bottom: 60px;*/
     /*margin-top: 90px;*/
 
 }
@@ -436,7 +467,7 @@ h3.full-header {
 
 /*数据图表开始*/
 .reservation-chart {
-    min-height: 200px;
+    min-height: 700px;
     width: 95%;
     margin: 0 auto;
     margin-bottom: 30px;

@@ -85,6 +85,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                     if (data[i].state == "已完成") {
                         data[i].orderHandled = true;
                         //console.log("已完成——" + data[i]);
+
                     }
                     else if (data[i].state == "未确认") {
                         var index = data.indexOf(data[i]);
@@ -160,16 +161,16 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
 
 
         push.subscribe([$.cookie("restaurantId").toString()], function () {
-            console.log('订阅成功！');
+            //console.log('订阅成功！');
         });
 
         push.open(function () {
-            console.log('连接服务器成功，可以接收推送');
+            //console.log('连接服务器成功，可以接收推送');
         });
 
         // 监听推送消息
         push.on('message', function (data) {
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
             if (data.order.state == '未确认')
                 $scope.notify(data.order);
             else {

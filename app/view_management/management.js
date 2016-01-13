@@ -10,6 +10,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
             controller: 'ManagementCtrl'
         });
     }])
+    .run(['$anchorScroll', function($anchorScroll) {
+        $anchorScroll.yOffset = 80;   // always scroll by 50 extra pixels
+    }])
     .directive('changePic', function () {
         return {
             restrict: 'A',
@@ -176,9 +179,16 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
 
             });
 
-        $scope.goto = function (id) {
-            $location.hash(id);
-            $anchorScroll();
+        $scope.goto = function (x) {
+
+            var newHash =  x;
+            if ($location.hash() !== newHash) {
+                // set the $location.hash to `newHash` and
+                // $anchorScroll will automatically scroll to it
+                $location.hash(x);
+            } else {
+                $anchorScroll();
+            }
         };
 
 

@@ -1,0 +1,17 @@
+<div class="autoAcceptConfig">
+    <div class="config-item">
+        餐厅为最美食会员预留桌数最大值<input class="config-input" type="number" ng-model="persistInfo.persistTable">
+        <span class="explain"><i>(说明:如果系统内当日未完成预定超过预设值,则自动转为人工接单)</i></span>
+    </div>
+    <div class="config-item">
+        用户发起预定时距离时间大于<input type="number" class="config-input" ng-model="persistInfo.persistTime">小时的订单,系统自动订单.
+    </div>
+    <div class="config-item">
+        <span class="explain"><i>自动接单:在指定时间范围内的订单系统自动为商户确定订单,在指定时间范围外的订单需要餐厅联系人进行人工确认接单.</i></span>
+    </div>
+</div>
+<div class="save-btn">
+    <button class="btn btn-warning" ng-click="savePersistInfo()"><span
+            class="glyphicon glyphicon-ok"></span>保存自动接单设置
+    </button>
+</div>
