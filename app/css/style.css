@@ -168,7 +168,7 @@ a.navbar-brand {
     list-style: none;
 }
 
-.menu li span {
+.sidebar-span {
     display: block;
     background: #52504b;
     color: #fff;
@@ -229,7 +229,7 @@ a.navbar-brand {
 
 #data-statistics {
     margin-top: 0;
-    min-height: 995px;
+    min-height: 1040px;
 }
 
 #faq {
@@ -280,6 +280,40 @@ h3.full-header {
 }
 
 /*餐厅基本信息结束*/
+
+/*统计数据查询开始*/
+.query-data {
+    width: 95%;
+    margin: 10px auto;
+    height: 40px;
+    line-height: 40px;
+}
+
+a {
+    color: #3A3A3A;
+    margin: 0 8px;
+}
+
+a:active {
+    color: #ffa500;
+}
+
+a:hover {
+    color: #ffa500;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.display-right {
+    float: right;
+    width: 200px;
+}
+
+.selectDays {
+    color: #ffa500;
+}
+
+/*统计数据查询结束*/
 
 .right-content .row {
     margin-right: 15px;

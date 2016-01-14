@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialog'])
+angular.module('myApp.management', ['ngRoute', 'ngImgCrop','ngDialog'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/management', {
             templateUrl: 'view_management/management.html',
@@ -79,12 +79,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
             });
         };
 
-        var getChartInfoRequest = function (id, date) {
-            return $http({
-                method: "GET",
-                url: restaurantBaseUrl + '/order/orderCountInfo?restaurantId=' + id + '&date=' + date,
-            });
-        };
 
         var updateLinkmanInfoRequest = function (linkmanInfo) {
             return $http({
@@ -126,9 +120,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
         return {
             updatePwd: function (pwdInfo) {
                 return updatePwdRequest(pwdInfo);
-            },
-            getChartInfo: function (id, date) {
-                return getChartInfoRequest(id, date);
             },
             uploadHomePagePic: function (imageInfo) {
                 return uploadHomePagePicRequest(imageInfo);
@@ -488,148 +479,5 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'chart.js', 'ngDialo
                 })
             ;
         };
-
-    })
-    .controller('ChartCtrl', function ($scope, $timeout, ManageService) {
-
-        $scope.options = {
-            tooltipEvents: [],
-            showTooltips: true,
-            tooltipCaretSize: 0,
-            tooltipTemplate: function (label) {
-                return "￥" + getTotalSales(label.label);
-            },
-            onAnimationComplete: function () {
-                this.showTooltip(this.datasets[0].points, true);
-            }
-        };
-
-        $scope.ChartDate = {
-            getDay: function (month) {
-                if (month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9 || month == 11) {
-                    return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
-                }
-                else if (month == 1) {
-                    var date = new Date();
-                    var year = date.getFullYear();
-                    if ((year % 100 !== 0 && year % 4 == 0) || (year % 100 == 0 && year % 400 == 0))
-                        return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"];
-                    else {
-                        return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28"];
-                    }
-                }
-                else {
-                    return ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"];
-                }
-
-            },
-            getMonth: function (month) {
-                switch (month) {
-                    case 0 :
-                        return "一月";
-                    case 1:
-                        return "二月";
-                    case 2:
-                        return "三月";
-                    case 3:
-                        return "四月";
-                    case 4:
-                        return "五月";
-                    case 5:
-                        return "六月";
-                    case 6:
-                        return "七月";
-                    case 7:
-                        return "八月";
-                    case 8:
-                        return "九月";
-                    case 9:
-                        return "十月";
-                    case 10:
-                        return "十一月";
-                    case 11:
-                        return "十二月";
-                }
-            }
-
-        };
-
-        $scope.date = new Date();
-        $scope.year = $scope.date.getFullYear();
-        $scope.initialMonth = $scope.date.getMonth();
-
-
-        $scope.month = $scope.ChartDate.getMonth($scope.initialMonth);
-        $scope.labels = $scope.ChartDate.getDay($scope.initialMonth);
-
-        function formatDate() {
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var day = date.getDate();
-            if (month < 10)
-                month = '0' + month;
-            if (day < 10)
-                day = '0' + day;
-            var formatDate = year + '-' + month + '-' + day;
-            return formatDate;
-        }
-
-        $scope.queryDate = formatDate();
-
-        function getDateDay(inputDate) {
-            var day = inputDate.split('-')[2];
-            if (day[0] == '0')
-                day = parseInt(day[1]);
-            else day = parseInt(day);
-            return day;
-        }
-
-        $scope.data = [];
-        $scope.totalSale = [];
-        $scope.firstData = [];
-
-        ManageService.getChartInfo($.cookie('restaurantId'), $scope.queryDate)
-            .success(function (data) {
-
-                var now = new Date();
-                var today = now.getDate();
-                //var today = '16';
-
-                //循环得到具体是几号
-                for (var j = 0; j < data.length; j++) {
-                    data[j].indexDay = getDateDay(data[j].dorderDate);
-                }
-
-                //循环将两个数组(销售量和销售金额)初始化
-                for (var i = 0; i < today; i++) {
-                    $scope.firstData[i] = 0;
-                    $scope.totalSale[i] = 0;
-                }
-
-                //循环将指定是几号的信息进行填充
-                for (var h = 0; h < data.length; h++) {
-                    $scope.firstData[data[h].indexDay - 1] = data[h].dorderFinishNum;
-                    $scope.totalSale[data[h].indexDay - 1] = data[h].income;
-                }
-
-                $scope.data[0] = $scope.firstData;
-
-            });
-
-
-        $scope.series = ['预定量'];
-
-
-        function getTotalSales(value) {
-            return $scope.totalSale[value - 1];
-        }
-
-        //// Simulate async data update
-        //$timeout(function () {
-        //    $scope.data = [
-        //        [28, 48, 40, 19, 86, 27, 90]
-        //    ];
-        //}, 3000);
 
     });

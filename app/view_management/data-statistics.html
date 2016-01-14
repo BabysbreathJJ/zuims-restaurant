@@ -1,6 +1,77 @@
+<div class="query-data">
+
+    <span style="font-size: 22px;font-weight: 900"> 预订数据查看:</span>
+
+    <div style="float: right">
+        <button class="btn btn-warning" style="margin-left: 10px" ng-click="searchOrders(search)">
+            <span class="glyphicon glyphicon-search"></span></button>
+    </div>
+    <div class='input-group date display-right' id="endDate" style="height:40px">
+        <input type='text' class="form-control" style="height:40px" id="end"
+               ng-model="myEnd"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+    </div>
+    <div style="float: right;padding: 0 10px">
+        至
+    </div>
+    <div class='input-group date display-right' id="startDate" style="height:40px">
+        <input type='text' class="form-control" style="height:40px" id="start"
+               ng-model="myStart"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+    </div>
+    <div class="display-right">
+        <a class="days selectDays" ng-click="queryOrder(7)">7天</a>
+        <a class="days" ng-click="queryOrder(14)">14天</a>
+        <a class="days" ng-click="queryOrder(30)">30天</a>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            function getToday() {
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var day = date.getDate();
+                if (month < 10)
+                    month = '0' + month;
+                if (day < 10)
+                    day = '0' + day;
+                return year + '-' + month + '-' + day;
+            }
+
+            $('#startDate').datetimepicker({
+                viewMode: 'days',
+                format: 'YYYY-MM-DD',
+                maxDate: getToday(),
+                locale: 'zh-cn'
+            });
+            $('#endDate').datetimepicker({
+                viewMode: 'days',
+                format: 'YYYY-MM-DD',
+                maxDate: getToday(),
+                locale: 'zh-cn'
+            });
+
+        });
+
+        $('.days').click(function () {
+            $('.days').each(function () {
+                $(this).removeClass("selectDays");
+            });
+            $(this).addClass("selectDays");
+        });
+    </script>
+
+</div>
+
+
 <div class="panel panel-default reservation-chart">
     <div class="panel-heading">
-        {{month}}-预订量走势图
+        预订量走势图
     </div>
 
     <div class="panel-body">
