@@ -229,7 +229,7 @@ a.navbar-brand {
 
 #data-statistics {
     margin-top: 0;
-    min-height: 1040px;
+    min-height: 700px;
 }
 
 #faq {
@@ -239,6 +239,15 @@ a.navbar-brand {
 
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
     vertical-align: middle;
+    padding: 7px;
+}
+
+.search-input{
+    height: 30px;
+}
+
+.pagination{
+    margin: 10px 0;
 }
 
 /*右边内容区域结束*/
@@ -250,7 +259,7 @@ h3.full-header {
     font-weight: normal;
     font-size: 22px;
     margin: 10px 0;
-    padding: 15px 40px;
+    padding: 5px 40px;
 }
 
 .full-header span {
@@ -283,10 +292,10 @@ h3.full-header {
 
 /*统计数据查询开始*/
 .query-data {
-    width: 95%;
+    width: 80%;
     margin: 10px auto;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
 }
 
 a {
@@ -386,7 +395,7 @@ a:hover {
 
 #reservation-table {
     margin: 20px 0;
-    min-height: 900px;
+    min-height: 700px;
     background-color: #FFFFFF;
     overflow: auto;
     margin-top: 0;
@@ -501,8 +510,8 @@ a:hover {
 
 /*数据图表开始*/
 .reservation-chart {
-    min-height: 700px;
-    width: 95%;
+    /*min-height: 700px;*/
+    width: 80%;
     margin: 0 auto;
     margin-bottom: 30px;
 }
@@ -589,12 +598,12 @@ a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 50px;
+    height: 45px;
     clear: both;
     text-align: center;
     color: #FFF;
     background: #555;
-    line-height: 50px;
+    line-height: 45px;
     z-index: 1030;
 }
 
