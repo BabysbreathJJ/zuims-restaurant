@@ -167,6 +167,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop','ngDialog'])
                 delete $scope.basicInfo.images;
                 delete $scope.basicInfo.latitude;
                 delete $scope.basicInfo.longitude;
+                $("#restaurantName").text($scope.basicInfo.restaurantName);
 
             });
 

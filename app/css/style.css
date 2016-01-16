@@ -212,10 +212,9 @@ a.navbar-brand {
 }
 
 .right-bg {
-    margin: 20px 0;
-    min-height: 300px;
     background-color: #FFFFFF;
     overflow: auto;
+    margin-top: 25px;
 }
 
 .incomplete {
@@ -224,11 +223,10 @@ a.navbar-brand {
 }
 
 #info-management {
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 
 #data-statistics {
-    margin-top: 0;
     min-height: 700px;
 }
 
@@ -242,11 +240,11 @@ a.navbar-brand {
     padding: 7px;
 }
 
-.search-input{
+.search-input {
     height: 30px;
 }
 
-.pagination{
+.pagination {
     margin: 10px 0;
 }
 
@@ -394,11 +392,9 @@ a:hover {
 /*预定信息table开始*/
 
 #reservation-table {
-    margin: 20px 0;
-    min-height: 700px;
+    min-height: 750px;
     background-color: #FFFFFF;
     overflow: auto;
-    margin-top: 0;
 }
 
 .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
@@ -590,7 +586,7 @@ a:hover {
     height: auto !important;
     height: 100%;
     margin: 0 auto;
-    margin-top: 80px;
+    margin-top: 50px;
 }
 
 .footer {
@@ -598,12 +594,12 @@ a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 45px;
+    height: 35px;
     clear: both;
     text-align: center;
     color: #FFF;
     background: #555;
-    line-height: 45px;
+    line-height: 35px;
     z-index: 1030;
 }
 
