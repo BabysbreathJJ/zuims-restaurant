@@ -3,14 +3,14 @@
  */
 'use strict';
 
-angular.module('myApp.management', ['ngRoute', 'ngImgCrop','ngDialog'])
+angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/management', {
             templateUrl: 'view_management/management.html',
             controller: 'ManagementCtrl'
         });
     }])
-    .run(['$anchorScroll', function($anchorScroll) {
+    .run(['$anchorScroll', function ($anchorScroll) {
         $anchorScroll.yOffset = 80;   // always scroll by 50 extra pixels
     }])
     .directive('changePic', function () {
@@ -90,14 +90,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop','ngDialog'])
             });
         };
 
-        var updateBasicInfoRequest = function (basicInfo) {
-            return $http({
-                method: "POST",
-                url: restaurantBaseUrl + '/restaurant/info/basicinfoedit',
-                data: basicInfo,
-                crossDomain: true
-            });
-        };
+
 
         var updatePersistInfoRequest = function (persistInfo) {
             return $http({
@@ -142,9 +135,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop','ngDialog'])
             updateLinkmanInfo: function (linkmanInfo) {
                 return updateLinkmanInfoRequest(linkmanInfo);
             },
-            updateBasicInfo: function (basicInfo) {
-                return updateBasicInfoRequest(basicInfo);
-            },
             updatePersisInfo: function (persistInfo) {
                 return updatePersistInfoRequest(persistInfo);
             }
@@ -154,6 +144,21 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop','ngDialog'])
     .controller('ManagementCtrl', function ($scope, $location, $anchorScroll, ManageService, ngDialog) {
         if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
             window.location = "/";
+        }
+        $scope.goto = function (x) {
+
+            var newHash = x;
+            if ($location.hash() !== newHash) {
+                // set the $location.hash to `newHash` and
+                // $anchorScroll will automatically scroll to it
+                $location.hash(x);
+            } else {
+                $anchorScroll();
+            }
+        };
+        if ($location.hash() == 'info-management') {
+            console.log($location.hash());
+            $scope.goto('info-management');
         }
         ManageService.getRestaurantInfo($.cookie("restaurantId"))
             .success(function (data) {
@@ -170,18 +175,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop','ngDialog'])
                 $("#restaurantName").text($scope.basicInfo.restaurantName);
 
             });
-
-        $scope.goto = function (x) {
-
-            var newHash =  x;
-            if ($location.hash() !== newHash) {
-                // set the $location.hash to `newHash` and
-                // $anchorScroll will automatically scroll to it
-                $location.hash(x);
-            } else {
-                $anchorScroll();
-            }
-        };
 
 
         $scope.reservationNum = 20;
@@ -422,15 +415,15 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop','ngDialog'])
         };
 
     })
-    .controller('BasicInfoCtrl', function ($scope, ManageService) {
-
-        $scope.saveBasicInfo = function () {
-            ManageService.updateBasicInfo($scope.basicInfo)
-                .success(function (data) {
-                    alert("信息保存成功!");
-                });
-        };
-    })
+    //.controller('BasicInfoCtrl', function ($scope, ManageService) {
+    //
+    //    $scope.saveBasicInfo = function () {
+    //        ManageService.updateBasicInfo($scope.basicInfo)
+    //            .success(function (data) {
+    //                alert("信息保存成功!");
+    //            });
+    //    };
+    //})
     .controller('PersistInfoCtrl', function ($scope, ManageService) {
 
         $scope.savePersistInfo = function () {

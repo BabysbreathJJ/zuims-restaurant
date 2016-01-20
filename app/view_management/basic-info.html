@@ -6,9 +6,7 @@
             <td width="10%">
                 餐厅所在地
                 <select class="form-control" ng-model="restaurantInfo.city">
-                    <option value="北京">北京</option>
-                    <option value="上海">上海</option>
-                    <option value="广州">广州</option>
+                    <option ng-repeat="city in cities" value="{{city.name}}">{{city.name}}</option>
                 </select>
             </td>
             <td width="30%">
@@ -17,11 +15,7 @@
             <td>
                 餐厅类型
                 <select class="form-control" ng-model="basicInfo.restaurantType">
-                    <option value="自助餐">自助餐</option>
-                    <option value="下午茶">下午茶</option>
-                    <option value="大堂吧">大堂吧</option>
-                    <option value="商务套餐">商务套餐</option>
-                    <option value="酒廊">酒廊</option>
+                    <option ng-repeat="product in products" value="{{product.name}}">{{product.name}}</option>
                 </select>
             </td>
             <td>

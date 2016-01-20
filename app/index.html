@@ -53,8 +53,7 @@
 <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
 <script>
     $(document).ready(function () {
-        if($.cookie("restaurantId") !== undefined)
-        {
+        if ($.cookie("restaurantId") !== undefined) {
             window.location = "content.html";
         }
         var restaurantBaseUrl = "http://202.120.40.175:21104";
@@ -71,8 +70,13 @@
                 headers: {'Content-Type': 'application/json;charset=UTF-8'},
                 crossDomain: true
             }).success(function (data) {
-                $.cookie("restaurantId",data,{ expires: 36500 });
-                window.location = "content.html";
+                $.cookie("restaurantId", data.restaurantId, {expires: 36500});
+                if (data.whetherInfoComplete == 2) {
+                    window.location = "content.html";
+                }
+                else {
+                    window.location = "content.html#/management#info-management";
+                }
             }).error(function (data) {
                 alert("登录失败,请检查用户名和密码是否正确!");
             });

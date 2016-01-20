@@ -7,13 +7,6 @@ angular.module('myApp.chart', ['chart.js'])
     .factory('ChartService', ['$http', function ($http) {
         var restaurantBaseUrl = "http://202.120.40.175:21104";
 
-        var getChartInfoRequest = function (id, date) {
-            return $http({
-                method: "GET",
-                url: restaurantBaseUrl + '/order/orderCountInfo?restaurantId=' + id + '&date=' + date,
-            });
-        };
-
         var searchOrderInfo = function (id, start, end) {
             return $http({
                 method: "GET",
@@ -22,9 +15,6 @@ angular.module('myApp.chart', ['chart.js'])
         };
         return {
 
-            getChartInfo: function (id, date) {
-                return getChartInfoRequest(id, date);
-            },
             searchOrder: function (id, start, end) {
                 return searchOrderInfo(id, start, end);
             }
@@ -35,15 +25,12 @@ angular.module('myApp.chart', ['chart.js'])
     .controller('ChartCtrl', function ($scope, $timeout, ChartService) {
 
         $scope.options = {
-            //tooltipEvents: [],
             showTooltips: true,
             tooltipCaretSize: 0,
             tooltipTemplate: function (label) {
                 return "￥" + getTotalSales(label.label);
             }
-            //onAnimationComplete: function () {
-            //    this.showTooltip(this.datasets[0].points, true);
-            //}
+
         };
 
 
