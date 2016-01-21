@@ -18,24 +18,24 @@ angular.module('myApp.basicInfo', [])
 
         };
 
-        var getProductsInfoRequest = function (token) {
+        var getProductsInfoRequest = function () {
             return $http({
                 method: 'GET',
                 url: 'http://202.120.40.175:21108/productions',
-                headers: {
-                    'x-auth-token': token
-                },
+                //headers: {
+                //    'x-auth-token': token
+                //},
                 crossDomain: true
             });
         };
 
-        var getCityInfoRequest = function (token) {
+        var getCityInfoRequest = function () {
             return $http({
                 method: 'GET',
                 url: 'http://202.120.40.175:21108/cities',
-                headers: {
-                    'x-auth-token': token
-                },
+                //headers: {
+                //    'x-auth-token': token
+                //},
                 crossDomain: true
             });
         };
@@ -75,21 +75,21 @@ angular.module('myApp.basicInfo', [])
         };
 
 
-        BasicInfoService.authorize().then(function (response) {
-            $http.defaults.headers.common['x-auth-token'] = response.data.token;
-            console.log(response.data.token);
-            BasicInfoService.getProducts(response.data.token)
+        //BasicInfoService.authorize().then(function (response) {
+        //    $http.defaults.headers.common['x-auth-token'] = response.data.token;
+        //    console.log(response.data.token);
+            BasicInfoService.getProducts()
                 .success(function (data) {
                     $scope.products = data;
                 });
 
-            BasicInfoService.getCities(response.data.token)
+            BasicInfoService.getCities()
                 .success(function (data) {
                     $scope.cities = data;
-                })
+                });
 
 
-        });
+        //});
 
 
     });
