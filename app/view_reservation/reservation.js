@@ -210,6 +210,12 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                         data.orderTimer = dateTime[1].substr(0, 5);
                         data.orderHandled = true;
                         data.state = "已拒绝";
+                        if (data.gender == 0) {
+                            data.gender = "女";
+                        }
+                        else {
+                            data.gender = "男";
+                        }
 
                         $scope.rowCollection.push(data);
                         newScope.notification.then(function (notification) {
