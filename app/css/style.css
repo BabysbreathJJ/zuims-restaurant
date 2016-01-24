@@ -894,3 +894,16 @@ ul li, ol li {
     margin: 0 20px;
     margin-bottom: 10px;
 }
+
+.seller-info {
+    display: inline-block;
+    width: 50px;
+    text-align: right;
+    margin: 10px 0px;
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+.seller{
+    min-width: 400px;
+}

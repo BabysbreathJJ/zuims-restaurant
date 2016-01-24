@@ -91,7 +91,6 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
         };
 
 
-
         var updatePersistInfoRequest = function (persistInfo) {
             return $http({
                 method: "POST",
@@ -110,6 +109,13 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             });
         };
 
+        var getSellerInfoRequest = function (sellerId) {
+            return $http({
+                method: "GET",
+                url: "http://202.120.40.175:21108/users/" + sellerId,
+                crossDomain: true
+            });
+        }
         return {
             updatePwd: function (pwdInfo) {
                 return updatePwdRequest(pwdInfo);
@@ -137,6 +143,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             },
             updatePersisInfo: function (persistInfo) {
                 return updatePersistInfoRequest(persistInfo);
+            },
+            getSellerInfo: function (sellerId) {
+                return getSellerInfoRequest(sellerId);
             }
         }
 
@@ -174,6 +183,17 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 delete $scope.basicInfo.longitude;
                 $("#restaurantName").text($scope.basicInfo.restaurantName);
 
+                ManageService.getSellerInfo(data.sellerId).success(function (data) {
+                        console.log(data);
+                        $("#sellerName").text(data.fullname);
+                        $("#sellerTel").text(data.mobile);
+                        $("#sellerEmail").text(data.email);
+                    })
+                    .error(function () {
+                        $("#sellerName").text("暂无信息");
+                        $("#sellerTel").text("暂无信息");
+                        $("#sellerEmail").text("暂无信息");
+                    });
             });
 
 
