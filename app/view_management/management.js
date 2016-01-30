@@ -151,7 +151,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
         }
 
     }])
-    .controller('ManagementCtrl', function ($scope, $location, $anchorScroll, ManageService, ngDialog) {
+    .controller('ManagementCtrl', function ($scope, $location, $anchorScroll, ManageService, ngDialog, BaseUrl, restaurantPort) {
         if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
             window.location = "/";
         }
@@ -206,13 +206,12 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             ManageService.getHomePage($.cookie("restaurantId"))
                 .success(function (data) {
 
-                    $scope.restaurantInfo.homePagePic = data.picname;
+                    $scope.restaurantInfo.homePagePic = BaseUrl + restaurantPort + data.picname;
                     $scope.restaurantInfo.restaurantTeles = $scope.restaurantInfo.restaurantTele.split(" ");
                     $scope.description = data.introduction;
 
                     if (data.picname == "" || data.picname == null)
                         $scope.restaurantInfo.homePagePic = BaseUrl + restaurantPort + "/restaurants/images?relativePath=NonePicture1.jpg";
-
 
                     $scope.discount = $scope.restaurantInfo.discountType == 'discount' ? true : false;
                     ngDialog.open({
@@ -265,6 +264,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 .success(function (data, status) {
                     if (data.success == true) {
                         alert("图片上传成功,可以点击首页图文信息预览进行查看!");
+                        $scope.picDescription = "";
                         $scope.homePageShow = false;
                     }
                 });
@@ -279,7 +279,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
         };
 
     })
-    .controller('ImageDetailCtrl', function ($scope, ManageService, ngDialog) {
+    .controller('ImageDetailCtrl', function ($scope, ManageService, ngDialog, BaseUrl, restaurantPort) {
 
         $scope.myDetailImage = '';
         $scope.myDetailCroppedImage = '';
@@ -305,9 +305,13 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                         $scope.discount = $scope.basicInfo.discountType == 'discount' ? true : false;
                         $scope.description = $scope.details[0].introduction;
                     }
-                    else {
+                    else
+                    {
                         $scope.details = [];
                         $scope.details[0].picname = BaseUrl + restaurantPort + '/restaurants/images?relativePath=NonePicture2.jpg';
+                    }
+                    for (var i = 0; i < $scope.details.length; i++) {
+                        $scope.details[i].picname = BaseUrl + restaurantPort + $scope.details[i].picname;
                     }
 
                     ngDialog.open({
@@ -355,6 +359,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 .success(function (data, status) {
                     if (data.success == true) {
                         alert("图片上传成功,可以点击餐厅详细图文信息预览进行查看!");
+                        $scope.picDescription = "";
                         $scope.detailPicShow = false;
                     }
                 });
