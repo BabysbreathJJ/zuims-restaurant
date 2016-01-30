@@ -4,8 +4,9 @@
 'use strict';
 
 angular.module('myApp.chart', ['chart.js'])
-    .factory('ChartService', ['$http', function ($http) {
-        var restaurantBaseUrl = "http://202.120.40.175:21104";
+    .factory('ChartService', ['$http', 'BaseUrl', 'merchantPort', function ($http, BaseUrl, merchantPort) {
+        //var restaurantBaseUrl = "http://202.120.40.175:21104";
+        var restaurantBaseUrl = BaseUrl + merchantPort;
 
         var searchOrderInfo = function (id, start, end) {
             return $http({

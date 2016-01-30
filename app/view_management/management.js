@@ -28,8 +28,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             }
         };
     })
-    .factory('ManageService', ['$http', function ($http) {
-        var restaurantBaseUrl = "http://202.120.40.175:21104";
+    .factory('ManageService', ['$http', 'BaseUrl', 'merchantPort', 'managementPort', function ($http, BaseUrl, merchantPort, managementPort) {
+        //var restaurantBaseUrl = "http://202.120.40.175:21104";
+        var restaurantBaseUrl = BaseUrl + merchantPort;
 
         var uploadHomePagePicRequest = function (imageInfo) {
             return $http({
@@ -112,7 +113,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
         var getSellerInfoRequest = function (sellerId) {
             return $http({
                 method: "GET",
-                url: "http://202.120.40.175:21108/users/" + sellerId,
+                url: BaseUrl + managementPort + "/users/" + sellerId,
                 crossDomain: true
             });
         }
@@ -210,7 +211,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                     $scope.description = data.introduction;
 
                     if (data.picname == "" || data.picname == null)
-                        $scope.restaurantInfo.homePagePic = "http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture1.jpg";
+                        $scope.restaurantInfo.homePagePic = BaseUrl + restaurantPort + "/restaurants/images?relativePath=NonePicture1.jpg";
 
 
                     $scope.discount = $scope.restaurantInfo.discountType == 'discount' ? true : false;
@@ -306,7 +307,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                     }
                     else {
                         $scope.details = [];
-                        $scope.details[0].picname = 'http://202.120.40.175:21100/restaurants/images?relativePath=NonePicture2.jpg';
+                        $scope.details[0].picname = BaseUrl + restaurantPort + '/restaurants/images?relativePath=NonePicture2.jpg';
                     }
 
                     ngDialog.open({

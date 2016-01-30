@@ -4,24 +4,24 @@
 'use strict';
 
 angular.module('myApp.basicInfo', [])
-    .factory('BasicInfoService', ['$http', function ($http) {
-        var restaurantBaseUrl = "http://202.120.40.175:21104";
+    .factory('BasicInfoService', ['$http', 'BaseUrl', 'merchantPort', 'managementPort', function ($http, BaseUrl, merchantPort, managementPort) {
+        var restaurantBaseUrl = BaseUrl + merchantPort;
 
-        var authorizeRequest = function () {
-            return $http({
-                method: 'GET',
-                url: 'http://202.120.40.175:21108/token',
-                headers: {
-                    authorization: "Basic " + btoa("panxin" + ":" + "panxin")
-                }
-            })
-
-        };
+        //var authorizeRequest = function () {
+        //    return $http({
+        //        method: 'GET',
+        //        url: 'http://202.120.40.175:21108/token',
+        //        headers: {
+        //            authorization: "Basic " + btoa("panxin" + ":" + "panxin")
+        //        }
+        //    })
+        //
+        //};
 
         var getProductsInfoRequest = function () {
             return $http({
                 method: 'GET',
-                url: 'http://202.120.40.175:21108/productions',
+                url: BaseUrl+managementPort+'/productions',
                 //headers: {
                 //    'x-auth-token': token
                 //},
@@ -32,7 +32,7 @@ angular.module('myApp.basicInfo', [])
         var getCityInfoRequest = function () {
             return $http({
                 method: 'GET',
-                url: 'http://202.120.40.175:21108/cities',
+                url: BaseUrl+managementPort+'/cities',
                 //headers: {
                 //    'x-auth-token': token
                 //},
@@ -66,11 +66,12 @@ angular.module('myApp.basicInfo', [])
         }
 
     }])
-    .controller('BasicInfoCtrl', function ($scope, BasicInfoService, $http) {
+    .controller('BasicInfoCtrl', function ($scope, BasicInfoService) {
         $scope.saveBasicInfo = function () {
             BasicInfoService.updateBasicInfo($scope.basicInfo)
                 .success(function (data) {
                     $("#restaurantName").text(data.restaurantName);
+                    $scope.basicInfo = data;
                     alert("信息保存成功!");
                 });
         };
@@ -79,15 +80,15 @@ angular.module('myApp.basicInfo', [])
         //BasicInfoService.authorize().then(function (response) {
         //    $http.defaults.headers.common['x-auth-token'] = response.data.token;
         //    console.log(response.data.token);
-            BasicInfoService.getProducts()
-                .success(function (data) {
-                    $scope.products = data;
-                });
+        BasicInfoService.getProducts()
+            .success(function (data) {
+                $scope.products = data;
+            });
 
-            BasicInfoService.getCities()
-                .success(function (data) {
-                    $scope.cities = data;
-                });
+        BasicInfoService.getCities()
+            .success(function (data) {
+                $scope.cities = data;
+            });
 
 
         //});

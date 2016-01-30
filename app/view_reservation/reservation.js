@@ -20,8 +20,9 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             });
         }
     ])
-    .factory('OrderService', ['$http', function ($http) {
-        var restaurantBaseUrl = "http://202.120.40.175:21104";
+    .factory('OrderService', ['$http', 'BaseUrl', 'merchantPort', function ($http, BaseUrl, merchantPort) {
+        var restaurantBaseUrl = BaseUrl + merchantPort;
+        //var restaurantBaseUrl = "http://202.120.40.175:21104";
 
         var getOderInfosRequest = function (restaurantId) {
             return $http({
@@ -192,7 +193,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
 
         $scope.notify = function (order) {
             var newScope = $scope.$new(true);
-            newScope.name = order.userLastName+order.userFirstName;
+            newScope.name = order.userLastName + order.userFirstName;
             newScope.phone = order.phoneId;
             newScope.level = order.userVipLevel;
             newScope.date = order.orderTime.split(" ")[0];
