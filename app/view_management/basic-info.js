@@ -72,6 +72,7 @@ angular.module('myApp.basicInfo', [])
                 .success(function (data) {
                     $("#restaurantName").text(data.restaurantName);
                     $scope.basicInfo = data;
+                    $scope.$emit('newRestaurantInfo', data);
                     alert("信息保存成功!");
                 });
         };

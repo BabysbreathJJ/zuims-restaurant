@@ -79,6 +79,46 @@
 </div>
 
 
+<script type="text/ng-template" id="homePic.html">
+    <!--餐厅介绍开始-->
+    <div class="w-300 r-active">
+        <div class="pos-r overflow-h">
+            <img ng-src="{{restaurantInfo.homePagePic}}" class="img-responsive">
+
+            <div class="pos-a font-white bg-orange transform45 smy" ng-show="discount">三免一</div>
+            <div class="pos-a tc per100 bottom20">
+                <p class="bg-t display-ib per100 l-ht30 font-white">{{description}}</p>
+            </div>
+        </div>
+        <div class="introduce">
+            <p class="tc mt16"><b class="font16">{{restaurantInfo.restaurantName}}</b><i class="font-c-f8 ml10">hot</i>
+            </p>
+
+            <p>
+                <span class="font-c-8f">每位：</span>
+                <span class="font-c-40">￥{{restaurantInfo.homeAveragePrice}}
+                     <span class="font-c-8f text-d-lt ml5"
+                           ng-show="discount">￥{{restaurantInfo.homeOriginAveragePrice}}</span>
+                    （含15%服务费）</span>
+            </p>
+
+            <p>
+                <span class="font-c-8f">地址 ：</span>
+                <span class="font-c-40">{{restaurantInfo.restaurantAddress}}</span>
+            </p>
+
+            <p>
+                <span class="font-c-8f">电话 ：</span>
+                        <span class="font-c-40"><span ng-repeat=" tel in restaurantInfo.restaurantTeles">
+                            <a class="font-c-40" href="tel:{{tel}}">{{tel}}</a></span> </span>
+            </p>
+
+        </div>
+    </div>
+    <!--餐厅介绍结束-->
+</script>
+
+
 <script type="text/ng-template" id="detailPic.html">
     <!--内容开始-->
     <div class="pd15 mt70" style="margin-top: 20px">
@@ -119,7 +159,10 @@
                 <p>
                     <span class="font-c-8f">每位：</span>
                     <!--<span class="font-c-8f text-d-lt">￥200</span>-->
-                    <span class="font-c-40">￥{{restaurantInfo.averagePrice}}（含15%服务费）</span>
+                    <span class="font-c-40">￥{{restaurantInfo.detailAveragePrice}}
+                        <span class="font-c-8f text-d-lt ml5"
+                              ng-show="discount">￥{{restaurantInfo.detailOriginAveragePrice}}</span>
+                        （含15%服务费）</span>
                 </p>
 
                 <p>
