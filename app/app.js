@@ -15,7 +15,7 @@ angular.module('myApp', [
     //.constant('merchantPort', '8004')
     .constant('merchantPort', '21104')
     //.constant('managementPort', '8008')
-    .constant('managementPort', '211008')
+    .constant('managementPort', '21108')
     .constant('restaurantPort', '8000')
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/management'});
