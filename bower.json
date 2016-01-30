@@ -14,15 +14,17 @@
     "angular-chart.js": "~0.8.8",
     "angular-smart-table": "~2.1.6",
     "bootstrap": "~3.3.6",
-    "ngImgCropFullExtended": "~0.4.7",
     "angularjs-ie8-build": "~1.4.7",
-    "jquery": "~2.1.4",
     "es5-shim": "~4.4.1",
     "respond": "~1.4.2",
     "ExplorerCanvas": "excanvas#*",
     "html5shiv": "~3.7.3",
     "jquery.cookie": "jquery-cookie#~1.4.1",
     "leancloud-push.js": "leancloud-push#~2.0.4",
-    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
+    "moment": "~2.11.1",
+    "moment-timezone": "~0.5.0",
+    "ng-dialog": "~0.5.6",
+    "ng-img-crop-full-extended": "ngImgCropFullExtended#~0.4.9"
   }
 }
