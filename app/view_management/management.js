@@ -182,7 +182,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 delete $scope.basicInfo.images;
                 delete $scope.basicInfo.latitude;
                 delete $scope.basicInfo.longitude;
-                $("#restaurantName").text($scope.basicInfo.restaurantName);
+                $("#restaurantName").text($scope.basicInfo.hotelName+$scope.basicInfo.restaurantName);
 
                 ManageService.getSellerInfo(data.sellerId).success(function (data) {
                         console.log(data);

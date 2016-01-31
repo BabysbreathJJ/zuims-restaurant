@@ -9,7 +9,10 @@
                     <option ng-repeat="city in cities" value="{{city.name}}">{{city.name}}</option>
                 </select>
             </td>
-            <td width="30%">
+            <td width="20%">
+                <span>酒店名称</span>
+                <input type="text" class="form-control" ng-model="basicInfo.hotelName" disabled></td>
+            <td width="20%">
                 <span>餐厅名称</span>
                 <input type="text" class="form-control" ng-model="basicInfo.restaurantName"></td>
             <td>
