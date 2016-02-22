@@ -53,7 +53,8 @@
 <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
 <script>
     $(document).ready(function () {
-        if ($.cookie("restaurantId") !== undefined) {
+        if ($.cookie("restaurantId") !== undefined && $.cookie("restaurantId") !== 'null') {
+            alert($.cookie("restaurantId"));
             window.location = "content.html";
         }
         var restaurantBaseUrl = "http://202.120.40.175:21104";

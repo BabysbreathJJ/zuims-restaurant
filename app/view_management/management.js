@@ -166,6 +166,11 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 $anchorScroll();
             }
         };
+
+        $("#logout").click(function () {
+            $.cookie("restaurantId", null);
+            window.location = "/";
+        });
         if ($location.hash() == 'info-management') {
             console.log($location.hash());
             $scope.goto('info-management');
@@ -182,10 +187,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 delete $scope.basicInfo.images;
                 delete $scope.basicInfo.latitude;
                 delete $scope.basicInfo.longitude;
-                $("#restaurantName").text($scope.basicInfo.hotelName+$scope.basicInfo.restaurantName);
+                $("#restaurantName").text($scope.basicInfo.hotelName + $scope.basicInfo.restaurantName);
 
                 ManageService.getSellerInfo(data.sellerId).success(function (data) {
-                        console.log(data);
                         $("#sellerName").text(data.fullname);
                         $("#sellerTel").text(data.mobile);
                         $("#sellerEmail").text(data.email);
@@ -201,9 +205,8 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
         //$scope.reservationNum = 20;
         //$scope.advanceTime = 4;
 
-        $scope.$on('newRestaurantInfo', function(event, data) {
+        $scope.$on('newRestaurantInfo', function (event, data) {
             $scope.restaurantInfo = data;
-            console.log(data);
         });
 
         //首页图文信息预览
@@ -213,7 +216,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
 
                     $scope.restaurantInfo.homePagePic = BaseUrl + restaurantPort + data.picname;
                     $scope.restaurantInfo.restaurantTeles = $scope.restaurantInfo.restaurantTele.split(" ");
-                    $scope.description = data.introduction;
+                    $scope.restaurantInfo.introduction = data.introduction;
 
                     if (data.picname == "" || data.picname == null)
                         $scope.restaurantInfo.homePagePic = BaseUrl + restaurantPort + "/restaurants/images?relativePath=NonePicture1.jpg";
