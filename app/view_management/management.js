@@ -507,6 +507,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 'newpwd': $scope.newPwd,
                 'oldpwd': $scope.oldPwd
             };
+            console.log($scope.pwdInfo);
 
             ManageService.updatePwd($scope.pwdInfo)
                 .success(function (data) {

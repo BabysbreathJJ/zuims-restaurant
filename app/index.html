@@ -54,7 +54,6 @@
 <script>
     $(document).ready(function () {
         if ($.cookie("restaurantId") !== undefined && $.cookie("restaurantId") !== 'null') {
-            alert($.cookie("restaurantId"));
             window.location = "content.html";
         }
         var restaurantBaseUrl = "http://202.120.40.175:21104";
