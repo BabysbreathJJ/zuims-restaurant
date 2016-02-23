@@ -227,6 +227,7 @@ a.navbar-brand {
 }
 
 #data-statistics {
+    overflow: visible;
     min-height: 700px;
 }
 
@@ -904,15 +905,22 @@ ul li, ol li {
     font-weight: 600;
 }
 
-.seller{
+.seller {
     min-width: 400px;
 }
+
 .mb0 {
     margin-bottom: 0px !important;
 }
+
 .tc {
     text-align: center;
 }
+
 .font16 {
     font-size: 16px;
+}
+
+.bootstrap-datetimepicker-widget {
+    z-index: 10000;
 }

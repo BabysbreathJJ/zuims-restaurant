@@ -9,10 +9,10 @@
                     <option ng-repeat="city in cities" value="{{city.name}}">{{city.name}}</option>
                 </select>
             </td>
-            <td width="20%">
+            <td width="35%">
                 <span>酒店名称</span>
                 <input type="text" class="form-control" ng-model="basicInfo.hotelName" disabled></td>
-            <td width="20%">
+            <td width="30%">
                 <span>餐厅名称</span>
                 <input type="text" class="form-control" ng-model="basicInfo.restaurantName"></td>
             <td>
@@ -21,6 +21,11 @@
                     <option ng-repeat="product in products" value="{{product.name}}">{{product.name}}</option>
                 </select>
             </td>
+        </tr>
+    </table>
+
+    <table class="table table-bordered" style="width: 95%; margin: 0px auto;">
+        <tr>
             <td>
                 优惠类型
                 <select class="form-control" ng-model="basicInfo.discountType[0]">
@@ -28,9 +33,13 @@
                     <option value="none">暂无</option>
                 </select>
             </td>
-            <td width="10%">
-                人均价格<span class="explain" style="padding-left: 10px"><i>请包含服务费</i></span>
-                <input class="form-control" type="number" ng-model="basicInfo.averagePrice">
+            <td width="25%">
+                午餐价格<span class="explain" style="padding-left: 10px"><i>请包含服务费</i></span>
+                <input class="form-control" type="number" ng-model="basicInfo.lunchPrice">
+            </td>
+            <td width="25%">
+                晚餐价格<span class="explain" style="padding-left: 10px"><i>请包含服务费</i></span>
+                <input class="form-control" type="number" ng-model="basicInfo.supperPrice">
             </td>
             <td>
                 免费泊车
