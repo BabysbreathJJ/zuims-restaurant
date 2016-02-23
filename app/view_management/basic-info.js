@@ -70,7 +70,7 @@ angular.module('myApp.basicInfo', [])
         $scope.saveBasicInfo = function () {
             BasicInfoService.updateBasicInfo($scope.basicInfo)
                 .success(function (data) {
-                    $("#restaurantName").text(data.restaurantName);
+                    $("#restaurantName").text(data.hotelName +data.restaurantName);
                     $scope.basicInfo = data;
                     $scope.$emit('newRestaurantInfo', data);
                     alert("信息保存成功!");

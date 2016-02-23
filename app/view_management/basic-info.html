@@ -29,7 +29,7 @@
                 </select>
             </td>
             <td width="10%">
-                人均价格
+                人均价格<span class="explain" style="padding-left: 10px"><i>请包含服务费</i></span>
                 <input class="form-control" type="number" ng-model="basicInfo.averagePrice">
             </td>
             <td>
@@ -45,8 +45,8 @@
     <table class="table table-bordered" style="width: 95%; margin: 0px auto;margin-bottom: 20px">
         <tr>
             <td colspan="3">
-                餐厅详细地址<span class="explain" style="padding-left: 10px"><i>城市不用重复填写</i></span>
-                <input type="datetime" class="form-control" placeholder="城市不用重复填写"
+                餐厅详细地址<span class="explain" style="padding-left: 10px"><i>如需修改请联系销售人员</i></span>
+                <input type="text" class="form-control" placeholder="城市不用重复填写"
                        ng-model="basicInfo.restaurantAddress" disabled/>
             </td>
 
