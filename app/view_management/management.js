@@ -190,9 +190,18 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 $("#restaurantName").text($scope.basicInfo.hotelName + $scope.basicInfo.restaurantName);
 
                 ManageService.getSellerInfo(data.sellerId).success(function (data) {
-                        $("#sellerName").text(data.fullname);
-                        $("#sellerTel").text(data.mobile);
-                        $("#sellerEmail").text(data.email);
+                        if (data.fullName !== null)
+                            $("#sellerName").text(data.fullname);
+                        else
+                            $("#sellerName").text("暂无信息");
+                        if (data.mobile !== null)
+                            $("#sellerTel").text(data.mobile);
+                        else
+                            $("#sellerTel").text("暂无信息");
+                        if (data.email !== null)
+                            $("#sellerEmail").text(data.email);
+                        else
+                            $("#sellerEmail").text("暂无信息");
                     })
                     .error(function () {
                         $("#sellerName").text("暂无信息");
