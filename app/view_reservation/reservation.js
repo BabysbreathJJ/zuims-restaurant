@@ -83,7 +83,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                     data[i].orderDate = dateTime[0];
                     data[i].orderTimer = dateTime[1].substr(0, 5);
 
-                    if (data[i].state == "已完成") {
+                    if (data[i].state == "已就餐") {
                         data[i].orderHandled = true;
                         //console.log("已完成——" + data[i]);
 
