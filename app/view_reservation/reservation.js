@@ -193,7 +193,11 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
 
         $scope.notify = function (order) {
             var newScope = $scope.$new(true);
-            newScope.name = order.userLastName + order.userFirstName;
+            if (order.userFirstName == undefined || order.userFirstName == null) {
+                newScope.name = order.userLastName;
+            }
+            else
+                newScope.name = order.userLastName + order.userFirstName;
             newScope.phone = order.phoneId;
             newScope.level = order.userVipLevel;
             newScope.date = order.orderTime.split(" ")[0];
