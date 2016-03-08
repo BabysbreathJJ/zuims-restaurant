@@ -88,7 +88,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                         //console.log("已完成——" + data[i]);
 
                     }
-                    else if (data[i].state == "未确认") {
+                    else if (data[i].state == "待确认") {
                         var index = data.indexOf(data[i]);
                         $scope.myNotifications.push(data[i]);
                         $scope.removeIndex.push(index);
@@ -172,7 +172,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
         // 监听推送消息
         push.on('message', function (data) {
             //console.log(JSON.stringify(data));
-            if (data.order.state == '未确认')
+            if (data.order.state == '待确认')
                 $scope.notify(data.order);
             else {
 
