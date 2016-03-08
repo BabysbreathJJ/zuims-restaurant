@@ -152,7 +152,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
 
     }])
     .controller('ManagementCtrl', function ($scope, $location, $anchorScroll, ManageService, ngDialog, BaseUrl, restaurantPort) {
-        if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
+        if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == 'null' || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
             window.location = "/";
         }
         $scope.goto = function (x) {
