@@ -52,6 +52,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
 <script>
+    jQuery.support.cors = true;
     $(document).ready(function () {
         if ($.cookie("restaurantId") !== undefined && $.cookie("restaurantId") !== 'null') {
             window.location = "content.html";
