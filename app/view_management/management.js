@@ -28,7 +28,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             }
         };
     })
-    .factory('ManageService', ['$http', 'BaseUrl', 'merchantPort', 'managementPort', function ($http, BaseUrl, merchantPort, managementPort) {
+    .factory('ManageService', ['$http', 'BaseUrl', 'merchantPort', 'managementPort', 'userPort',function ($http, BaseUrl, merchantPort, managementPort, userPort) {
         //var restaurantBaseUrl = "http://202.120.40.175:21104";
         var restaurantBaseUrl = BaseUrl + merchantPort;
 
@@ -113,7 +113,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
         var getSellerInfoRequest = function (sellerId) {
             return $http({
                 method: "GET",
-                url: BaseUrl + managementPort + "/users/" + sellerId,
+                url: BaseUrl + userPort + "/users/" + sellerId,
                 crossDomain: true
             });
         }
