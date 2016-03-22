@@ -115,10 +115,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 method: "GET",
                 url: BaseUrl + userPort + "/roles/marketing/users",
                 crossDomain: true,
-                "headers": {
-                    "authorization": "Basic YWRtaW46aW5jb25ncnVvdXM=",
-                    "cache-control": "no-cache",
-                    "postman-token": "cd862e34-4ae3-4c40-581a-0c26b4913fa5"
+                headers: {
+                    'Content-Type' : 'application/json;charset=UTF-8',
+                    "authorization": "Basic YWRtaW46aW5jb25ncnVvdXM="
                 }
             });
         }
@@ -195,25 +194,34 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 $("#restaurantName").text($scope.basicInfo.hotelName + $scope.basicInfo.restaurantName);
                 var sellerId = data.sellerId;
                 var seller;
-                ManageService.getSellerInfo().success(function (data) {
+                ManageService.getSellerInfo()
+                    .success(function (data) {
                         for(var i = 0; i < data.length; i++){
                             if(data[i].id == sellerId){
                                 seller = data[i];
                                 break;
                             }
                         }
-                        if (seller.fullName !== null)
-                            $("#sellerName").text(seller.fullname);
-                        else
+                        if(seller == null){
                             $("#sellerName").text("暂无信息");
-                        if (seller.mobile !== null)
-                            $("#sellerTel").text(seller.mobile);
-                        else
                             $("#sellerTel").text("暂无信息");
-                        if (seller.email !== null)
-                            $("#sellerEmail").text(seller.email);
-                        else
                             $("#sellerEmail").text("暂无信息");
+                        }
+                        else{
+                            if (seller.fullName !== null)
+                                $("#sellerName").text(seller.fullname);
+                            else
+                                $("#sellerName").text("暂无信息");
+                            if (seller.mobile !== null)
+                                $("#sellerTel").text(seller.mobile);
+                            else
+                                $("#sellerTel").text("暂无信息");
+                            if (seller.email !== null)
+                                $("#sellerEmail").text(seller.email);
+                            else
+                                $("#sellerEmail").text("暂无信息");
+
+                        }
                     })
                     .error(function () {
                         $("#sellerName").text("暂无信息");
