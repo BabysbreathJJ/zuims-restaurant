@@ -11,7 +11,7 @@ angular.module('myApp', [
     ])
     .constant('BaseUrl', 'http://115.159.87.129:')
     //.constant('BaseUrl', 'http://202.120.40.175:')
-    .constant('userPort', '8001')
+    .constant('userPort', '8008')
     .constant('merchantPort', '8004')
     //.constant('merchantPort', '21104')
     .constant('managementPort', '8008')

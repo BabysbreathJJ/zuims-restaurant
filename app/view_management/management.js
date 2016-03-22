@@ -110,11 +110,16 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             });
         };
 
-        var getSellerInfoRequest = function (sellerId) {
+        var getSellerInfoRequest = function () {
             return $http({
                 method: "GET",
-                url: BaseUrl + userPort + "/users/" + sellerId,
-                crossDomain: true
+                url: BaseUrl + userPort + "/roles/marketing/users",
+                crossDomain: true,
+                "headers": {
+                    "authorization": "Basic YWRtaW46aW5jb25ncnVvdXM=",
+                    "cache-control": "no-cache",
+                    "postman-token": "cd862e34-4ae3-4c40-581a-0c26b4913fa5"
+                }
             });
         }
         return {
@@ -145,8 +150,8 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             updatePersisInfo: function (persistInfo) {
                 return updatePersistInfoRequest(persistInfo);
             },
-            getSellerInfo: function (sellerId) {
-                return getSellerInfoRequest(sellerId);
+            getSellerInfo: function () {
+                return getSellerInfoRequest();
             }
         }
 
@@ -188,18 +193,25 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                 delete $scope.basicInfo.latitude;
                 delete $scope.basicInfo.longitude;
                 $("#restaurantName").text($scope.basicInfo.hotelName + $scope.basicInfo.restaurantName);
-
-                ManageService.getSellerInfo(data.sellerId).success(function (data) {
-                        if (data.fullName !== null)
-                            $("#sellerName").text(data.fullname);
+                var sellerId = data.sellerId;
+                var seller;
+                ManageService.getSellerInfo().success(function (data) {
+                        for(var i = 0; i < data.length; i++){
+                            if(data[i].id == sellerId){
+                                seller = data[i];
+                                break;
+                            }
+                        }
+                        if (seller.fullName !== null)
+                            $("#sellerName").text(seller.fullname);
                         else
                             $("#sellerName").text("暂无信息");
-                        if (data.mobile !== null)
-                            $("#sellerTel").text(data.mobile);
+                        if (seller.mobile !== null)
+                            $("#sellerTel").text(seller.mobile);
                         else
                             $("#sellerTel").text("暂无信息");
-                        if (data.email !== null)
-                            $("#sellerEmail").text(data.email);
+                        if (seller.email !== null)
+                            $("#sellerEmail").text(seller.email);
                         else
                             $("#sellerEmail").text("暂无信息");
                     })
