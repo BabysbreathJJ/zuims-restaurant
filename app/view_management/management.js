@@ -157,7 +157,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
     }])
     .controller('ManagementCtrl', function ($scope, $location, $anchorScroll, ManageService, ngDialog, BaseUrl, restaurantPort) {
         if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == 'null' || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
-            window.location = "/";
+            window.location = $.cookie("loginPath");
         }
         $scope.goto = function (x) {
 
@@ -173,7 +173,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
 
         $("#logout").click(function () {
             $.cookie("restaurantId", null);
-            window.location = "/merchant/";
+            window.location = $.cookie("loginPath");
         });
         if ($location.hash() == 'info-management') {
             console.log($location.hash());

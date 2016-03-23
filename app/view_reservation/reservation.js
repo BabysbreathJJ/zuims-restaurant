@@ -60,7 +60,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
     .controller("ReservationCtrl", ["$scope", "Notification", "ngDialog", "OrderService", "$location", function ($scope, Notification, ngDialog, OrderService, $location) {
 
         if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
-            window.location = "/";
+            window.location = $.cookie("loginPath");
         }
         //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
         //$scope.displayedCollection = [].concat($scope.rowCollection);
