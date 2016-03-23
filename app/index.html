@@ -58,6 +58,7 @@
 <script>
     jQuery.support.cors = true;
     $(document).ready(function () {
+        console.log("pathname = " + location.pathname);
         if ($.cookie("restaurantId") !== undefined && $.cookie("restaurantId") !== 'null') {
             window.location = "content.html";
         }
