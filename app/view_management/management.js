@@ -173,7 +173,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
 
         $("#logout").click(function () {
             $.cookie("restaurantId", null);
-            window.location = "/";
+            window.location = "/merchant/";
         });
         if ($location.hash() == 'info-management') {
             console.log($location.hash());
