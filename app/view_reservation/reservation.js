@@ -153,8 +153,8 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
         };
 
         //推送开始
-        var appId = '8d3bm5jtWzUowvOw2GJLqUxI-gzGzoHsz';
-        var appKey = '4dTvIzaFOoHU6Xatd7rDIrvw';
+        var appId = '6HR0iwp5ALyvLRHtq70BhYy8-gzGzoHsz';
+        var appKey = 'HmiHqJ9dJ3O26BP5V175HdG8';
         var push = AV.push({
             appId: appId,
             appKey: appKey
