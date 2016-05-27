@@ -243,7 +243,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             ManageService.getHomePage($.cookie("restaurantId"))
                 .success(function (data) {
 
-                    $scope.restaurantInfo.homePagePic = BaseUrl + restaurantPort + data.picname;
+                    $scope.restaurantInfo.homePagePic = data.picname;
                     $scope.restaurantInfo.restaurantTeles = $scope.restaurantInfo.restaurantTele.split(" ");
                     $scope.restaurantInfo.introduction = data.introduction;
 
@@ -355,7 +355,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
                         $scope.details[0].picname = BaseUrl + restaurantPort + '/restaurants/images?relativePath=NonePicture2.jpg';
                     }
                     for (var i = 0; i < $scope.details.length; i++) {
-                        $scope.details[i].picname = BaseUrl + restaurantPort + $scope.details[i].picname;
+                        $scope.details[i].picname = $scope.details[i].picname;
                     }
 
                     if ($scope.discount) {
