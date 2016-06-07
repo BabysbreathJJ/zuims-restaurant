@@ -9,7 +9,7 @@ angular.module('myApp', [
         'myApp.chart',
         'myApp.basicInfo'
     ])
-    .constant('BaseUrl', 'http://zui.ms/')
+    .constant('BaseUrl', 'http://api.zui.ms/')
     //.constant('BaseUrl', 'http://115.159.87.129:')
     //.constant('BaseUrl', 'http://202.120.40.175:')
 

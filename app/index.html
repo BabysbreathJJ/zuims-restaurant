@@ -61,7 +61,7 @@
         if ($.cookie("restaurantId") !== undefined && $.cookie("restaurantId") !== 'null') {
             window.location = "content.html";
         }
-        var restaurantBaseUrl = "http://zui.ms/api/merchant";
+        var restaurantBaseUrl = "http://api.zui.ms/api/merchant";
         $("#loginBtn").click(function () {
             var restaurantInfo = {
                 "account": $("#account").val(),
