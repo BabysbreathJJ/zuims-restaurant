@@ -340,7 +340,7 @@ a:hover {
 #recommend-pic {
     display: block;
     float: left;
-    width: 38%;
+    width: 32%;
     /*height: 570px;*/
 }
 
@@ -351,7 +351,12 @@ a:hover {
 
 #detail-pic {
     float: left;
-    width: 60%;
+    width: 34%;
+}
+
+#list-pic {
+    float: left;
+    width: 33%;
 }
 
 .cropAreaRecommend {
@@ -923,4 +928,53 @@ ul li, ol li {
 
 .bootstrap-datetimepicker-widget {
     z-index: 10000;
+}
+
+.lty-pic-preview {
+    padding-left: 24px;
+    padding-right: 26px;
+    margin-bottom: 8px;
+}
+
+.lty-tag-a {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.lty-modify-pic-word {
+    background: #d58512;
+    border: 1px solid #FF7256;
+    border-radius: 4px;
+    color: #FFFFFF;
+    width: inherit;
+    margin-left: 0px;
+}
+
+.lty-modify-pic-block {
+    border: 1px solid #d58512;
+    min-height: 69px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    padding-bottom: 16px;
+    padding-left: 0px;
+}
+
+.lty-modify-pic-block > div {
+    display: inline-block;
+}
+
+/*.lty-modify-pic-list {*/
+    /*padding-top: 16px;*/
+    /*padding-bottom: 0px;*/
+    /*padding-left: 6px;*/
+    /*margin-top: 0px;*/
+/*}*/
+
+.lty-dialog {
+    padding-top: auto;
+    padding-bottom: auto;
+    width: 70%;
+    height: 60%;
+    max-width: inherit;
+    max-height: inherit;
 }

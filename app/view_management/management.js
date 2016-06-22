@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
+angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular-sortable-view'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/management', {
             templateUrl: 'view_management/management.html',
@@ -324,7 +324,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
         };
 
     })
-    .controller('ImageDetailCtrl', function ($scope, ManageService, ngDialog, BaseUrl, restaurantPort) {
+    .controller('ImageDetailCtrl', function ($scope, ManageService, ngDialog, BaseUrl, restaurantPort, ngDialogProvider) {
 
         $scope.myDetailImage = '';
         $scope.myDetailCroppedImage = '';
@@ -424,6 +424,19 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog'])
             $scope.myDetailCroppedImage = '';
             $scope.picDescription = '';
             $scope.detailPicShow = false;
+        };
+
+        $scope.editDetail = function(){
+            $scope.ltypicName = "餐厅详情图片";
+            ManageService.getDetail($.cookie("restaurantId"))
+                .success(function (data) {
+                    $scope.ltyAllDetailPic = data;
+                });
+            ngDialog.open({
+                templateUrl: 'editPic.html',
+                scope: $scope,
+                appendClassName: 'lty-dialog'
+            });
         };
 
     })
