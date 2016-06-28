@@ -24,7 +24,10 @@
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
     "moment": "~2.11.1",
     "moment-timezone": "~0.5.0",
-    "ng-dialog": "~0.5.6",
-    "ng-img-crop-full-extended": "ngImgCropFullExtended#~0.4.9"
+    "ng-img-crop-full-extended": "ngImgCropFullExtended#~0.4.9",
+    "ng-dialog": "^0.6.2"
+  },
+  "resolutions": {
+    "angular": "~1.5"
   }
 }

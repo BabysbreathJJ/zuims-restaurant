@@ -32,7 +32,7 @@
             <a href="javascript:;" class="file lty-tag-a"><span class="glyphicon glyphicon-picture"></span>选择图片
                 <input type="file" accept="image/*" name="recommend" id="fileInputRecommend">
             </a>
-            <a href="javascript:;" class="file btn-warning lty-tag-a" ng-click="previewHomePage()"><span
+            <a href="javascript:;" class="file btn-warning lty-tag-a" ng-click="editHomePage()"><span
                     class="glyphicon glyphicon-edit"></span>编辑图片
             </a>
 
@@ -46,23 +46,23 @@
         <div class="clearfix"></div>
     </div>
 
-    <div id="list-pic" ng-controller="ImageDetailCtrl">
+    <div id="list-pic" ng-controller="ImageListCtrl">
         列表展示图片
         <div><span class="explain">建议:图片分辨率:640*420,横图</span></div>
 
-        <div ng-show="false">
+        <div ng-show="uploadListImageShow">
             <div class="cropAreaDetail">
-                <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.52380952"
+                <img-crop image="myListImage" area-type="rectangle" aspect-ratio="1.52380952"
                           result-image-size='{w: 640,h: 420}'
-                          result-image='myDetailCroppedPic'
+                          result-image='myListCroppedPic'
                 ></img-crop>
 
             </div>
             <!--<div>图片预览:</div>-->
-            <div class="croppedPic" style="display: none"><img ng-src="{{myDetailCroppedPic}}"/></div>
+            <div class="croppedPic" style="display: none"><img ng-src="{{myListCroppedPic}}"/></div>
             <div class="picDetailDescription">
                 <input class="form-control" type="text" placeholder="图片描述,限20字,与图片同时显示在用户手机上"
-                       ng-model="picDescription"/>
+                       ng-model="listPicDescription"/>
             </div>
             <div class="image-upload">
                 <a href="javascript:;" class="file" ng-click="uploadPic()">
@@ -73,17 +73,17 @@
                 </a>
             </div>
         </div>
-        <div class="image-upload" ng-hide="false">
+        <div class="image-upload" ng-hide="uploadListImageShow">
             <a href="javascript:;" class="file lty-tag-a"><span
                     class="glyphicon glyphicon-picture"></span>选择图片
-                <input type="file" accept="image/*" name="detail" id="fileInputList" >
+                <input type="file" accept="image/*" name="listImage" id="InputListImage" >
             </a>
-            <a href="javascript:;" class="file btn-warning lty-tag-a" ng-click="previewDetail()">
+            <a href="javascript:;" class="file btn-warning lty-tag-a" ng-click="editListPic()">
                 <span class="glyphicon glyphicon-edit"></span>编辑图片
             </a>
         </div>
-        <div class="image-upload" ng-hide="false">
-            <a href="javascript:;" class="file btn-warning lty-pic-preview lty-tag-a" ng-click="previewDetail()"
+        <div class="image-upload" ng-hide="uploadListImageShow">
+            <a href="javascript:;" class="file btn-warning lty-pic-preview lty-tag-a" ng-click="previewList()"
             style="padding-left: 41px; padding-right: 41px" >
                 <span class="glyphicon glyphicon-search"></span>列表图文信息预览
             </a>
@@ -249,28 +249,104 @@
 <script type="text/ng-template" id="editPic.html">
     <!--内容开始-->
     <div>
-        <a class="lty-modify-pic-word">{{ltypicName}}</a>
+        <a class="lty-modify-pic-word">展示图片</a>
     </div>
     <div class="lty-modify-pic-block" sv-root>
-        <!--<ul class="list-unstyled img-list pos-r overflow-h lty-modify-pic-list" ng-repeat="ltyDetailPic in ltyAllDetailPic">-->
-            <!--<div sv-part="ltyDetailPic">-->
-                <!--<li class="fl pl10 border-r-5" ng-repeat="detail in ltyDetailPic" sv-element>-->
-                    <!--<img src="{{detail.picname}}" class="per100 small-pic" change-pic-->
-                         <!--description="{{detail.introduction}}" draggable="false" >-->
-                    <!--<br>-->
-                <!--</li>-->
-            <!--</div>-->
-        <!--</ul>-->
-        <div ng-repeat="detail in ltyAllDetailPic" sv-part="detail">
-            <img src="{{detail.picname}}" class="per100 small-pic" change-pic
-            description="{{detail.introduction}}" draggable="false" sv-element>
+        <div sv-part="ltyAllPic.ShowPic">
+            <div ng-repeat="show in ltyAllPic.ShowPic" style="display: inline-block" sv-element>
+                <img src="{{show.picname}}" class="per100 lty-detail-pic">
+                <div class="lty-mlra">
+                    <a href="javascript:;" class="lty-btn" ng-click="cancelShowPic(show)">
+                        取消展示
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-
     <div>
-        <a class="lty-modify-pic-word">删除图片</a>
+        <a class="lty-modify-pic-word">已上传图片</a>
     </div>
-    <div class="lty-modify-pic-block">
+    <div class="lty-modify-pic-block" >
+        <div ng-repeat="detail in ltyAllPic.DetailPic" style="display: inline-block" >
+            <img src="{{detail.picname}}" class="per100 lty-detail-pic" change-pic>
+            <div class="lty-mlra">
+                <a href="javascript:;" class="lty-btn" ng-click="showPic(detail)">
+                    展示
+                </a>
+                <a href="javascript:;" class="lty-btn" ng-click="deletePic(detail)">
+                    删除
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" class="file btn-warning lty-tag-a" autofocus="false" ng-click="setDetail()">
+        <span class="glyphicon glyphicon-file" autofocus="false"></span>保存修改
+    </a>
+</script>
 
+<script type="text/ng-template" id="editFrontPic.html">
+    <!--内容开始-->
+    <div>
+        <a class="lty-modify-pic-word">首页展示图片</a>
+    </div>
+    <div class="lty-modify-pic-block" style="min-height: 132px">
+        <img src="{{FrontPic.picname}}" class="per100 lty-detail-pic" style="width: 86px; height: 116px">
+    </div>
+    <div>
+        <a class="lty-modify-pic-word">已上传图片</a>
+    </div>
+    <div class="lty-modify-pic-block" style="min-height: 159px">
+        <div ng-repeat="detail in FrontPics" style="display: inline-block" >
+            <img src="{{detail.picname}}" class="per100 lty-detail-pic" style="width: 86px; height: 116px">
+            <div class="lty-mlra">
+                <a href="javascript:;" class="lty-btn" ng-click="setFront(detail)">
+                    展示
+                </a>
+                <a href="javascript:;" class="lty-btn" ng-click="deleteCFront(detail)">
+                    删除
+                </a>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="editListPic.html">
+    <!--内容开始-->
+    <div>
+        <a class="lty-modify-pic-word">首页展示图片</a>
+    </div>
+    <div class="lty-modify-pic-block" style="min-height: 85px">
+        <img src="{{ListPic.picname}}" class="per100 lty-detail-pic">
+    </div>
+    <div>
+        <a class="lty-modify-pic-word">已上传图片</a>
+    </div>
+    <div class="lty-modify-pic-block" >
+        <div ng-repeat="detail in ListPics" style="display: inline-block" >
+            <img src="{{detail.picname}}" class="per100 lty-detail-pic" change-pic>
+            <div class="lty-mlra">
+                <a href="javascript:;" class="lty-btn" ng-click="setList(detail)">
+                    展示
+                </a>
+                <a href="javascript:;" class="lty-btn" ng-click="deleteCList(detail)">
+                    删除
+                </a>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="previewList.html">
+    <!--内容开始-->
+    <div class="pd15 mt70" style="margin-top: 20px">
+        <div class="border border-r-5 bg-white padding">
+            <div class="pos-r">
+                <img src="{{listPic.picname}}" class="per100">
+
+                <div class="pos-a tc per100 bottom20">
+                    <p class="bg-t display-ib per90 ht40 l-ht40 font-white">{{listPic.description}}</p>
+                </div>
+            </div>
+        </div>
     </div>
 </script>

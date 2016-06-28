@@ -370,8 +370,8 @@ a:hover {
 .cropAreaDetail {
     background: #E4E4E4;
     overflow: hidden;
-    width: 640px;
-    height: 420px;
+    width: 380px;
+    height: 250px;
     margin: 0 auto;
 }
 
@@ -383,7 +383,7 @@ a:hover {
 .picDetailDescription {
     margin: 0 auto;
     margin-top: 10px;
-    width: 640px;
+    width: 380px;
 
 }
 
@@ -951,17 +951,16 @@ ul li, ol li {
 }
 
 .lty-modify-pic-block {
-    border: 1px solid #d58512;
-    min-height: 69px;
+    border: 2px dashed #d58512;
+    min-height: 112px;
     margin-top: 10px;
     margin-bottom: 25px;
-    padding-bottom: 16px;
-    padding-left: 0px;
+    padding: 3px;
+    border-radius: 4px;
+    overflow: auto;
+    width: 100%;
 }
 
-.lty-modify-pic-block > div {
-    display: inline-block;
-}
 
 /*.lty-modify-pic-list {*/
     /*padding-top: 16px;*/
@@ -970,11 +969,24 @@ ul li, ol li {
     /*margin-top: 0px;*/
 /*}*/
 
-.lty-dialog {
-    padding-top: auto;
-    padding-bottom: auto;
-    width: 70%;
-    height: 60%;
-    max-width: inherit;
-    max-height: inherit;
+.lty-detail-pic {
+    border: 1px solid #d58512;
+    width: 86px;
+    height: 69px;
+    margin: 3px;
+}
+
+.lty-btn{
+    margin: 0px auto;
+    text-align: center;
+    font-size: 16px;
+    color: #d58512;
+    padding-top: 0px;
+    padding-bottom: 4px;
+}
+
+.lty-mlra{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }

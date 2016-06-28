@@ -32,10 +32,11 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
         //var restaurantBaseUrl = "http://202.120.40.175:21104";
         var restaurantBaseUrl = BaseUrl + merchantPort;
 
+        //上传候选集
         var uploadHomePagePicRequest = function (imageInfo) {
             return $http({
                 method: 'POST',
-                url: restaurantBaseUrl + '/restaurant/uploadFrontImage',
+                url: restaurantBaseUrl + '/restaurant/uploadCFrontImage',
                 data: imageInfo,
                 headers: {'Content-Type': 'application/json;charset=UTF-8'},
                 crossDomain: true
@@ -45,7 +46,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
         var uploadDetailPicRequest = function (imageInfo) {
             return $http({
                 method: 'POST',
-                url: restaurantBaseUrl + '/restaurant/uploadNormalImage',
+                url: restaurantBaseUrl + '/restaurant/uploadCNormalImage',
                 data: imageInfo,
                 headers: {'Content-Type': 'application/json;charset=UTF-8'},
                 crossDomain: true
@@ -62,14 +63,15 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
         var getHomePageRequest = function (restaurantId) {
             return $http({
                 method: "GET",
-                url: restaurantBaseUrl + '/restaurant/frontimage?id=' + restaurantId
+                url: restaurantBaseUrl + '/restaurant/Cfrontimage/?id=' + restaurantId
             });
         };
+
 
         var getDetailRequest = function (restaurantId) {
             return $http({
                 method: "GET",
-                url: restaurantBaseUrl + '/restaurant/normalimage?id=' + restaurantId
+                url: restaurantBaseUrl + '/restaurant/Cnormalimage?id=' + restaurantId
             });
         };
 
@@ -121,6 +123,84 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                 }
             });
         }
+
+        //By lty
+        var newGetHomePageRequest = function (restaurantId) {
+            return $http({
+                method: "GET",
+                url: restaurantBaseUrl + '/restaurant/frontimage/get?id=' + restaurantId
+            });
+        };
+
+        var setFrontImageRequest = function (setInfo) {
+            return $http({
+                method: 'GET',
+                url: restaurantBaseUrl + '/restaurant/frontimage/set?id=' + setInfo.restaurantId
+                    + '&pictureId=' + setInfo.pictureId,
+                crossDomain: true
+            });
+
+        };
+
+        var uploadCListImageRequest = function (imageInfo) {
+            return $http({
+                method: 'POST',
+                url: restaurantBaseUrl + '/restaurant/uploadCListImage',
+                data: imageInfo,
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        };
+
+        var getCListImageRequest = function (restaurantId){
+            return $http({
+                method: 'GET',
+                url: restaurantBaseUrl + '/restaurant/Clistimage?id=' + restaurantId,
+                crossDomain: true
+            });
+        };
+
+        var getListImageRequest = function (restaurantId){
+            return $http({
+                method: 'GET',
+                url: restaurantBaseUrl + '/restaurant/listimage/get?id=' + restaurantId,
+                crossDomain: true
+            });
+        };
+
+        var setListImageRequest = function(restaurantId, pictureId){
+            return $http({
+                method: 'GET',
+                url: restaurantBaseUrl + '/restaurant/listimage/set?id='
+                    + restaurantId + '&pictureId=' + pictureId,
+                crossDomain: true
+            });
+        };
+
+        var deleteDetailRequest = function(pictureId) {
+            return $http({
+                method: 'GET',
+                url: restaurantBaseUrl + '/restaurant/image/delete?pictureId=' + pictureId
+            });
+        };
+
+        var setDetailPicRequest = function(setInfo){
+            return $http({
+                method: 'POST',
+                url: restaurantBaseUrl + '/restaurant/normalimage/set',
+                data: setInfo,
+                crossDomain: true
+            });
+        }
+
+        var getDetailShowPicRequest = function(restaurantId){
+            return $http({
+                method: 'GET',
+                url: restaurantBaseUrl + '/restaurant/normalimage/get?id='+restaurantId,
+                crossDomain: true
+            });
+        }
+
         return {
             updatePwd: function (pwdInfo) {
                 return updatePwdRequest(pwdInfo);
@@ -137,6 +217,12 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             getHomePage: function (restaurantId) {
                 return getHomePageRequest(restaurantId);
             },
+            newGetHomePage: function(restaurantId) {
+                return newGetHomePageRequest(restaurantId);
+            },
+            setFrontImage: function(setInfo) {
+                return setFrontImageRequest(setInfo);
+            },
             getDetail: function (restaurantId) {
                 return getDetailRequest(restaurantId);
             },
@@ -151,6 +237,27 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             },
             getSellerInfo: function () {
                 return getSellerInfoRequest();
+            },
+            uploadCListImage: function(imageInfo) {
+                return uploadCListImageRequest(imageInfo);
+            },
+            deleteDetail: function(pictureId){
+                return deleteDetailRequest(pictureId);
+            },
+            setDetailPic: function(setInfo){
+                return setDetailPicRequest(setInfo);
+            },
+            getDetailShowPic: function(restaurantId){
+                return getDetailShowPicRequest(restaurantId);
+            },
+            getCListImage: function(restaurantId){
+                return getCListImageRequest(restaurantId);
+            },
+            getListImage: function(restaurantId){
+                return getListImageRequest(restaurantId);
+            },
+            setListImage: function(restaurantId, pictureId){
+                return setListImageRequest(restaurantId, pictureId);
             }
         }
 
@@ -159,6 +266,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
         if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == 'null' || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
             window.location = $.cookie("loginPath");
         }
+        var dialog;
         $scope.goto = function (x) {
 
             var newHash = x;
@@ -240,7 +348,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
 
         //首页图文信息预览
         $scope.previewHomePage = function () {
-            ManageService.getHomePage($.cookie("restaurantId"))
+            ManageService.newGetHomePage($.cookie("restaurantId"))
                 .success(function (data) {
 
                     $scope.restaurantInfo.homePagePic = data.picname;
@@ -266,6 +374,45 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                 });
         };
 
+        $scope.editHomePage = function(){
+            ManageService.newGetHomePage($.cookie("restaurantId"))
+                .success(function(data){
+                    $scope.FrontPic = data;
+                });
+            ManageService.getHomePage($.cookie("restaurantId"))
+                .success(function(data){
+                    $scope.FrontPics = data;
+                });
+            dialog = ngDialog.open({
+                templateUrl: 'editFrontPic.html',
+                scope: $scope,
+                width: 600
+            });
+        };
+
+        $scope.deleteCFront = function(detail){
+            ManageService.deleteDetail(detail.pictureId)
+                .success(function(data){
+                    var index = $scope.FrontPics.indexOf(detail);
+                    $scope.FrontPics.splice(index, 1);
+                    alert("图片删除成功");
+                });
+        };
+
+        $scope.setFront = function(detail){
+            var setInfo = {};
+            setInfo.restaurantId = $.cookie("restaurantId");
+            setInfo.pictureId = detail.pictureId;
+            ManageService.setFrontImage(setInfo)
+                .success(function(data){
+                    alert("首页图片设置成功");
+                    var index = $scope.FrontPics.indexOf(detail);
+                    $scope.FrontPics.splice(index, 1);
+                    $scope.FrontPics.push($scope.FrontPic);
+                    $scope.FrontPic = detail;
+                });
+
+        };
 
     })
     .controller('ImageRecommendCtrl', function ($scope, ManageService) {
@@ -324,21 +471,119 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
         };
 
     })
-    .controller('ImageDetailCtrl', function ($scope, ManageService, ngDialog, BaseUrl, restaurantPort, ngDialogProvider) {
+
+    .controller('ImageListCtrl', function ($scope, ManageService, ngDialog, BaseUrl, restaurantPort) {
+        $scope.uploadListImageShow = false;
+        $scope.myListCroppedPic = '';
+        $scope.myListImage = '';
+        $scope.listPicDescription = '';
+        var handleFileSelect = function (evt) {
+
+            var target = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
+
+            var file = target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                $scope.$apply(function ($scope) {
+                    $scope.myListImage = evt.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+            $scope.uploadListImageShow = true;
+
+        };
+        angular.element(document.querySelector('#InputListImage')).on('change', handleFileSelect);
+        $scope.uploadPic = function () {
+            $scope.begin = $scope.myListCroppedPic.indexOf("base64") + 7;
+            $scope.myUploadPic = $scope.myListCroppedPic.substr($scope.begin);
+
+
+            if ($scope.listPicDescription.length > 20) {
+                alert('图片描述不能超过20个字!');
+                return;
+            }
+
+            $scope.uploadPicInfo = {
+                "imageValue": $scope.myUploadPic,
+                "restaurantId": parseInt($.cookie("restaurantId")),
+                "pictureIntro": $scope.listPicDescription
+            };
+            $scope.uploadInfo = JSON.stringify($scope.uploadPicInfo);
+            ManageService.uploadCListImage($scope.uploadInfo)
+                .success(function (data, status) {
+                    if (data.success == true) {
+                        alert("图片上传成功,可以点击首页图文信息预览进行查看!");
+                        $scope.listPicDescription = "";
+                        $scope.uploadListImageShow = false;
+                    }
+                });
+        };
+        $scope.removePic = function() {
+            $scope.uploadListImageShow = false;
+            $scope.myListImage = '';
+            $scope.listPicDescription = '';
+            $scope.myListCroppedPic = '';
+
+        };
+        $scope.editListPic = function() {
+            ManageService.getCListImage($.cookie("restaurantId"))
+                .success(function(data){
+                    $scope.ListPics = data;
+                });
+            ManageService.getListImage($.cookie("restaurantId"))
+                .success(function(data){
+                    $scope.ListPic = data;
+                });
+            ngDialog.open({
+                templateUrl: 'editListPic.html',
+                scope: $scope,
+                width: 600
+            });
+        };
+
+        $scope.deleteCList = function(detail){
+            ManageService.deleteDetail(detail.pictureId)
+                .success(function(data){
+                    var index = $scope.ListPics.indexOf(detail);
+                    $scope.ListPics.splice(index, 1);
+                    alert("图片删除成功");
+                });
+        };
+
+        $scope.setList = function(detail){
+            ManageService.setListImage($.cookie("restaurantId"), detail.pictureId)
+                .success(function(data){
+                    var index = $scope.ListPics.indexOf(detail);
+                    $scope.ListPics.splice(index, 1);
+                    $scope.ListPics.push($scope.ListPic);
+                    $scope.ListPic = detail;
+                    alert("图片删除成功");
+                });
+        };
+
+        $scope.previewList = function(){
+            ManageService.getListImage($.cookie("restaurantId"))
+                .success(function(data){
+                    $scope.listPic = data;
+                    ngDialog.open({
+                        templateUrl: 'previewList.html',
+                        scope: $scope
+                    });
+                })
+        }
+
+    })
+
+    .controller('ImageDetailCtrl', function ($scope, ManageService, ngDialog, BaseUrl, restaurantPort) {
 
         $scope.myDetailImage = '';
         $scope.myDetailCroppedImage = '';
         $scope.detailPicShow = false;
-
-        //详情图文信息预览
-        ManageService.getDetail($.cookie("restaurantId"))
-            .success(function (data) {
-                $scope.details = data;
-            });
+        var dialog;
 
         //详情图文信息预览
         $scope.previewDetail = function () {
-            ManageService.getDetail($.cookie("restaurantId"))
+            ManageService.getDetailShowPic($.cookie("restaurantId"))
                 .success(function (data) {
                     $scope.details = data;
 
@@ -427,16 +672,57 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
         };
 
         $scope.editDetail = function(){
-            $scope.ltypicName = "餐厅详情图片";
+            $scope.ltyAllPic = {};
+            $scope.ltyAllPic.ShowPic = [];
+            $scope.ltyAllPic.DetailPic = [];
             ManageService.getDetail($.cookie("restaurantId"))
                 .success(function (data) {
-                    $scope.ltyAllDetailPic = data;
+                    $scope.ltyAllPic.DetailPic = data;
                 });
-            ngDialog.open({
+            ManageService.getDetailShowPic($.cookie("restaurantId"))
+                .success(function(data){
+                    $scope.ltyAllPic.ShowPic = data;
+                });
+            dialog = ngDialog.open({
                 templateUrl: 'editPic.html',
                 scope: $scope,
-                appendClassName: 'lty-dialog'
+                width: 600
             });
+        };
+
+        $scope.deletePic = function(detail){
+            ManageService.deleteDetail(detail.pictureId)
+                .success(function(data){
+                    var index = $scope.ltyAllPic.DetailPic.indexOf(detail);
+                    $scope.ltyAllPic.DetailPic.splice(index, 1);
+                    alert("图片删除成功");
+                });
+        };
+
+        $scope.showPic = function(detail){
+            var index = $scope.ltyAllPic.DetailPic.indexOf(detail);
+            $scope.ltyAllPic.DetailPic.splice(index, 1);
+            $scope.ltyAllPic.ShowPic.push(detail);
+        };
+
+        $scope.cancelShowPic = function(show){
+            var index = $scope.ltyAllPic.ShowPic.indexOf(show);
+            $scope.ltyAllPic.ShowPic.splice(index, 1);
+            $scope.ltyAllPic.DetailPic.push(show);
+        };
+
+        $scope.setDetail = function(){
+            var setInfo = {};
+            setInfo.restaurantId = $.cookie("restaurantId");
+            setInfo.pictureIds = [];
+            for(var i = 0; i < $scope.ltyAllPic.ShowPic.length; i++){
+                setInfo.pictureIds.push($scope.ltyAllPic.ShowPic[i].pictureId);
+            }
+            ManageService.setDetailPic(setInfo)
+                .success(function(data){
+                    alert("修改成功");
+                    dialog.close("editPic.html");
+                });
         };
 
     })
