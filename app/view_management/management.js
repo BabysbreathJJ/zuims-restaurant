@@ -557,7 +557,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                     $scope.ListPics.splice(index, 1);
                     $scope.ListPics.push($scope.ListPic);
                     $scope.ListPic = detail;
-                    alert("图片删除成功");
+                    alert("列表图片展示成功");
                 });
         };
 
