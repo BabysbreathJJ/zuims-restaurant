@@ -990,3 +990,24 @@ ul li, ol li {
     margin-right: auto;
     text-align: center;
 }
+
+.lty-product-management{
+    padding-bottom: 15px;
+}
+
+.lty-add-product {
+    width: 95%;
+    margin: 15px auto;
+}
+
+.lty-product-separator {
+    border-bottom: dashed 1px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.lty-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 12px;
+}

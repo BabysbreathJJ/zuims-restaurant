@@ -9,7 +9,7 @@
             <ul class="menu nav nav-divider">
                 <li ng-click="goto('reservation-table')"><span class="sidebar-span">预订信息</span></li>
                 <li ng-click="goto('data-statistics')"><span class="sidebar-span">预订数据统计</span></li>
-                <li ><span class="sidebar-span">产品管理</span></li>
+                <li ng-click="goto('product-management')"><span class="sidebar-span">产品管理</span></li>
                 <li ng-click="goto('info-management')"><span class="sidebar-span">商户信息管理</span></li>
                 <li ng-click="goto('faq')"><span class="sidebar-span">客服 FAQ</span></li>
                 <!-- END .menu -->
@@ -54,6 +54,16 @@
         <!--Data statistic chart end-->
 
 
+        <!-- Product management begin -->
+        <div id="product-management" ng-controller="ProductCtrl" class="right-bg">
+            <h3 class="full-header"><span>产品管理</span></h3>
+
+            <div ng-include="'view_management/product-management.html'"></div>
+
+        </div>
+        <!-- Product management end -->
+
+        <!-- 商户信息管理开始 -->
         <div id="info-management" class="right-bg">
             <h3 class="full-header"><span>商户信息管理</span></h3>
 
@@ -96,6 +106,7 @@
             <!--餐厅登录密码修改结束-->
 
         </div>
+        <!-- 商户信息管理结束 -->
 
         <div id="faq" class="right-bg">
             <h3 class="full-header"><span>客服FAQ</span></h3>

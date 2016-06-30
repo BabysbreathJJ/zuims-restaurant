@@ -1,0 +1,38 @@
+<div class="lty-product-management">
+    <button class="btn btn-warning" style="margin-left: 30px" ng-click="addNewProduct()">
+        <span class="glyphicon glyphicon-plus"></span>新建产品
+    </button>
+    <div ng-show="showMode==0" class="lty-add-product">
+        <h4 class="lty-product-separator" style="padding-left: 0px">产品基本信息</h4>
+        <table class="table table-bordered" style="margin-bottom: 12px">
+            <tr>
+                <td width="30%">
+                    <span>产品名</span>
+                    <input type="text" class="form-control" ng-model="newProduct.productName"></td>
+                </td>
+                <td width="30%">
+                    原价<span class="explain" style="padding-left: 10px">请包含服务费</span>
+                    <input class="form-control" type="text" ng-model="newProduct.orginPrice">
+                </td>
+                <td width="40%">
+                    <span>产品描述</span>
+                    <input type="text" class="form-control" ng-model="newProduct.description"></td>
+                </td>
+
+            </tr>
+        </table>
+        <h4 class="lty-product-separator" style="padding-left: 0px">折扣信息</h4>
+        <table class="table table-bordered" style="margin-bottom: 12px">
+            <tr>
+                <td width="40%">
+                    <span>产品名</span>
+                    <input type="text" class="form-control" ng-model="newProduct.productName"></td>
+                </td>
+                <td width="60%">
+                    <span>产品描述</span>
+                    <input type="text" class="form-control" ng-model="newProduct.description"></td>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

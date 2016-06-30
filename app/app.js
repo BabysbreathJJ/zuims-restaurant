@@ -7,7 +7,8 @@ angular.module('myApp', [
         'myApp.management',
         'myApp.reservation',
         'myApp.chart',
-        'myApp.basicInfo'
+        'myApp.basicInfo',
+        'myApp.productManagement'
     ])
     //.constant('BaseUrl', 'http://api.zui.ms/')
     //.constant('userPort', 'api/operation')
