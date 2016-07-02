@@ -7,32 +7,92 @@
         <table class="table table-bordered" style="margin-bottom: 12px">
             <tr>
                 <td width="30%">
-                    <span>产品名</span>
-                    <input type="text" class="form-control" ng-model="newProduct.productName"></td>
+                    产品名
+                    <input type="text" class="form-control" ng-model="newProduct.productName">
                 </td>
                 <td width="30%">
                     原价<span class="explain" style="padding-left: 10px">请包含服务费</span>
-                    <input class="form-control" type="text" ng-model="newProduct.orginPrice">
+                    <input class="form-control" type="number" min="0" ng-model="newProduct.originPrice">
                 </td>
                 <td width="40%">
-                    <span>产品描述</span>
-                    <input type="text" class="form-control" ng-model="newProduct.description"></td>
+                    产品描述
+                    <input type="text" class="form-control" ng-model="newProduct.description">
                 </td>
 
             </tr>
         </table>
         <h4 class="lty-product-separator" style="padding-left: 0px">折扣信息</h4>
-        <table class="table table-bordered" style="margin-bottom: 12px">
-            <tr>
-                <td width="40%">
-                    <span>产品名</span>
-                    <input type="text" class="form-control" ng-model="newProduct.productName"></td>
-                </td>
-                <td width="60%">
-                    <span>产品描述</span>
-                    <input type="text" class="form-control" ng-model="newProduct.description"></td>
-                </td>
-            </tr>
-        </table>
+        <!--<table class="table table-bordered" style="margin-bottom: 12px">-->
+            <!--<tr>-->
+                <!--<td width="20%">-->
+                    <!--折扣<span class="explain" style="padding-left: 10px">0~10,0表示免费,10表示无折扣</span>-->
+                    <!--<input type="number" min="0" max="10" class="form-control" ng-model="newProduct.discount">-->
+                <!--</td>-->
+                <!--<td width="20%">-->
+                    <!--价格-->
+                    <!--<input type="number" class="form-control" ng-model="newProduct.discount * newProduct.originPrice">-->
+                <!--</td>-->
+                <!--<td width="30%">-->
+                    <!--折扣开始时间-->
+                    <!--<select class="form-control" ng-model="newProduct.beginTime" ng-options="x for x in intervals">-->
+                    <!--</select>-->
+                <!--</td>-->
+                <!--<td width="30%">-->
+                    <!--结束开始时间-->
+                    <!--<select class="form-control" ng-model="newProduct.endTime" ng-options="x for x in intervals">-->
+                    <!--</select>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+        <div class="lty-product-discount" ng-repeat="temp in discounts">
+            <p>{{textDiscount(temp.discount)}}</p>
+            <p>{{textDays(temp.days)}}</p>
+            <p>{{textIntervals(temp.beginTime, temp.endTime)}}</p>
+        </div>
+        <button class="btn btn-warning" ng-click="addDiscount()">
+            <span class="glyphicon glyphicon-plus"></span>添加折扣
+        </button>
     </div>
 </div>
+
+<script type="text/ng-template" id="addNewDiscount.html">
+    <!--内容开始-->
+    <h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加折扣</span></h3>
+    <div class="pd15 mt70" style="margin-top: 20px">
+        <form>
+            <div style="display: inline-block; width:48%">
+                <span>折扣额度: </span><span class="explain" style="padding-left: 10px">0-1之间的数字</span>
+                <input class="form-control" type="number" min="0" max="1" step="0.00000001" ng-model="discount.discount"/>
+            </div>
+            <div style="display: inline-block; width:48%">
+                <span>折后价格: </span><input class="form-control" type="number" disabled value="{{discount.discount * newProduct.originPrice}}"/>
+            </div>
+            <div style="margin-top: 15px">
+                <span>折扣时间:</span>
+                <br>
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[1]">周一
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[2]">周二
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[3]">周三
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[4]">周四
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[5]">周五
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[6]">周六
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[7]">周日
+                <br>
+                <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-model="discount.beginTime">
+                </select>
+                <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-model="discount.endTime">
+                </select>
+
+                <li style="color:red; font-size: 15px" ng-show="addDiscountError.flag">
+                    {{addDiscountError.info}}
+                </li>
+
+            </div>
+            <div style="margin-top: 15px">
+                <button class="btn btn-warning" ng-click="saveNewDiscount()">
+                    <span class="glyphicon glyphicon-ok"></span>保存折扣
+                </button>
+            </div>
+        </form>
+    </div>
+</script>

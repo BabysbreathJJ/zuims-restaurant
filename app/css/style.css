@@ -1011,3 +1011,40 @@ ul li, ol li {
     max-width: 100%;
     margin-bottom: 12px;
 }
+
+.lty-product-discount{
+    border: dashed 2px #d58512;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 160px;
+    height: 100px;
+    display: inline-block;
+    text-align: center;
+}
+
+.lty-product-promotion {
+    border: dashed 1px;
+    background-color: #eee;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 180px;
+    height: 120px;
+    display: inline-block;
+    text-align: center;
+}
+
+.lty-align-horizontal-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lty-select-days{
+    display: inline-block;
+    width: 48%;
+}
+
+form input[type="checkbox"] {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 3px;
+}
