@@ -2,56 +2,48 @@
     <button class="btn btn-warning" style="margin-left: 30px" ng-click="addNewProduct()">
         <span class="glyphicon glyphicon-plus"></span>新建产品
     </button>
+    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
     <div ng-show="showMode==0" class="lty-add-product">
         <h4 class="lty-product-separator" style="padding-left: 0px">产品基本信息</h4>
         <table class="table table-bordered" style="margin-bottom: 12px">
             <tr>
                 <td width="30%">
                     产品名
-                    <input type="text" class="form-control" ng-model="newProduct.productName">
+                    <input type="text" class="form-control" ng-model="showProduct.productName">
                 </td>
                 <td width="30%">
                     原价<span class="explain" style="padding-left: 10px">请包含服务费</span>
-                    <input class="form-control" type="number" min="0" ng-model="newProduct.originPrice">
+                    <input class="form-control" type="number" min="0" ng-model="showProduct.originPrice">
                 </td>
                 <td width="40%">
                     产品描述
-                    <input type="text" class="form-control" ng-model="newProduct.description">
+                    <input type="text" class="form-control" ng-model="showProduct.description">
                 </td>
 
             </tr>
         </table>
         <h4 class="lty-product-separator" style="padding-left: 0px">折扣信息</h4>
-        <!--<table class="table table-bordered" style="margin-bottom: 12px">-->
-            <!--<tr>-->
-                <!--<td width="20%">-->
-                    <!--折扣<span class="explain" style="padding-left: 10px">0~10,0表示免费,10表示无折扣</span>-->
-                    <!--<input type="number" min="0" max="10" class="form-control" ng-model="newProduct.discount">-->
-                <!--</td>-->
-                <!--<td width="20%">-->
-                    <!--价格-->
-                    <!--<input type="number" class="form-control" ng-model="newProduct.discount * newProduct.originPrice">-->
-                <!--</td>-->
-                <!--<td width="30%">-->
-                    <!--折扣开始时间-->
-                    <!--<select class="form-control" ng-model="newProduct.beginTime" ng-options="x for x in intervals">-->
-                    <!--</select>-->
-                <!--</td>-->
-                <!--<td width="30%">-->
-                    <!--结束开始时间-->
-                    <!--<select class="form-control" ng-model="newProduct.endTime" ng-options="x for x in intervals">-->
-                    <!--</select>-->
-                <!--</td>-->
-            <!--</tr>-->
-        <!--</table>-->
-        <div class="lty-product-discount" ng-repeat="temp in discounts">
-            <p>{{textDiscount(temp.discount)}}</p>
-            <p>{{textDays(temp.days)}}</p>
-            <p>{{textIntervals(temp.beginTime, temp.endTime)}}</p>
+        <div>
+            <div class="lty-product-discount" ng-repeat="temp in showProduct.discounts">
+                <a href="javascript:;" class="lty-btn" ng-click="deleteDiscount(temp)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <p>
+                    {{textDiscount(temp.discount)}}
+                    <span class="explain" style="padding-left: 10px; display:inline-block">{{textPrice(temp.discount, showProduct.originPrice)}}</span>
+                </p>
+                <span class="explain" style="padding-left: 0px">{{textDays(temp.days)}}</span>
+                <span class="explain" style="padding-left: 0px">{{textIntervals(temp.beginTime, temp.endTime)}}</span>
+            </div>
+            <div class="lty-product-discount" style="border: none; text-align: left">
+                <button class="btn btn-warning" ng-click="addDiscount()" >
+                    <span class="glyphicon glyphicon-plus"></span>添加折扣
+                </button>
+                <button class="btn btn-warning" ng-click="previewDiscountTable()" style="margin-top: 15px; margin-bottom: 15px;">
+                    <span class="glyphicon glyphicon-search"></span>预览折扣信息
+                </button>
+            </div>
         </div>
-        <button class="btn btn-warning" ng-click="addDiscount()">
-            <span class="glyphicon glyphicon-plus"></span>添加折扣
-        </button>
     </div>
 </div>
 
@@ -61,25 +53,26 @@
     <div class="pd15 mt70" style="margin-top: 20px">
         <form>
             <div style="display: inline-block; width:48%">
-                <span>折扣额度: </span><span class="explain" style="padding-left: 10px">0-1之间的数字</span>
-                <input class="form-control" type="number" min="0" max="1" step="0.00000001" ng-model="discount.discount"/>
+                <span>折扣额度: </span><span class="explain" style="padding-left: 10px">0~1之间的数字</span>
+                <input class="form-control" type="number" min="0" max="1" step="0.0000000001" ng-model="discount.discount"/>
             </div>
             <div style="display: inline-block; width:48%">
-                <span>折后价格: </span><input class="form-control" type="number" disabled value="{{discount.discount * newProduct.originPrice}}"/>
+                <span>折后价格: </span><input class="form-control"disabled ng-model="(discount.discount * showProduct.originPrice).toFixed(2)"/>
             </div>
             <div style="margin-top: 15px">
                 <span>折扣时间:</span>
                 <br>
-                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[1]">周一
-                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[2]">周二
-                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[3]">周三
-                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[4]">周四
-                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[5]">周五
-                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[6]">周六
-                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[7]">周日
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[0]">周一
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[1]">周二
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[2]">周三
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[3]">周四
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[4]">周五
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[5]">周六
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[6]">周日
                 <br>
                 <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-model="discount.beginTime">
                 </select>
+                <span style="width: 10%">&nbsp&nbsp 至 &nbsp&nbsp</span>
                 <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-model="discount.endTime">
                 </select>
 
@@ -95,4 +88,35 @@
             </div>
         </form>
     </div>
+</script>
+
+
+<script type="text/ng-template" id="DiscountTable.html">
+    <!--内容开始-->
+    <table class="table table-bordered table-striped discount-table">
+        <thead>
+            <tr>
+                <th width="16%"></th>
+                <th width="12%">周一</th>
+                <th width="12%">周二</th>
+                <th width="12%">周三</th>
+                <th width="12%">周四</th>
+                <th width="12%">周五</th>
+                <th width="12%">周六</th>
+                <th width="12%">周日</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ele in showDiscountTable">
+                <th width="16%">{{intervals[$index].key + " ~ " + intervals[$index+1].key}}</th>
+                <th width="12%" ng-class="{true: 'background-orange'}[ele[0]!=-1]">{{textDiscount(ele[0])}}</th>
+                <th width="12%" ng-class="{true: 'background-orange'}[ele[1]!=-1]">{{textDiscount(ele[1])}}</th>
+                <th width="12%" ng-class="{true: 'background-orange'}[ele[2]!=-1]">{{textDiscount(ele[2])}}</th>
+                <th width="12%" ng-class="{true: 'background-orange'}[ele[3]!=-1]">{{textDiscount(ele[3])}}</th>
+                <th width="12%" ng-class="{true: 'background-orange'}[ele[4]!=-1]">{{textDiscount(ele[4])}}</th>
+                <th width="12%" ng-class="{true: 'background-orange'}[ele[5]!=-1]">{{textDiscount(ele[5])}}</th>
+                <th width="12%" ng-class="{true: 'background-orange'}[ele[6]!=-1]">{{textDiscount(ele[6])}}</th>
+            </tr>
+        </tbody>
+    </table>
 </script>
