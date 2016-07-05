@@ -1021,19 +1021,18 @@ ul li, ol li {
     height: 90px;
     display: inline-block;
     text-align: center;
-    min-height: 90px;
-    min-width: 90px;
+    vertical-align: top;
 }
 
 .lty-product-promotion {
-    border: dashed 1px;
-    background-color: #eee;
+    border: dashed 2px #d58512;
     margin-right: 20px;
     margin-bottom: 20px;
-    width: 180px;
-    height: 120px;
+    width: 160px;
+    height: 90px;
     display: inline-block;
     text-align: center;
+    vertical-align: top;
 }
 
 .lty-align-horizontal-center {
@@ -1052,18 +1051,18 @@ form input[type="checkbox"] {
     margin-left: 3px;
 }
 
-div.lty-product-discount p {
+div.lty-product-discount p,  div.lty-product-promotion p{
     font-size: 16px;
     margin-top: 6px;
     margin-bottom: 0px;
 }
 
-div.lty-product-discount > span {
+div.lty-product-discount > span, div.lty-product-promotion > span {
     display: block;
     margin-top: 6px;
 }
 
-div.lty-product-discount a.lty-btn {
+div.lty-product-discount a.lty-btn,  div.lty-product-promotion a.lty-btn{
     float: right;
 }
 
@@ -1081,4 +1080,20 @@ div.lty-product-discount a.lty-btn {
 
 .background-orange{
     background-color: #d58512;
+}
+
+span.moment-picker {
+    position: relative !important;
+    display: inline-block !important;
+    width: 43%;
+}
+
+.moment-picker td.selected {
+    border-color: #ff8500 !important;
+    background: #d58512 !important;
+    background-image: -webkit-linear-gradient(#ff8500,#d58512) !important;
+    background-image: -moz-linear-gradient(#ff8500,#d58512) !important;
+    background-image: -ms-linear-gradient(#ff8500,#d58512) !important;
+    background-image: -o-linear-gradient(#ff8500,#d58512) !important;
+    background-image: linear-gradient(#ff8500,#d58512) !important;
 }

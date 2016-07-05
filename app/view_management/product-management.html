@@ -1,14 +1,21 @@
 <div class="lty-product-management">
-    <button class="btn btn-warning" style="margin-left: 30px" ng-click="addNewProduct()">
-        <span class="glyphicon glyphicon-plus"></span>新建产品
-    </button>
+    <div class="btn-group" role="group">
+        <button class="btn btn-warning" style="margin-left: 30px" ng-click="addNewProduct()">
+            <span class="glyphicon glyphicon-plus"></span>新建产品
+        </button>
+        <button class="btn btn-warning" ng-click="productList()">
+            <span class="glyphicon glyphicon-th-list"></span>产品列表
+        </button>
+    </div>
     <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+
+    <!--新建产品开始-->
     <div ng-show="showMode==0" class="lty-add-product">
         <h4 class="lty-product-separator" style="padding-left: 0px">产品基本信息</h4>
-        <table class="table table-bordered" style="margin-bottom: 12px">
+        <table class="table table-bordered" style="margin-bottom: 23px">
             <tr>
                 <td width="30%">
-                    产品名
+                    产品名<span class="explain" style="padding-left: 10px">限15字</span>
                     <input type="text" class="form-control" ng-model="showProduct.productName">
                 </td>
                 <td width="30%">
@@ -16,13 +23,16 @@
                     <input class="form-control" type="number" min="0" ng-model="showProduct.originPrice">
                 </td>
                 <td width="40%">
-                    产品描述
+                    产品描述<span class="explain" style="padding-left: 10px">限30字</span>
                     <input type="text" class="form-control" ng-model="showProduct.description">
                 </td>
 
             </tr>
         </table>
-        <h4 class="lty-product-separator" style="padding-left: 0px">折扣信息</h4>
+        <h4 class="lty-product-separator" style="padding-left: 0px">折扣信息
+            <span class="explain" style="padding-left: 10px">默认该产品在所有时间段均无折扣</span>
+        </h4>
+
         <div>
             <div class="lty-product-discount" ng-repeat="temp in showProduct.discounts">
                 <a href="javascript:;" class="lty-btn" ng-click="deleteDiscount(temp)">
@@ -35,7 +45,7 @@
                 <span class="explain" style="padding-left: 0px">{{textDays(temp.days)}}</span>
                 <span class="explain" style="padding-left: 0px">{{textIntervals(temp.beginTime, temp.endTime)}}</span>
             </div>
-            <div class="lty-product-discount" style="border: none; text-align: left">
+            <div class="lty-product-discount" style="border: none; text-align: left; height: 90px">
                 <button class="btn btn-warning" ng-click="addDiscount()" >
                     <span class="glyphicon glyphicon-plus"></span>添加折扣
                 </button>
@@ -44,9 +54,45 @@
                 </button>
             </div>
         </div>
+        <h4 class="lty-product-separator" style="padding-left: 0px">促销信息</h4>
+        <div>
+            <div class="lty-product-promotion" ng-repeat="temp in showProduct.promotions" ng-style="{height: (90 + temp.promotionPeriods.length * 23), width: (160 + (temp.description.length > 8 ? (temp.description.length-8):0) * 8)}">
+                <a href="javascript:;" class="lty-btn" ng-click="showProduct.promotions.splice($index, 1);">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <p>
+                    {{temp.price}} 元
+                    <span class="explain" style="padding-left: 10px; display:inline-block">{{temp.name}}</span>
+                </p>
+                <span class="explain" style="padding-left: 0px">描述: {{temp.description}}</span>
+                <span class="explain" style="padding-left: 0px">{{temp.startDate}} 至 {{temp.endDate}}</span>
+                <span class="explain" style="padding-left: 0px" ng-repeat="period in temp.promotionPeriods">
+                    {{period.startTime.key}} ~ {{period.endTime.key}}
+                </span>
+            </div>
+            <div class="lty-product-promotion" style="border: none; text-align: left">
+                <button class="btn btn-warning" ng-click="addPromotion()" style="margin-bottom: 60px">
+                    <span class="glyphicon glyphicon-plus"></span>添加促销
+                </button>
+            </div>
+        </div>
+        <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+        <div style="text-align: center">
+            <li style="color:red; font-size: 15px; margin-bottom: 12px" ng-show="submitNewProductError.flag">
+                {{submitNewProductError.info}}
+            </li>
+            <button class="btn btn-warning" ng-click="submitNewProduct()" style="margin-bottom: 60px">
+                <span class="glyphicon glyphicon-upload"></span>提交新建产品信息
+            </button>
+        </div>
     </div>
+    <!--新建产品结束-->
+
+    <!--产品列表开始-->
+    <!--产品列表结束-->
 </div>
 
+<!--添加折扣对话框-->
 <script type="text/ng-template" id="addNewDiscount.html">
     <!--内容开始-->
     <h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加折扣</span></h3>
@@ -57,7 +103,8 @@
                 <input class="form-control" type="number" min="0" max="1" step="0.0000000001" ng-model="discount.discount"/>
             </div>
             <div style="display: inline-block; width:48%">
-                <span>折后价格: </span><input class="form-control"disabled ng-model="(discount.discount * showProduct.originPrice).toFixed(2)"/>
+                <span>折后价格: </span>
+                <input class="form-control"disabled ng-model="(discount.discount * showProduct.originPrice).toFixed(2)"/>
             </div>
             <div style="margin-top: 15px">
                 <span>折扣时间:</span>
@@ -90,7 +137,74 @@
     </div>
 </script>
 
+<!--添加促销对话框-->
+<script type="text/ng-template" id="addNewPromotion.html">
+    <!--内容开始-->
+    <h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加促销</span></h3>
+    <div class="pd15 mt70" style="margin-top: 20px">
+        <form>
+            <div style="width:48%; display: inline-block">
+                <span>促销名称: </span><span class="explain" style="padding-left: 10px">限15字</span>
+                <input class="form-control" type="text" ng-model="promotion.name"/>
+            </div>
+            <div style="width:48%; display: inline-block">
+                <span>价格: </span>
+                <input class="form-control" type="number" min="0" step="0.01" ng-model="promotion.price"/>
+            </div>
+            <div style="width:98%; margin-top: 15px">
+                <span>促销描述: </span><span class="explain" style="padding-left: 10px">限30字</span>
+                <input class="form-control" type="text" ng-model="promotion.description"/>
+            </div>
+            <div style="margin-top: 15px; width: 98%">
+                <span>促销起止日期:</span>
+                <br>
+                <input class="form-control"
+                       locale="zh-cn"
+                       format="YYYY-MM-DD"
+                       ng-model="promotion.startDate"
+                       ng-model-options="{ updateOn: 'blur' }"
+                       placeholder="促销开始日期..."
+                       moment-picker="promotion.startDate">
+                <span style="width: 10%">&nbsp&nbsp 至 &nbsp&nbsp</span>
+                <input class="form-control"
+                       locale="zh-cn"
+                       format="YYYY-MM-DD"
+                       ng-model="promotion.endDate"
+                       ng-model-options="{ updateOn: 'blur' }"
+                       placeholder="促销结束日期..."
+                       moment-picker="promotion.endDate">
+            </div>
+            <div style="margin-top: 15px">
+                <span>促销时段:</span>
+                <a href="javascript:;" class="lty-btn" ng-click="promotion.promotionPeriods.push({});">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <div ng-repeat="detail in promotion.promotionPeriods" style="margin-bottom: 10px; width:98%">
+                    <select class="form-control lty-select-days" style="width: 40%" ng-options="days.key for days in intervals" ng-model="detail.startTime">
+                    </select>
+                    <span style="width: 6%">&nbsp 至 &nbsp</span>
+                    <select class="form-control lty-select-days" style="width: 40%" ng-options="days.key for days in intervals" ng-model="detail.endTime">
+                    </select>
+                    <a href="javascript:;" class="lty-btn" style="float: right; margin-top: 5px" ng-click="promotion.promotionPeriods.splice($index, 1);">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            </div>
+            <div style="margin-top: 15px">
+                <li style="color:red; font-size: 15px" ng-show="addPromotionError.flag">
+                    {{addPromotionError.info}}
+                </li>
+            </div>
+            <div style="margin-top: 15px">
+                <button class="btn btn-warning" ng-click="saveNewPromotion()">
+                    <span class="glyphicon glyphicon-ok"></span>保存促销
+                </button>
+            </div>
+        </form>
+    </div>
+</script>
 
+<!--折扣大表-->
 <script type="text/ng-template" id="DiscountTable.html">
     <!--内容开始-->
     <table class="table table-bordered table-striped discount-table">
