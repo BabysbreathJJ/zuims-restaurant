@@ -14,6 +14,8 @@
     <!--新建产品开始-->
     <div ng-show="showMode==0 || showMode==2" class="lty-add-product">
         <h3 style="text-align: center">{{["新建产品", " ", "修改产品信息"][showMode]}}</h3>
+
+        <!--产品基本信息开始-->
         <h4 class="lty-product-separator" style="padding-left: 0px">产品基本信息</h4>
         <table class="table table-bordered" style="margin-bottom: 23px">
             <tr>
@@ -34,6 +36,51 @@
         <button class="btn btn-warning" ng-click="editProductInfo()" ng-show="showMode==2" style="margin-bottom: 15px">
             <span class="glyphicon glyphicon-ok"></span>保存产品基本信息
         </button>
+        <!--产品基本信息结束-->
+
+        <!--图片管理开始-->
+        <div ng-show="showMode == 2" ng-controller="ProductImageCtrl" style="margin-bottom: 20px; margin-top: 10px">
+            <h4 class="lty-product-separator" style="padding-left: 0px">图片管理</h4>
+
+            <div ng-show="productPicShow == 1">
+                <div class="cropAreaDetail">
+                    <img-crop image="myProductImage" area-type="rectangle" aspect-ratio="1.52380952"
+                              result-image-size='{w: 960,h: 630}'
+                              result-image='myProductCroppedPic'
+                    ></img-crop>
+
+                </div>
+                <!--<div>图片预览:</div>-->
+                <div class="croppedPic" style="display: none"><img ng-src="{{myProductCroppedPic}}"/></div>
+                <div class="picDetailDescription">
+                    <input class="form-control" type="text" placeholder="图片描述,限20字,与图片同时显示在用户手机上"
+                           ng-model="picDescription"/>
+                </div>
+                <div class="image-upload">
+                    <a href="javascript:;" class="file" ng-click="uploadPic()">
+                        <span class="glyphicon glyphicon-saved"></span>上传图片
+                    </a>
+                    <a href="javascript:;" class="file-cancel" ng-click="removePic()">
+                        <span class="glyphicon glyphicon-remove"></span>取消上传
+                    </a>
+                </div>
+            </div>
+            <div ng-hide="productPicShow == 1">
+                <a href="javascript:;" class="file" style="margin-right: 10px; margin-left: 0px"><span
+                        class="glyphicon glyphicon-picture"></span>选择图片
+                    <input type="file" accept="image/*" id="inputProductImage" >
+                </a>
+                <a href="javascript:;" class="file btn-warning" ng-click="editProductPic()" style="margin-right: 10px">
+                    <span class="glyphicon glyphicon-edit"></span>编辑图片
+                </a>
+                <a href="javascript:;" class="file btn-warning " ng-click="previewProductPic()" style="margin-right: 10px">
+                    <span class="glyphicon glyphicon-search"></span>图文信息预览
+                </a>
+            </div>
+        </div>
+        <!--图片管理结束-->
+
+        <!--折扣信息开始-->
         <h4 class="lty-product-separator" style="padding-left: 0px">折扣信息
             <span class="explain" style="padding-left: 10px">默认该产品在所有时间段均无折扣</span>
         </h4>
@@ -58,8 +105,10 @@
                     <span class="glyphicon glyphicon-search"></span>预览折扣信息
                 </button>
             </div>
-
         </div>
+        <!--折扣信息结束-->
+
+        <!--促销信息开始-->
         <h4 class="lty-product-separator" style="padding-left: 0px">促销信息</h4>
         <div>
             <div class="lty-product-promotion" ng-repeat="temp in showProduct.promotions" ng-style="{height: (90 + temp.promotionPeriods.length * 23), width: (160 + (temp.description.length > 8 ? (temp.description.length-8):0) * 8)}">
@@ -82,7 +131,10 @@
                 </button>
             </div>
         </div>
+        <!--促销信息结束-->
+
         <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px" ng-show="showMode == 0"></div>
+
         <div style="text-align: center" ng-show="showMode == 0">
             <li style="color:red; font-size: 15px; margin-bottom: 12px" ng-show="submitNewProductError.flag">
                 {{submitNewProductError.info}}
@@ -91,6 +143,7 @@
                 <span class="glyphicon glyphicon-upload"></span>提交新建产品信息
             </button>
         </div>
+
     </div>
     <!--新建产品结束-->
 
@@ -300,4 +353,71 @@
             </tr>
         </tbody>
     </table>
+</script>
+
+<script type="text/ng-template" id="editProductPic.html" ng-controller="ProductCtrl">
+    <!--内容开始-->
+    <div>
+        <a class="lty-modify-pic-word">展示图片</a>
+    </div>
+    <div class="lty-modify-pic-block" sv-root>
+        <div sv-part="ltyAllPic.ShowPic">
+            <div ng-repeat="show in ltyAllPic.ShowPic" style="display: inline-block" sv-element>
+                <img src="{{show.picname}}" class="per100 lty-detail-pic">
+                <div class="lty-mlra">
+                    <a href="javascript:;" class="lty-btn" ng-click="cancelShowPic(show)">
+                        取消展示
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a class="lty-modify-pic-word">已上传图片</a>
+    </div>
+    <div class="lty-modify-pic-block" >
+        <div ng-repeat="productPic in ltyAllPic.ProductPic" style="display: inline-block" >
+            <img src="{{productPic.picname}}" class="per100 lty-detail-pic" change-pic>
+            <div class="lty-mlra">
+                <a href="javascript:;" class="lty-btn" ng-click="showPic(productPic)">
+                    展示
+                </a>
+                <a href="javascript:;" class="lty-btn" ng-click="deletePic(productPic)">
+                    删除
+                </a>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" class="file btn-warning lty-tag-a" autofocus="false" ng-click="setProductPic()">
+        <span class="glyphicon glyphicon-file" autofocus="false"></span>保存修改
+    </a>
+    </div>
+
+</script>
+
+<script type="text/ng-template" id="productPic.html"  ng-controller="ProductCtrl">
+    <!--内容开始-->
+    <div class="pd15 mt70" style="margin-top: 20px">
+        <div class="border border-r-5 bg-white padding">
+            <div class="pos-r">
+                <img src="{{productPics[0].picname}}" class="per100" id="d-img">
+
+                <div class="pos-a tc per100 bottom20">
+                    <p class="bg-t display-ib per90 ht40 l-ht40 font-white" id="description">{{description}}</p>
+                </div>
+            </div>
+            <!--图片列表开始-->
+            <div class="overflow-x-auto carousel">
+                <ul class="list-unstyled pr10 ht70 img-list mt10 pos-r overflow-h">
+                    <li class="fl pl10 border-r-5" ng-repeat="productPic in productPics">
+                        <img src="{{productPic.picname}}" class="per100 small-pic" change-pic
+                             description="{{productPic.introduction}}">
+                    </li>
+                </ul>
+            </div>
+            <!--图片列表结束-->
+
+        </div>
+    </div>
 </script>

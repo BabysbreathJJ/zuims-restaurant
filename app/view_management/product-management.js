@@ -1,9 +1,25 @@
 /**
  * Created by kubenetes on 16/6/30.
  */
-angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
+angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCrop', 'angular-sortable-view'])
+    .directive('changePic', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr, ctrl) {
+                element.bind('click', function () {
+                    var imageList = angular.element(document.querySelector('#d-img'));
+                    imageList.attr("src", attr.src);
+                    scope.$apply(function () {
+                        var description = angular.element(document.querySelector('#description'));
+                        description.text(attr.description);
+                    });
+                });
+            }
+        };
+    })
     .factory('ProductService', ['$http', 'BaseUrl', 'merchantPort', 'managementPort', function ($http, BaseUrl, merchantPort, managementPort) {
         var factory = {};
+
         factory.addProduct = function(data){
             return $http({
                 method: "POST",
@@ -13,6 +29,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 crossDomain: true
             });
         };
+
         factory.getProduct = function(restaurantId){
             return $http({
                 method: "GET",
@@ -20,6 +37,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 crossDomain: true
             });
         };
+
         factory.deleteProduct = function(productId){
             return $http({
                 method: "GET",
@@ -27,6 +45,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 crossDomain: true
             });
         };
+
         factory.editProduct = function(product){
             return $http({
                 method: "POST",
@@ -35,6 +54,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 crossDomain: true
             });
         };
+
         factory.addPromotion = function(promotion){
             return $http({
                 method: "POST",
@@ -43,6 +63,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 crossDomain: true
             });
         };
+
         factory.deletePromotion = function(promotionId){
             return $http({
                 method: "GET",
@@ -50,6 +71,50 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 crossDomain: true
             });
         };
+
+        factory.getProductPic = function(productId) {
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/product/picture?productId=" + productId,
+                crossDomain: true
+            });
+        };
+
+        factory.getCProductPic = function(productId) {
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/product/cpicture?productId=" + productId,
+                crossDomain: true
+            });
+        };
+
+        factory.setProductPic = function(setInfo) {
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + "/product/picture/set",
+                data: JSON.stringify(setInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        };
+
+        factory.deleteProductPic = function(pictureId) {
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort+ '/restaurant/image/delete?pictureId=' + pictureId
+            });
+        };
+
+        factory.uploadCProuductPic = function(imageInfo) {
+            return $http({
+                method: "POST",
+                url:BaseUrl + merchantPort + "/product/uploadCProductImage",
+                data:JSON.stringify(imageInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        };
+
         return factory;
     }])
     .controller('ProductCtrl', ['$scope', 'ngDialog', 'ProductService', function ($scope, ngDialog, ProductService) {
@@ -429,12 +494,17 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                     promotion.promotionPeriods[i].price = promotion.price;
                 }
                 promotion.restaurantId = parseInt($.cookie("restaurantId"));
-                console.log(promotion);
                 ProductService.addPromotion(promotion)
                     .success(function(data){
-                        $scope.showProduct.promotions.push($scope.promotion);
-                        ngDialog.close();
-                        alert("添加促销成功");
+                        console.log(data);
+                        if(data.name == undefined){
+                            alert("促销时段有冲突,添加促销失败");
+                        }
+                        else {
+                            $scope.showProduct.promotions.push($scope.promotion);
+                            ngDialog.close();
+                            alert("添加促销成功");
+                        }
                     })
                     .error(function(){
                         $scope.showProduct.promotions.pop();
@@ -458,6 +528,22 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                         alert("删除促销失败");
                     })
             }
+        };
+
+        //获取产品列表
+        function getProductList(){
+            $scope.showMode = 1;
+            ProductService.getProduct($.cookie("restaurantId"))
+                .success(function(data){
+                    console.log(data.length);
+                    for(var i = 0; i < data.length; i++){
+                        data[i].discounts = JSON.parse(data[i].discountRecord);
+                    };
+                    $scope.rowCollection = data;
+                })
+                .error(function(){
+
+                });
         };
 
 
@@ -517,8 +603,9 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
             ProductService.addProduct(upData)
                 .success(function(data){
                     //console.log(data.id);
-                    alert("创建产品成功");
+                    alert("创建产品成功,请在详情界面为该产品上传图片");
                     $scope.newProduct = initNewProduct();
+                    getProductList();
                 })
                 .error(function(){
 
@@ -526,20 +613,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
         };
         //新建产品按钮结束
 
-        $scope.productList = function(){
-            $scope.showMode = 1;
-            ProductService.getProduct($.cookie("restaurantId"))
-                .success(function(data){
-                    console.log(data.length);
-                    for(var i = 0; i < data.length; i++){
-                        data[i].discounts = JSON.parse(data[i].discountRecord);
-                    };
-                    $scope.rowCollection = data;
-                })
-                .error(function(){
-
-                });
-        };
+        $scope.productList = getProductList;
 
         $scope.deleteProduct = function(row){
             var flag = confirm("确认删除产品: " + row.productName + "?");
@@ -576,4 +650,278 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
         };
 
 
+        $scope.myProductImage = '';
+        $scope.myProductCroppedImage = '';
+        $scope.productPicShow = 0;
+
+        $scope.previewProductPic = function () {
+            ProductService.getProductPic($scope.showProduct.productId)
+                .success(function (data) {
+                    $scope.productPics = data;
+
+                    $scope.picLen = $scope.productPics.length;
+
+                    if ($scope.picLen > 5)
+                        $scope.productPics = $scope.productPics.slice(-5);
+                    if ($scope.picLen > 0) {
+                        //$scope.discount = $scope.basicInfo.discountType == 'discount' ? true : false;
+                        $scope.description = $scope.productPics[0].introduction;
+                    }
+                    else {
+                        $scope.productPics = [];
+                        //$scope.details[0].picname =
+                    }
+                    for (var i = 0; i < $scope.productPics.length; i++) {
+                        $scope.productPics[i].picname = $scope.productPics[i].picname;
+                    }
+                    ngDialog.open({
+                        templateUrl: 'productPic.html',
+                        scope: $scope
+                    });
+                });
+        };
+
+
+
+        var productHandleFileSelect = function (evt) {
+            $scope.productPicShow = 1;
+            var target = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
+
+            var file = target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                $scope.$apply(function ($scope) {
+                    $scope.myProductImage = evt.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+        };
+
+        angular.element(document.querySelector('#inputProductImage')).on('change', productHandleFileSelect);
+
+        $scope.uploadPic = function () {
+            $scope.begin = $scope.myProductCroppedPic.indexOf("base64") + 7;
+            $scope.myUploadPic = $scope.myProductCroppedPic.substr($scope.begin);
+
+            if ($scope.picDescription.length > 20) {
+                alert('图片描述不能超过20个字!');
+                return;
+            }
+
+            $scope.uploadInfo = {
+                "imageValue": $scope.myUploadPic,
+                "productId": $scope.showProduct.productId,
+                "pictureIntro": $scope.picDescription,
+                "restaurantId": parseInt($.cookie("restaurantId"))
+            };
+
+
+            ProductService.uploadCProuductPic($scope.uploadInfo)
+                .success(function (data) {
+                    if (data.success == true) {
+                        alert("图片上传成功,可以点击预览进行查看!");
+                        $scope.picDescription = "";
+                        $scope.productPicShow = 0;
+                    }
+                });
+        };
+
+        $scope.removePic = function () {
+            $scope.myProductImage = '';
+            $scope.myProductCroppedImage = '';
+            $scope.picDescription = '';
+            $scope.productPicShow = false;
+        };
+
+        $scope.editProductPic = function(){
+            $scope.ltyAllPic = {};
+            $scope.ltyAllPic.ShowPic = [];
+            $scope.ltyAllPic.ProductPic = [];
+            ProductService.getCProductPic($scope.showProduct.productId)
+                .success(function (data) {
+                    $scope.ltyAllPic.ProductPic = data;
+                });
+            ProductService.getProductPic($scope.showProduct.productId)
+                .success(function(data){
+                    $scope.ltyAllPic.ShowPic = data;
+                });
+            ngDialog.open({
+                templateUrl: 'editProductPic.html',
+                scope: $scope,
+                width: 600
+            });
+        };
+
+        $scope.deletePic = function(productPic){
+            ProductService.deleteProductPic(productPic.pictureId)
+                .success(function(data){
+                    var index = $scope.ltyAllPic.ProductPic.indexOf(productPic);
+                    $scope.ltyAllPic.ProductPic.splice(index, 1);
+                    alert("图片删除成功");
+                });
+        };
+
+        $scope.showPic = function(productPic){
+            var index = $scope.ltyAllPic.ProductPic.indexOf(productPic);
+            $scope.ltyAllPic.ProductPic.splice(index, 1);
+            $scope.ltyAllPic.ShowPic.push(productPic);
+        };
+
+        $scope.cancelShowPic = function(show){
+            var index = $scope.ltyAllPic.ShowPic.indexOf(show);
+            $scope.ltyAllPic.ShowPic.splice(index, 1);
+            $scope.ltyAllPic.ProductPic.push(show);
+        };
+
+        $scope.setProductPic = function(){
+            var setInfo = {};
+            setInfo.productId = $scope.showProduct.productId;
+            setInfo.pictureIds = [];
+            for(var i = 0; i < $scope.ltyAllPic.ShowPic.length; i++){
+                setInfo.pictureIds.push($scope.ltyAllPic.ShowPic[i].pictureId);
+            }
+            ProductService.setProductPic(setInfo)
+                .success(function(data){
+                    alert("修改成功");
+                    ngDialog.close();
+                });
+        };
+
+    }])
+    .controller('ProductImageCtrl', ['$scope', 'ngDialog', 'ProductService', function ($scope, ngDialog, ProductService) {
+        $scope.myProductImage = '';
+        $scope.myProductCroppedImage = '';
+        $scope.productPicShow = 0;
+
+        $scope.previewProductPic = function () {
+            ProductService.getProductPic($scope.showProduct.productId)
+                .success(function (data) {
+                    $scope.productPics = data;
+
+                    $scope.picLen = $scope.productPics.length;
+
+                    if ($scope.picLen > 5)
+                        $scope.productPics = $scope.productPics.slice(-5);
+                    if ($scope.picLen > 0) {
+                        //$scope.discount = $scope.basicInfo.discountType == 'discount' ? true : false;
+                        $scope.description = $scope.productPics[0].introduction;
+                    }
+                    else {
+                        $scope.productPics = [];
+                        //$scope.details[0].picname =
+                    }
+                    for (var i = 0; i < $scope.productPics.length; i++) {
+                        $scope.productPics[i].picname = $scope.productPics[i].picname;
+                    }
+                    ngDialog.open({
+                        templateUrl: 'productPic.html',
+                        scope: $scope
+                    });
+                });
+        }
+
+
+        var productHandleFileSelect = function (evt) {
+            $scope.productPicShow = 1;
+            var target = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
+
+            var file = target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                $scope.$apply(function ($scope) {
+                    $scope.myProductImage = evt.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+        };
+
+        angular.element(document.querySelector('#inputProductImage')).on('change', productHandleFileSelect);
+
+        $scope.uploadPic = function () {
+            $scope.begin = $scope.myProductCroppedPic.indexOf("base64") + 7;
+            $scope.myUploadPic = $scope.myProductCroppedPic.substr($scope.begin);
+
+            if ($scope.picDescription.length > 20) {
+                alert('图片描述不能超过20个字!');
+                return;
+            }
+
+            $scope.uploadInfo = {
+                "imageValue": $scope.myUploadPic,
+                "productId": $scope.showProduct.productId,
+                "pictureIntro": $scope.picDescription,
+                "restaurantId": parseInt($.cookie("restaurantId"))
+            };
+
+
+            ProductService.uploadCProuductPic($scope.uploadInfo)
+                .success(function (data) {
+                    if (data.success == true) {
+                        alert("图片上传成功,可以点击预览进行查看!");
+                        $scope.picDescription = "";
+                        $scope.productPicShow = 0;
+                    }
+                });
+        };
+
+        $scope.removePic = function () {
+            $scope.myProductImage = '';
+            $scope.myProductCroppedImage = '';
+            $scope.picDescription = '';
+            $scope.productPicShow = false;
+        };
+
+        $scope.editProductPic = function(){
+            $scope.ltyAllPic = {};
+            $scope.ltyAllPic.ShowPic = [];
+            $scope.ltyAllPic.ProductPic = [];
+            ProductService.getCProductPic($scope.showProduct.productId)
+                .success(function (data) {
+                    $scope.ltyAllPic.ProductPic = data;
+                });
+            ProductService.getProductPic($scope.showProduct.productId)
+                .success(function(data){
+                    $scope.ltyAllPic.ShowPic = data;
+                });
+            ngDialog.open({
+                templateUrl: 'editProductPic.html',
+                scope: $scope,
+                width: 600
+            });
+        };
+
+        $scope.deletePic = function(productPic){
+            ProductService.deleteProductPic(productPic.pictureId)
+                .success(function(data){
+                    var index = $scope.ltyAllPic.ProductPic.indexOf(productPic);
+                    $scope.ltyAllPic.ProductPic.splice(index, 1);
+                    alert("图片删除成功");
+                });
+        };
+
+        $scope.showPic = function(productPic){
+            var index = $scope.ltyAllPic.ProductPic.indexOf(productPic);
+            $scope.ltyAllPic.ProductPic.splice(index, 1);
+            $scope.ltyAllPic.ShowPic.push(productPic);
+        };
+
+        $scope.cancelShowPic = function(show){
+            var index = $scope.ltyAllPic.ShowPic.indexOf(show);
+            $scope.ltyAllPic.ShowPic.splice(index, 1);
+            $scope.ltyAllPic.ProductPic.push(show);
+        };
+
+        $scope.setProductPic = function(){
+            var setInfo = {};
+            setInfo.productId = $scope.showProduct.productId;
+            setInfo.pictureIds = [];
+            for(var i = 0; i < $scope.ltyAllPic.ShowPic.length; i++){
+                setInfo.pictureIds.push($scope.ltyAllPic.ShowPic[i].pictureId);
+            }
+            ProductService.setProductPic(setInfo)
+                .success(function(data){
+                    alert("修改成功");
+                    ngDialog.close();
+                });
+        };
     }]);
