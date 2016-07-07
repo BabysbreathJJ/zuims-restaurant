@@ -20,6 +20,36 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 crossDomain: true
             });
         };
+        factory.deleteProduct = function(productId){
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/product/delete?productId=" + productId,
+                crossDomain: true
+            });
+        };
+        factory.editProduct = function(product){
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + "/product/edit",
+                data: JSON.stringify(product),
+                crossDomain: true
+            });
+        };
+        factory.addPromotion = function(promotion){
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + "/product/promotion/add",
+                data: JSON.stringify(promotion),
+                crossDomain: true
+            });
+        };
+        factory.deletePromotion = function(promotionId){
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/product/promotion/delete?id=" + promotionId,
+                crossDomain: true
+            });
+        };
         return factory;
     }])
     .controller('ProductCtrl', ['$scope', 'ngDialog', 'ProductService', function ($scope, ngDialog, ProductService) {
@@ -40,17 +70,18 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
 
         //初始化新产品参数
         function initNewProduct(){
-            $scope.newProduct = {};
-            $scope.newProduct.discounts = [];
-            $scope.newProduct.discoutsTable = [];
-            $scope.newProduct.promotions = [];
+            data = {};
+            data.discounts = [];
+            data.discoutsTable = [];
+            data.promotions = [];
             for(var i = 0; i < 48; i++){
                 var temp = new Array();
                 for(var j = 0; j < 7; j++){
                     temp.push(-1);
                 }
-                $scope.newProduct.discoutsTable.push(temp);
+                data.discoutsTable.push(temp);
             }
+            return data;
         };
 
         //初始化添加折扣参数
@@ -90,9 +121,80 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
             return newO;
         };
 
-        $scope.showMode = -1;
+        function constructHttpProduct(showProduct){
+            var result = {};
+            var data = clone(showProduct);
+            if(data.productId != undefined && data.productId != null){
+                result.productId = data.productId;
+            }
+            result.description = data.description;
+            result.discount = data.discoutsTable;
+            result.discountDescription = "暂时写死的";
+            result.discountRecord = JSON.stringify(data.discounts);
+            result.originPrice = data.originPrice;
+            result.productName = data.productName;
+            result.interval = 30;
+            result.restaurantId = parseInt($.cookie("restaurantId"));
+            result.promotionProducts = clone(data.promotions);
+            for(var i = 0; i < result.promotionProducts.length; i++){
+                for(var j = 0; j < result.promotionProducts[i].promotionPeriods.length; j++){
+                    var tempStart = result.promotionProducts[i].promotionPeriods[j].startTime;
+                    var tempEnd = result.promotionProducts[i].promotionPeriods[j].endTime;
+                    result.promotionProducts[i].promotionPeriods[j].startTime = tempStart.key;
+                    result.promotionProducts[i].promotionPeriods[j].endTime = tempEnd.key;
+                    result.promotionProducts[i].promotionPeriods[j].price = result.promotionProducts[i].price;
+                }
+                delete result.promotionProducts[i].price;
+            }
+            return result;
+        };
+
+        function constructShowProduct(httpProduct){
+            var result = {};
+            var data = clone(httpProduct);
+            result.description = data.description;
+            result.originPrice = data.originPrice;
+            result.productId = data.productId;
+            result.productName = data.productName;
+            result.discoutsTable = clone(data.discount);
+            result.discounts = JSON.parse(data.discountRecord);
+            result.promotions = clone(data.promotionProducts);
+            for(var i = 0; i < result.promotions.length; i++){
+                for(var j = 0; j < result.promotions[i].promotionPeriods.length; j++){
+                    var tempStart = result.promotions[i].promotionPeriods[j].startTime;
+                    var tempEnd = result.promotions[i].promotionPeriods[j].endTime;
+                    var startIndex, endIndex;
+                    for(var t = 0; t < $scope.intervals.length; t++){
+                        if($scope.intervals[t].key == tempStart){
+                            startIndex = t;
+                        }
+                        if($scope.intervals[t].key == tempEnd){
+                            endIndex = t;
+                        }
+                    }
+                    result.promotions[i].promotionPeriods[j].startTime = $scope.intervals[startIndex];
+                    result.promotions[i].promotionPeriods[j].endTime = $scope.intervals[endIndex];
+                    result.promotions[i].price = result.promotions[i].promotionPeriods[j].price;
+                    delete result.promotions[i].promotionPeriods[j].price;
+                }
+            }
+            return result;
+        };
+
+        $scope.showMode = 1;
+        ProductService.getProduct($.cookie("restaurantId"))
+            .success(function(data){
+                console.log(data.length);
+                for(var i = 0; i < data.length; i++){
+                    data[i].discounts = JSON.parse(data[i].discountRecord);
+                };
+                $scope.rowCollection = data;
+            })
+            .error(function(){
+
+            });
         initDiscount();
-        initNewProduct();
+        $scope.newProduct = initNewProduct();
         initSelectOptions();
 
         //添加产品
@@ -144,14 +246,55 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 return;
             }
 
-            $scope.newProduct.discounts.push($scope.discount);
-            initDiscount();
+            if($scope.showMode == 0){
+                $scope.newProduct.discounts.push($scope.discount);
+                initDiscount();
+            }
+
+            if($scope.showMode == 2){
+                $scope.showProduct.discounts.push($scope.discount);
+                parseDiscounts($scope.showProduct.discounts, $scope.showProduct.discoutsTable);
+                var product = constructHttpProduct($scope.showProduct);
+                delete product.promotionProducts;
+                console.log(product);
+                ProductService.editProduct(product)
+                    .success(function(data){
+                        initDiscount();
+                        console.log(data);
+                        alert("添加折扣成功");
+                    })
+                    .error(function(){
+                        $scope.showProduct.discounts.pop();
+                        alert("添加折扣失败");
+                    })
+            }
             ngDialog.close();
         };
 
         $scope.deleteDiscount = function(temp){
-            var index = $scope.newProduct.discounts.indexOf(temp);
-            $scope.newProduct.discounts.splice(index, 1);
+            //新建产品模式
+            if($scope.showMode == 0) {
+                var index = $scope.newProduct.discounts.indexOf(temp);
+                $scope.newProduct.discounts.splice(index, 1);
+            }
+            //修改产品模式
+            if($scope.showMode == 2) {
+                var index = $scope.showProduct.discounts.indexOf(temp);
+                $scope.showProduct.discounts.splice(index, 1);
+                parseDiscounts($scope.showProduct.discounts, $scope.showProduct.discoutsTable);
+                var product = constructHttpProduct($scope.showProduct);
+                delete product.promotionProducts;
+                console.log(product);
+                ProductService.editProduct(product)
+                    .success(function(data){
+                        console.log(data);
+                        alert("折扣删除成功");
+                    })
+                    .error(function(){
+                        $scope.showProduct.discounts.splice(index, 0, temp);
+                        alert("折扣删除失败");
+                    })
+            }
         };
 
         //折扣格式化显示开始
@@ -273,9 +416,48 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                     return;
                 }
             }
-            $scope.showProduct.promotions.push($scope.promotion);
+            if($scope.showMode == 0){
+                $scope.showProduct.promotions.push($scope.promotion);
+                ngDialog.close();
+            }
+            if($scope.showMode == 2){
+                var promotion = clone($scope.promotion);
+                promotion.productId = $scope.showProduct.productId;
+                for(var i = 0; i < promotion.promotionPeriods.length; i++){
+                    promotion.promotionPeriods[i].startTime = promotion.promotionPeriods[i].startTime.key;
+                    promotion.promotionPeriods[i].endTime = promotion.promotionPeriods[i].endTime.key;
+                    promotion.promotionPeriods[i].price = promotion.price;
+                }
+                promotion.restaurantId = parseInt($.cookie("restaurantId"));
+                console.log(promotion);
+                ProductService.addPromotion(promotion)
+                    .success(function(data){
+                        $scope.showProduct.promotions.push($scope.promotion);
+                        ngDialog.close();
+                        alert("添加促销成功");
+                    })
+                    .error(function(){
+                        $scope.showProduct.promotions.pop();
+                        alert("添加促销失败");
+                    })
+            }
+        };
 
-            ngDialog.close();
+        $scope.deletePromotion = function(promotion){
+            var index = $scope.showProduct.promotions.indexOf(promotion);
+            if($scope.showMode == 0) {
+                $scope.showProduct.promotions.splice(index, 1);
+            }
+            if($scope.showMode == 2){
+                ProductService.deletePromotion(promotion.id)
+                    .success(function(data){
+                        $scope.showProduct.promotions.splice(index, 1);
+                        alert("删除促销成功");
+                    })
+                    .error(function(){
+                        alert("删除促销失败");
+                    })
+            }
         };
 
 
@@ -309,33 +491,34 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
                 return;
             }
 
-            var upData = {};
+
             parseDiscounts($scope.newProduct.discounts, $scope.newProduct.discoutsTable);
-            upData.description = $scope.newProduct.description;
-            upData.discount = $scope.newProduct.discoutsTable;
-            upData.discountDescription = "暂时写死的";
-            upData.discountRecord = JSON.stringify($scope.newProduct.discounts);
-            upData.originPrice = $scope.newProduct.originPrice;
-            upData.productName = $scope.newProduct.productName;
-            upData.interval = 30;
-            upData.restaurantId = parseInt($.cookie("restaurantId"));
-            upData.promotionProducts = clone($scope.newProduct.promotions);
-            for(var i = 0; i < upData.promotionProducts.length; i++){
-                for(var j = 0; j < upData.promotionProducts[i].promotionPeriods.length; j++){
-                    var tempStart = upData.promotionProducts[i].promotionPeriods[j].startTime;
-                    var tempEnd = upData.promotionProducts[i].promotionPeriods[j].endTime;
-                    upData.promotionProducts[i].promotionPeriods[j].startTime = tempStart.key;
-                    upData.promotionProducts[i].promotionPeriods[j].endTime = tempEnd.key;
-                    upData.promotionProducts[i].promotionPeriods[j].price = upData.promotionProducts[i].price;
-                }
-                delete upData.promotionProducts[i].price;
-            }
+            //upData.description = $scope.newProduct.description;
+            //upData.discount = $scope.newProduct.discoutsTable;
+            //upData.discountDescription = "暂时写死的";
+            //upData.discountRecord = JSON.stringify($scope.newProduct.discounts);
+            //upData.originPrice = $scope.newProduct.originPrice;
+            //upData.productName = $scope.newProduct.productName;
+            //upData.interval = 30;
+            //upData.restaurantId = parseInt($.cookie("restaurantId"));
+            //upData.promotionProducts = clone($scope.newProduct.promotions);
+            //for(var i = 0; i < upData.promotionProducts.length; i++){
+            //    for(var j = 0; j < upData.promotionProducts[i].promotionPeriods.length; j++){
+            //        var tempStart = upData.promotionProducts[i].promotionPeriods[j].startTime;
+            //        var tempEnd = upData.promotionProducts[i].promotionPeriods[j].endTime;
+            //        upData.promotionProducts[i].promotionPeriods[j].startTime = tempStart.key;
+            //        upData.promotionProducts[i].promotionPeriods[j].endTime = tempEnd.key;
+            //        upData.promotionProducts[i].promotionPeriods[j].price = upData.promotionProducts[i].price;
+            //    }
+            //    delete upData.promotionProducts[i].price;
+            //}
+            var upData = constructHttpProduct($scope.newProduct);
             console.log(JSON.stringify(upData));
             ProductService.addProduct(upData)
                 .success(function(data){
-                    console.log(data.id);
+                    //console.log(data.id);
                     alert("创建产品成功");
-                    initNewProduct();
+                    $scope.newProduct = initNewProduct();
                 })
                 .error(function(){
 
@@ -348,9 +531,49 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker'])
             ProductService.getProduct($.cookie("restaurantId"))
                 .success(function(data){
                     console.log(data.length);
+                    for(var i = 0; i < data.length; i++){
+                        data[i].discounts = JSON.parse(data[i].discountRecord);
+                    };
+                    $scope.rowCollection = data;
                 })
                 .error(function(){
 
                 });
         };
+
+        $scope.deleteProduct = function(row){
+            var flag = confirm("确认删除产品: " + row.productName + "?");
+            if(flag == true) {
+                ProductService.deleteProduct(row.productId)
+                    .success(function (data) {
+                        var index = $scope.rowCollection.indexOf(row);
+                        $scope.rowCollection.splice(index, 1);
+                    })
+                    .error(function () {
+
+                    });
+            }
+        };
+
+        $scope.modifyProduct = function(row){
+            $scope.showMode = 2;
+            $scope.showProduct = constructShowProduct(row);
+            initDiscount();
+        };
+
+        $scope.editProductInfo = function (){
+            parseDiscounts($scope.showProduct.discounts, $scope.showProduct.discoutsTable);
+            var product = constructHttpProduct($scope.showProduct);
+            delete product.promotionProducts;
+            console.log(product.productName);
+            ProductService.editProduct(product)
+                .success(function(data){
+                    alert("产品信息修改成功");
+                })
+                .error(function(){
+                    alert("产品信息修改失败");
+                })
+        };
+
+
     }]);
