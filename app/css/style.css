@@ -375,6 +375,13 @@ a:hover {
     margin: 0 auto;
 }
 
+.cropAreaProduct {
+    background: #E4E4E4;
+    overflow: hidden;
+    width: 570px;
+    height: 375px;
+}
+
 .image-upload {
     margin: 10px;
     overflow: auto;
@@ -391,6 +398,11 @@ a:hover {
     margin: 0 auto;
     margin-top: 10px;
     width: 350px;
+}
+
+.picProductDescription {
+    margin-top: 10px;
+    width: 570px;
 }
 
 /*餐厅图文信息结束*/
@@ -435,7 +447,7 @@ a:hover {
 }
 
 .reservation-content .btn {
-    width: 120px;
+    width: 100px;
 }
 
 .btn-order {

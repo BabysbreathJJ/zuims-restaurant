@@ -43,21 +43,21 @@
             <h4 class="lty-product-separator" style="padding-left: 0px">图片管理</h4>
 
             <div ng-show="productPicShow == 1">
-                <div class="cropAreaDetail">
+                <div class="cropAreaProduct">
                     <img-crop image="myProductImage" area-type="rectangle" aspect-ratio="1.52380952"
-                              result-image-size='{w: 960,h: 630}'
+                              result-image-size='{w: 630,h: 420}'
                               result-image='myProductCroppedPic'
                     ></img-crop>
 
                 </div>
                 <!--<div>图片预览:</div>-->
                 <div class="croppedPic" style="display: none"><img ng-src="{{myProductCroppedPic}}"/></div>
-                <div class="picDetailDescription">
+                <div class="picProductDescription">
                     <input class="form-control" type="text" placeholder="图片描述,限20字,与图片同时显示在用户手机上"
                            ng-model="picDescription"/>
                 </div>
-                <div class="image-upload">
-                    <a href="javascript:;" class="file" ng-click="uploadPic()">
+                <div class="image-upload" style="margin-left: 0px">
+                    <a href="javascript:;" class="file" ng-click="uploadPic()" style="margin-left: 0px">
                         <span class="glyphicon glyphicon-saved"></span>上传图片
                     </a>
                     <a href="javascript:;" class="file-cancel" ng-click="removePic()">

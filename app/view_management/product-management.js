@@ -857,7 +857,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
             ProductService.uploadCProuductPic($scope.uploadInfo)
                 .success(function (data) {
                     if (data.success == true) {
-                        alert("图片上传成功,可以点击预览进行查看!");
+                        alert("图片上传成功,请设置展示图片!");
                         $scope.picDescription = "";
                         $scope.productPicShow = 0;
                     }

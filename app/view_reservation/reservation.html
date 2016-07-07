@@ -4,6 +4,7 @@
         <thead>
         <tr>
             <th>订单号</th>
+            <th>产品名</th>
             <th>订单状态</th>
             <th st-sort="orderDate" st-sort-default="reverse">预定时间</th>
             <th>就餐时间</th>
@@ -15,6 +16,8 @@
         </tr>
         <tr>
             <th colspan="1"><input st-search="orderId" class="form-control search-input" placeholder="订单号" type="text"/>
+            </th>
+            <th colspan="1"><input st-search="productName" class="form-control search-input" placeholder="产品名" type="text"/>
             </th>
             <th colspan="1"><input st-search="state" class="form-control search-input" placeholder="订单状态" type="text"/>
             </th>
@@ -31,6 +34,7 @@
         <tbody>
         <tr ng-repeat="row in displayedCollection">
             <td width="10%">{{row.orderId}}</td>
+            <td width="10%">{{row.productName}}</td>
             <td width="10%" ng-if="row.state == '已订座'" class="incomplete">{{row.state}}</td>
             <td width="10%" ng-if="row.state == '已就餐'">{{row.state}}</td>
             <td width="10%" ng-if="row.state == '已拒绝'">{{row.state}}</td>
