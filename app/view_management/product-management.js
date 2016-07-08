@@ -603,9 +603,14 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
             ProductService.addProduct(upData)
                 .success(function(data){
                     //console.log(data.id);
-                    alert("创建产品成功,请在详情界面为该产品上传图片");
-                    $scope.newProduct = initNewProduct();
-                    getProductList();
+                    if(data.id == undefined){
+                        alert("创建产品失败,请检查促销时间是否冲突");
+                    }
+                    else {
+                        alert("创建产品成功,请在详情界面为该产品上传图片");
+                        $scope.newProduct = initNewProduct();
+                        getProductList();
+                    }
                 })
                 .error(function(){
 
