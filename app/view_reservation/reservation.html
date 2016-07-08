@@ -33,13 +33,13 @@
         </thead>
         <tbody>
         <tr ng-repeat="row in displayedCollection">
-            <td width="10%">{{row.orderId}}</td>
+            <td width="8%">{{row.orderId}}</td>
             <td width="10%">{{row.productName}}</td>
             <td width="10%" ng-if="row.state == '已订座'" class="incomplete">{{row.state}}</td>
             <td width="10%" ng-if="row.state == '已就餐'">{{row.state}}</td>
             <td width="10%" ng-if="row.state == '已拒绝'">{{row.state}}</td>
             <td width="10%">{{row.orderDate}}</td>
-            <td width="10%">{{row.orderTimer}}</td>
+            <td width="8%">{{row.orderTimer}}</td>
             <td>{{row.userLastName}}{{row.userFirstName}},{{row.gender}},{{row.phoneId}},{{row.userVipLevel}}</td>
             <td width="10%">{{row.dinerNum}}</td>
             <td width="10%">{{row.dorderSum}}</td>
