@@ -69,7 +69,7 @@ a.navbar-brand {
 }
 
 .navbar-nav li a:hover, .navbar-nav li a.active, .navbar-nav li a:active, .navbar-nav li a:visited {
-    color: #ff6b4a !important;
+    color: #337ab7 !important;
     background: none;
 }
 
@@ -99,12 +99,12 @@ a.navbar-brand {
 .navbar-nav a:hover:before,
 .navbar-nav a:focus:before, .navbar-nav a.active:before {
     color: #fff;
-    text-shadow: 10px 0 #ff6b4a, -10px 0 #ff6b4a;
+    text-shadow: 10px 0 #337ab7, -10px 0 #337ab7;
 }
 
 .navbar-nav a:hover,
 .navbar-nav a:focus {
-    color: #ff6b4a;
+    color: #337ab7;
 }
 
 .header-logo.navbar-brand {
@@ -149,7 +149,7 @@ a.navbar-brand {
 }
 
 .left-block {
-    background: #ff6100;
+    background: #337ab7;
     color: #d1d1d1;
     font-size: 1.5em;
     line-height: 1.5em;
@@ -184,7 +184,7 @@ a.navbar-brand {
 }
 
 .menu li span:hover, .menu li span:active {
-    background: #ff6100;
+    background: #337ab7;
     -webkit-transition: background 0.10s ease-in;
     -o-transition: background 0.10s ease-in;
 }
@@ -195,6 +195,12 @@ a.navbar-brand {
 
 .orange-sidebar {
     background: #ff6100;
+    -webkit-transition: background 0.10s ease-in;
+    -o-transition: background 0.10s ease-in;
+}
+
+.blue-sidebar {
+    background: #337ab7;
     -webkit-transition: background 0.10s ease-in;
     -o-transition: background 0.10s ease-in;
 }
@@ -218,7 +224,7 @@ a.navbar-brand {
 }
 
 .incomplete {
-    background: orange;
+    background: #5cb85c;
     color: white;
 }
 
@@ -303,11 +309,11 @@ a {
 }
 
 a:active {
-    color: #ffa500;
+    color: #337ab7;
 }
 
 a:hover {
-    color: #ffa500;
+    color: #337ab7;
     cursor: pointer;
     text-decoration: none;
 }
@@ -318,7 +324,7 @@ a:hover {
 }
 
 .selectDays {
-    color: #ffa500;
+    color: #337ab7;
 }
 
 /*统计数据查询结束*/
@@ -419,8 +425,8 @@ a:hover {
     z-index: 3;
     color: #fff;
     cursor: default;
-    background-color: #FF7F00;
-    border-color: #d58512;
+    background-color: #337ab7;
+    border-color: #2e6da4;
 }
 
 /*预定信息table结束*/
@@ -473,8 +479,8 @@ a:hover {
 .file {
     position: relative;
     display: inline-block;
-    background: #FF7F00;
-    border: 1px solid #FF7256;
+    background: #337ab7;
+    border: 1px solid #2e6da4;
     border-radius: 4px;
     padding: 4px 12px;
     overflow: hidden;
@@ -507,8 +513,8 @@ a:hover {
 }
 
 .file:hover {
-    background: #ec971f;
-    border-color: #d58512;
+    background: #286090;
+    border-color: #204d74;
     color: #FFFFFF;
     text-decoration: none;
 }
@@ -546,6 +552,13 @@ a:hover {
 
 .explain {
     color: #d58512;
+    font-size: 12px;
+    font-weight: 400;
+    /*padding-left: 20px;*/
+}
+
+.main-explain {
+    color: #337ab7;
     font-size: 12px;
     font-weight: 400;
     /*padding-left: 20px;*/
@@ -954,8 +967,8 @@ ul li, ol li {
 }
 
 .lty-modify-pic-word {
-    background: #d58512;
-    border: 1px solid #FF7256;
+    background: #337ab7;
+    border: 1px solid #2e6da4;
     border-radius: 4px;
     color: #FFFFFF;
     width: inherit;
@@ -963,7 +976,7 @@ ul li, ol li {
 }
 
 .lty-modify-pic-block {
-    border: 2px dashed #d58512;
+    border: 2px dashed #337ab7;
     min-height: 112px;
     margin-top: 10px;
     margin-bottom: 25px;
@@ -982,7 +995,7 @@ ul li, ol li {
 /*}*/
 
 .lty-detail-pic {
-    border: 1px solid #d58512;
+    border: 1px solid #337ab7;
     width: 86px;
     height: 69px;
     margin: 3px;
@@ -992,7 +1005,7 @@ ul li, ol li {
     margin: 0px auto;
     text-align: center;
     font-size: 16px;
-    color: #d58512;
+    color: #337ab7;
     padding-top: 0px;
     padding-bottom: 4px;
 }
@@ -1026,7 +1039,7 @@ ul li, ol li {
 }
 
 .lty-product-discount{
-    border: dashed 2px #d58512;
+    border: dashed 2px #337ab7;
     margin-right: 20px;
     margin-bottom: 20px;
     width: 160px;
@@ -1037,7 +1050,7 @@ ul li, ol li {
 }
 
 .lty-product-promotion {
-    border: dashed 2px #d58512;
+    border: dashed 2px #337ab7;
     margin-right: 20px;
     margin-bottom: 20px;
     width: 160px;
@@ -1094,6 +1107,14 @@ div.lty-product-discount a.lty-btn,  div.lty-product-promotion a.lty-btn{
     background-color: #d58512;
 }
 
+.background-blue {
+    background-color: #337ab7;
+}
+
+.background-green {
+    background-color: #5cb85c;
+}
+
 span.moment-picker {
     position: relative !important;
     display: inline-block !important;
@@ -1101,11 +1122,11 @@ span.moment-picker {
 }
 
 .moment-picker td.selected {
-    border-color: #ff8500 !important;
-    background: #d58512 !important;
-    background-image: -webkit-linear-gradient(#ff8500,#d58512) !important;
-    background-image: -moz-linear-gradient(#ff8500,#d58512) !important;
-    background-image: -ms-linear-gradient(#ff8500,#d58512) !important;
-    background-image: -o-linear-gradient(#ff8500,#d58512) !important;
-    background-image: linear-gradient(#ff8500,#d58512) !important;
+    border-color: #337ab7 !important;
+    background: #286090 !important;
+    background-image: -webkit-linear-gradient(#337ab7,#286090) !important;
+    background-image: -moz-linear-gradient(#337ab7,#286090) !important;
+    background-image: -ms-linear-gradient(#337ab7,#286090) !important;
+    background-image: -o-linear-gradient(#337ab7,#286090) !important;
+    background-image: linear-gradient(#337ab7,#286090) !important;
 }
