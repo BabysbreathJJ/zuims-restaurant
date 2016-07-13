@@ -440,6 +440,10 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             $scope.begin = $scope.myRecommendCroppedPic.indexOf("base64") + 7;
             $scope.myUploadPic = $scope.myRecommendCroppedPic.substr($scope.begin);
 
+            if ($scope.picDescription == null) {
+                alert('图片描述不能为空!');
+                return;
+            }
 
             if ($scope.picDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
@@ -497,6 +501,10 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             $scope.begin = $scope.myListCroppedPic.indexOf("base64") + 7;
             $scope.myUploadPic = $scope.myListCroppedPic.substr($scope.begin);
 
+            if ($scope.picDescription == null) {
+                alert('图片描述不能为空!');
+                return;
+            }
 
             if ($scope.listPicDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
@@ -641,6 +649,11 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             $scope.begin = $scope.myDetailCroppedPic.indexOf("base64") + 7;
             $scope.myUploadPic = $scope.myDetailCroppedPic.substr($scope.begin);
 
+            if ($scope.picDescription == null) {
+                alert('图片描述不能为空!');
+                return;
+            }
+            
             if ($scope.picDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
                 return;

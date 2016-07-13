@@ -708,6 +708,11 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
             $scope.begin = $scope.myProductCroppedPic.indexOf("base64") + 7;
             $scope.myUploadPic = $scope.myProductCroppedPic.substr($scope.begin);
 
+            if ($scope.picDescription == null) {
+                alert('图片描述不能为空!');
+                return;
+            }
+
             if ($scope.picDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
                 return;
@@ -845,6 +850,11 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
         $scope.uploadPic = function () {
             $scope.begin = $scope.myProductCroppedPic.indexOf("base64") + 7;
             $scope.myUploadPic = $scope.myProductCroppedPic.substr($scope.begin);
+
+            if ($scope.picDescription == null) {
+                alert('图片描述不能为空!');
+                return;
+            }
 
             if ($scope.picDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
