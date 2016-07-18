@@ -28,7 +28,8 @@ body a {
 
 /*--banner--*/
 .banner {
-    background: url(../images/banner1.jpg) no-repeat center top;
+    /*background: url(../images/banner1.jpg) no-repeat center top;*/
+    background-color: #337ab7;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -170,7 +171,7 @@ a.navbar-brand {
 
 .sidebar-span {
     display: block;
-    background: #52504b;
+    background: #286090;
     color: #fff;
     padding: 10px 10px 14px 18px;
     font-family: 'Signika Negative', sans-serif;
@@ -448,7 +449,7 @@ a:hover {
 
 .reservation-content th {
     text-align: center;
-    background-color: #3c3c3c !important;
+    background-color: #286090 !important;
     color: white;
 }
 
@@ -560,7 +561,7 @@ a:hover {
 .main-explain {
     color: #337ab7;
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 600;
     /*padding-left: 20px;*/
 }
 
