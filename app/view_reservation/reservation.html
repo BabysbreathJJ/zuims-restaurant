@@ -3,16 +3,16 @@
            style="font-size: 12px">
         <thead>
         <tr>
-            <th>订单号</th>
-            <th>产品名</th>
-            <th>订单状态</th>
-            <th st-sort="orderDate" st-sort-default="reverse">预定时间</th>
-            <th>就餐时间</th>
-            <th>预订人信息</th>
-            <th>预定人数</th>
-            <th>订单总金额</th>
-            <th>用户备注</th>
-            <th>操作</th>
+            <th width="8%">订单号</th>
+            <th width="10%">产品名</th>
+            <th width="9%">订单状态</th>
+            <th width="10%" st-sort="orderDate" st-sort-default="reverse">预定时间</th>
+            <th width="8%">就餐时间</th>
+            <th width="22%">预订人信息</th>
+            <th width="7%">预定人数</th>
+            <th width="8%">订单总金额</th>
+            <th width="10%">用户备注</th>
+            <th width="8%">操作</th>
         </tr>
         <tr>
             <th colspan="1"><input st-search="orderId" class="form-control search-input" placeholder="订单号" type="text"/>
@@ -33,16 +33,16 @@
         </thead>
         <tbody>
         <tr ng-repeat="row in displayedCollection">
-            <td width="8%">{{row.orderId}}</td>
-            <td width="10%">{{row.productName}}</td>
-            <td width="10%" ng-if="row.state == '已订座'" class="incomplete">{{row.state}}</td>
-            <td width="10%" ng-if="row.state == '已就餐'">{{row.state}}</td>
-            <td width="10%" ng-if="row.state == '已拒绝'">{{row.state}}</td>
-            <td width="10%">{{row.orderDate}}</td>
-            <td width="8%">{{row.orderTimer}}</td>
+            <td>{{row.orderId}}</td>
+            <td>{{row.productName}}</td>
+            <td ng-if="row.state == '已订座'" class="incomplete">{{row.state}}</td>
+            <td ng-if="row.state == '已就餐'">{{row.state}}</td>
+            <td ng-if="row.state == '已拒绝'">{{row.state}}</td>
+            <td>{{row.orderDate}}</td>
+            <td>{{row.orderTimer}}</td>
             <td>{{row.userLastName}}{{row.userFirstName}},{{row.gender}},{{row.phoneId}},{{row.userVipLevel}}</td>
-            <td width="10%">{{row.dinerNum}}</td>
-            <td width="10%">{{row.dorderSum}}</td>
+            <td>{{row.dinerNum}}</td>
+            <td>{{row.dorderSum}}</td>
             <td>{{row.more}}</td>
             <td>
                 <button ng-show="!row.orderHandled" type="button" ng-click="completeOrder(row)"
