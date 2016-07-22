@@ -294,11 +294,11 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                 $scope.restaurantInfo = data;
                 $scope.basicInfo = data;
                 $scope.persistInfo = {"persistTable": data.persistTable, "persistTime": data.persistTime};
-                delete $scope.basicInfo.introduction;
-                delete $scope.basicInfo.smoke;
-                delete $scope.basicInfo.images;
-                delete $scope.basicInfo.latitude;
-                delete $scope.basicInfo.longitude;
+                //delete $scope.basicInfo.introduction;
+                //delete $scope.basicInfo.smoke;
+                //delete $scope.basicInfo.images;
+                //delete $scope.basicInfo.latitude;
+                //delete $scope.basicInfo.longitude;
                 $("#restaurantName").text($scope.basicInfo.hotelName + $scope.basicInfo.restaurantName);
                 var sellerId = data.sellerId;
                 var seller;
