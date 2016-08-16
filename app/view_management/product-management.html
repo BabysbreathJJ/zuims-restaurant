@@ -1,0 +1,423 @@
+<div class="lty-product-management">
+    <div class="btn-group" role="group">
+        <button class="btn btn-primary" style="margin-left: 30px" ng-click="productList()">
+            <span class="glyphicon glyphicon-th-list"></span>产品列表
+        </button>
+        <button class="btn btn-primary" ng-click="addNewProduct()">
+            <span class="glyphicon glyphicon-plus"></span>新建产品
+        </button>
+    </div>
+    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+
+    <!--showMode 0新建产品, 1产品列表, 2修改产品-->
+
+    <!--新建产品开始-->
+    <div ng-show="showMode==0 || showMode==2" class="lty-add-product">
+        <h3 style="text-align: center">{{["新建产品", " ", "修改产品信息"][showMode]}}</h3>
+
+        <!--产品基本信息开始-->
+        <h4 class="lty-product-separator" style="padding-left: 0px">产品基本信息</h4>
+        <table class="table table-bordered" style="margin-bottom: 23px">
+            <tr>
+                <td width="30%">
+                    产品名<span class="explain" style="padding-left: 10px">限15字</span>
+                    <input type="text" class="form-control" ng-model="showProduct.productName">
+                </td>
+                <td width="30%">
+                    原价<span class="explain" style="padding-left: 10px">请包含服务费</span>
+                    <input class="form-control" type="number" min="0" ng-model="showProduct.originPrice">
+                </td>
+                <td width="40%">
+                    产品描述<span class="explain" style="padding-left: 10px">限30字</span>
+                    <input type="text" class="form-control" ng-model="showProduct.description">
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-primary" ng-click="editProductInfo()" ng-show="showMode==2" style="margin-bottom: 15px">
+            <span class="glyphicon glyphicon-ok"></span>保存产品基本信息
+        </button>
+        <!--产品基本信息结束-->
+
+        <!--图片管理开始-->
+        <div ng-show="showMode == 2" ng-controller="ProductImageCtrl" style="margin-bottom: 20px; margin-top: 10px">
+            <h4 class="lty-product-separator" style="padding-left: 0px">图片管理</h4>
+
+            <div ng-show="productPicShow == 1">
+                <div class="cropAreaProduct">
+                    <img-crop image="myProductImage" area-type="rectangle" aspect-ratio="1.52380952"
+                              result-image-size='{w: 630,h: 420}'
+                              result-image='myProductCroppedPic'
+                    ></img-crop>
+
+                </div>
+                <!--<div>图片预览:</div>-->
+                <div class="croppedPic" style="display: none"><img ng-src="{{myProductCroppedPic}}"/></div>
+                <div class="picProductDescription">
+                    <input class="form-control" type="text" placeholder="图片描述,限20字,与图片同时显示在用户手机上"
+                           ng-model="picDescription"/>
+                </div>
+                <div class="image-upload" style="margin-left: 0px">
+                    <a href="javascript:;" class="file" ng-click="uploadPic()" style="margin-left: 0px">
+                        <span class="glyphicon glyphicon-saved"></span>上传图片
+                    </a>
+                    <a href="javascript:;" class="file-cancel" ng-click="removePic()">
+                        <span class="glyphicon glyphicon-remove"></span>取消上传
+                    </a>
+                </div>
+            </div>
+            <div ng-hide="productPicShow == 1">
+                <a href="javascript:;" class="file" style="margin-right: 10px; margin-left: 0px"><span
+                        class="glyphicon glyphicon-picture"></span>选择图片
+                    <input type="file" accept="image/*" id="inputProductImage" >
+                </a>
+                <a href="javascript:;" class="file btn-primary" ng-click="editProductPic()" style="margin-right: 10px">
+                    <span class="glyphicon glyphicon-edit"></span>编辑图片
+                </a>
+                <a href="javascript:;" class="file btn-primary " ng-click="previewProductPic()" style="margin-right: 10px">
+                    <span class="glyphicon glyphicon-search"></span>图文信息预览
+                </a>
+            </div>
+        </div>
+        <!--图片管理结束-->
+
+        <!--折扣信息开始-->
+        <h4 class="lty-product-separator" style="padding-left: 0px">折扣信息
+            <span class="explain" style="padding-left: 10px">默认该产品在所有时间段均无折扣</span>
+        </h4>
+
+        <div>
+            <div class="lty-product-discount" ng-repeat="temp in showProduct.discounts">
+                <a href="javascript:;" class="lty-btn" ng-click="deleteDiscount(temp)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <p>
+                    {{textDiscount(temp.discount)}}
+                    <span class="main-explain" style="padding-left: 10px; display:inline-block">{{textPrice(temp.discount, showProduct.originPrice)}}</span>
+                </p>
+                <span class="main-explain" style="padding-left: 0px">{{textDays(temp.days)}}</span>
+                <span class="main-explain" style="padding-left: 0px">{{textIntervals(temp.beginTime, temp.endTime)}}</span>
+            </div>
+            <div class="lty-product-discount" style="border: none; text-align: left; height: 90px">
+                <button class="btn btn-primary" ng-click="addDiscount()" >
+                    <span class="glyphicon glyphicon-plus"></span>添加折扣
+                </button>
+                <button class="btn btn-primary" ng-click="previewDiscountTable()" style="margin-top: 15px; margin-bottom: 15px;">
+                    <span class="glyphicon glyphicon-search"></span>预览折扣信息
+                </button>
+            </div>
+        </div>
+        <!--折扣信息结束-->
+
+        <!--促销信息开始-->
+        <h4 class="lty-product-separator" style="padding-left: 0px">促销信息</h4>
+        <div>
+            <div class="lty-product-promotion" ng-repeat="temp in showProduct.promotions" ng-style="{height: (90 + temp.promotionPeriods.length * 23), width: (160 + (temp.description.length > 8 ? (temp.description.length-8):0) * 8)}">
+                <a href="javascript:;" class="lty-btn" ng-click="deletePromotion(temp);">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <p>
+                    {{temp.price}} 元
+                    <span class="main-explain" style="padding-left: 10px; display:inline-block">{{temp.name}}</span>
+                </p>
+                <span class="main-explain" style="padding-left: 0px">描述: {{temp.description}}</span>
+                <span class="main-explain" style="padding-left: 0px">{{temp.startDate}} 至 {{temp.endDate}}</span>
+                <span class="main-explain" style="padding-left: 0px" ng-repeat="period in temp.promotionPeriods">
+                    {{period.startTime.key}} ~ {{period.endTime.key}}
+                </span>
+            </div>
+            <div class="lty-product-promotion" style="border: none; text-align: left">
+                <button class="btn btn-primary" ng-click="addPromotion()" style="margin-bottom: 60px">
+                    <span class="glyphicon glyphicon-plus"></span>添加促销
+                </button>
+            </div>
+        </div>
+        <!--促销信息结束-->
+
+        <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px" ng-show="showMode == 0"></div>
+
+        <div style="text-align: center" ng-show="showMode == 0">
+            <li style="color:red; font-size: 15px; margin-bottom: 12px" ng-show="submitNewProductError.flag">
+                {{submitNewProductError.info}}
+            </li>
+            <button class="btn btn-primary" ng-click="submitNewProduct()" style="margin-bottom: 60px">
+                <span class="glyphicon glyphicon-upload"></span>提交新建产品信息
+            </button>
+        </div>
+
+    </div>
+    <!--新建产品结束-->
+
+    <!--产品列表开始-->
+    <div class="reservation-content" ng-show="showMode==1">
+        <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped"
+               style="font-size: 12px">
+            <thead>
+            <tr>
+                <th width="14%">产品名</th>
+                <th width="20%">产品描述</th>
+                <!--<th st-sort="orderDate" st-sort-default="reverse">预定时间</th>-->
+                <th width="14%" st-sort="originPrice">产品价格</th>
+                <th width="10%" st-sort="discounts.length">折扣数量</th>
+                <th width="10%" st-sort="promotionProducts.length">促销数量</th>
+                <th width="20%">查看详情</th>
+                <th width="12%">删除产品</th>
+            </tr>
+            <tr>
+                <th colspan="1"><input st-search="productName" class="form-control search-input" placeholder="产品名..." type="text"/>
+                </th>
+                <th colspan="1"><input st-search="description" class="form-control search-input" placeholder="产品描述..." type="text"/>
+                </th>
+                <th colspan="1"><input st-search="originPrice" class="form-control search-input" placeholder="原价..." type="text"/>
+                </th>
+                <th colspan="1">
+                </th>
+                <th colspan="1">
+                </th>
+                <th colspan="1">
+                </th>
+                <th colspan="1">
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in displayedCollection">
+                <td width="14%">{{row.productName}}</td>
+                <td width="20%">{{row.description}}</td>
+                <td width="14%">{{row.originPrice}}</td>
+                <td width="10%">{{row.discounts.length}}</td>
+                <td width="10%">{{row.promotionProducts.length}}</td>
+                <td width="20%">
+                    <button class="btn btn-primary" style="width: 100px; padding: 5px 5px" ng-click="modifyProduct(row)">
+                        <span class="glyphicon glyphicon-search"></span> 详情&修改
+                    </button>
+                </td>
+                <td width="12%">
+                    <button class="btn btn-primary" style="width: 70px; padding: 5px 5px" ng-click="deleteProduct(row)">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="7" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"
+                    ></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!--产品列表结束-->
+</div>
+
+<!--添加折扣对话框-->
+<script type="text/ng-template" id="addNewDiscount.html">
+    <!--内容开始-->
+    <h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加折扣</span></h3>
+    <div class="pd15 mt70" style="margin-top: 20px">
+        <form>
+            <div style="display: inline-block; width:48%">
+                <span>折扣额度: </span><span class="explain" style="padding-left: 10px">0~1之间的数字</span>
+                <input class="form-control" type="number" min="0" max="1" step="0.0000000001" ng-model="discount.discount"/>
+            </div>
+            <div style="display: inline-block; width:48%">
+                <span>折后价格: </span>
+                <input class="form-control"disabled ng-model="(discount.discount * showProduct.originPrice).toFixed(2)"/>
+            </div>
+            <div style="margin-top: 15px">
+                <span>折扣时间:</span>
+                <br>
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[0]">周一
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[1]">周二
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[2]">周三
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[3]">周四
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[4]">周五
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[5]">周六
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[6]">周日
+                <br>
+                <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-model="discount.beginTime">
+                </select>
+                <span style="width: 10%">&nbsp&nbsp 至 &nbsp&nbsp</span>
+                <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-model="discount.endTime">
+                </select>
+
+                <li style="color:red; font-size: 15px" ng-show="addDiscountError.flag">
+                    {{addDiscountError.info}}
+                </li>
+
+            </div>
+            <div style="margin-top: 15px">
+                <button class="btn btn-primary" ng-click="saveNewDiscount()">
+                    <span class="glyphicon glyphicon-ok"></span>确定
+                </button>
+            </div>
+        </form>
+    </div>
+</script>
+
+<!--添加促销对话框-->
+<script type="text/ng-template" id="addNewPromotion.html">
+    <!--内容开始-->
+    <h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加促销</span></h3>
+    <div class="pd15 mt70" style="margin-top: 20px">
+        <form>
+            <div style="width:48%; display: inline-block">
+                <span>促销名称: </span><span class="explain" style="padding-left: 10px">限15字</span>
+                <input class="form-control" type="text" ng-model="promotion.name"/>
+            </div>
+            <div style="width:48%; display: inline-block">
+                <span>价格: </span>
+                <input class="form-control" type="number" min="0" step="0.01" ng-model="promotion.price"/>
+            </div>
+            <div style="width:98%; margin-top: 15px">
+                <span>促销描述: </span><span class="explain" style="padding-left: 10px">限30字</span>
+                <input class="form-control" type="text" ng-model="promotion.description"/>
+            </div>
+            <div style="margin-top: 15px; width: 98%">
+                <span>促销起止日期:</span>
+                <br>
+                <input class="form-control"
+                       locale="zh-cn"
+                       format="YYYY-MM-DD"
+                       ng-model="promotion.startDate"
+                       ng-model-options="{ updateOn: 'blur' }"
+                       placeholder="促销开始日期..."
+                       moment-picker="promotion.startDate">
+                <span style="width: 10%">&nbsp&nbsp 至 &nbsp&nbsp</span>
+                <input class="form-control"
+                       locale="zh-cn"
+                       format="YYYY-MM-DD"
+                       ng-model="promotion.endDate"
+                       ng-model-options="{ updateOn: 'blur' }"
+                       placeholder="促销结束日期..."
+                       moment-picker="promotion.endDate">
+            </div>
+            <div style="margin-top: 15px">
+                <span>促销时段:</span>
+                <a href="javascript:;" class="lty-btn" ng-click="promotion.promotionPeriods.push({});">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <div ng-repeat="detail in promotion.promotionPeriods" style="margin-bottom: 10px; width:98%">
+                    <select class="form-control lty-select-days" style="width: 40%" ng-options="days.key for days in intervals" ng-model="detail.startTime">
+                    </select>
+                    <span style="width: 6%">&nbsp 至 &nbsp</span>
+                    <select class="form-control lty-select-days" style="width: 40%" ng-options="days.key for days in intervals" ng-model="detail.endTime">
+                    </select>
+                    <a href="javascript:;" class="lty-btn" style="float: right; margin-top: 5px" ng-click="promotion.promotionPeriods.splice($index, 1);">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </div>
+            </div>
+            <div style="margin-top: 15px">
+                <li style="color:red; font-size: 15px" ng-show="addPromotionError.flag">
+                    {{addPromotionError.info}}
+                </li>
+            </div>
+            <div style="margin-top: 15px">
+                <button class="btn btn-primary" ng-click="saveNewPromotion()">
+                    <span class="glyphicon glyphicon-ok"></span>确定
+                </button>
+            </div>
+        </form>
+    </div>
+</script>
+
+<!--折扣大表-->
+<script type="text/ng-template" id="DiscountTable.html">
+    <!--内容开始-->
+    <table class="table table-bordered table-striped discount-table">
+        <thead>
+            <tr>
+                <th width="16%"></th>
+                <th width="12%">周一</th>
+                <th width="12%">周二</th>
+                <th width="12%">周三</th>
+                <th width="12%">周四</th>
+                <th width="12%">周五</th>
+                <th width="12%">周六</th>
+                <th width="12%">周日</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ele in showDiscountTable">
+                <th width="16%">{{intervals[$index].key + " ~ " + intervals[$index+1].key}}</th>
+                <th width="12%" ng-class="{true: 'background-green'}[ele[0]!=-1]">{{textDiscount(ele[0])}}</th>
+                <th width="12%" ng-class="{true: 'background-green'}[ele[1]!=-1]">{{textDiscount(ele[1])}}</th>
+                <th width="12%" ng-class="{true: 'background-green'}[ele[2]!=-1]">{{textDiscount(ele[2])}}</th>
+                <th width="12%" ng-class="{true: 'background-green'}[ele[3]!=-1]">{{textDiscount(ele[3])}}</th>
+                <th width="12%" ng-class="{true: 'background-green'}[ele[4]!=-1]">{{textDiscount(ele[4])}}</th>
+                <th width="12%" ng-class="{true: 'background-green'}[ele[5]!=-1]">{{textDiscount(ele[5])}}</th>
+                <th width="12%" ng-class="{true: 'background-green'}[ele[6]!=-1]">{{textDiscount(ele[6])}}</th>
+            </tr>
+        </tbody>
+    </table>
+</script>
+
+<script type="text/ng-template" id="editProductPic.html" ng-controller="ProductCtrl">
+    <!--内容开始-->
+    <div>
+        <a class="lty-modify-pic-word">展示图片</a>
+    </div>
+    <div class="lty-modify-pic-block" sv-root>
+        <div sv-part="ltyAllPic.ShowPic">
+            <div ng-repeat="show in ltyAllPic.ShowPic" style="display: inline-block" sv-element>
+                <img src="{{show.picname}}" class="per100 lty-detail-pic">
+                <div class="lty-mlra">
+                    <a href="javascript:;" class="lty-btn" ng-click="cancelShowPic(show)">
+                        取消展示
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a class="lty-modify-pic-word">已上传图片</a>
+    </div>
+    <div class="lty-modify-pic-block" >
+        <div ng-repeat="productPic in ltyAllPic.ProductPic" style="display: inline-block" >
+            <img src="{{productPic.picname}}" class="per100 lty-detail-pic" change-pic>
+            <div class="lty-mlra">
+                <a href="javascript:;" class="lty-btn" ng-click="showPic(productPic)">
+                    展示
+                </a>
+                <a href="javascript:;" class="lty-btn" ng-click="deletePic(productPic)">
+                    删除
+                </a>
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="javascript:;" class="file btn-primary lty-tag-a" autofocus="false" ng-click="setProductPic()">
+        <span class="glyphicon glyphicon-file" autofocus="false"></span>保存修改
+    </a>
+    </div>
+
+</script>
+
+<script type="text/ng-template" id="productPic.html"  ng-controller="ProductCtrl">
+    <!--内容开始-->
+    <div class="pd15 mt70" style="margin-top: 20px">
+        <div class="border border-r-5 bg-white padding">
+            <div class="pos-r">
+                <img src="{{productPics[0].picname}}" class="per100" id="d-img">
+
+                <div class="pos-a tc per100 bottom20">
+                    <p class="bg-t display-ib per90 ht40 l-ht40 font-white" id="description">{{description}}</p>
+                </div>
+            </div>
+            <!--图片列表开始-->
+            <div class="overflow-x-auto carousel">
+                <ul class="list-unstyled pr10 ht70 img-list mt10 pos-r overflow-h">
+                    <li class="fl pl10 border-r-5" ng-repeat="productPic in productPics">
+                        <img src="{{productPic.picname}}" class="per100 small-pic" change-pic
+                             description="{{productPic.introduction}}">
+                    </li>
+                </ul>
+            </div>
+            <!--图片列表结束-->
+
+        </div>
+    </div>
+</script>

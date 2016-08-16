@@ -28,7 +28,8 @@ body a {
 
 /*--banner--*/
 .banner {
-    background: url(../images/banner1.jpg) no-repeat center top;
+    /*background: url(../images/banner1.jpg) no-repeat center top;*/
+    background-color: #337ab7;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -69,7 +70,7 @@ a.navbar-brand {
 }
 
 .navbar-nav li a:hover, .navbar-nav li a.active, .navbar-nav li a:active, .navbar-nav li a:visited {
-    color: #ff6b4a !important;
+    color: #337ab7 !important;
     background: none;
 }
 
@@ -99,12 +100,12 @@ a.navbar-brand {
 .navbar-nav a:hover:before,
 .navbar-nav a:focus:before, .navbar-nav a.active:before {
     color: #fff;
-    text-shadow: 10px 0 #ff6b4a, -10px 0 #ff6b4a;
+    text-shadow: 10px 0 #337ab7, -10px 0 #337ab7;
 }
 
 .navbar-nav a:hover,
 .navbar-nav a:focus {
-    color: #ff6b4a;
+    color: #337ab7;
 }
 
 .header-logo.navbar-brand {
@@ -149,7 +150,7 @@ a.navbar-brand {
 }
 
 .left-block {
-    background: #ff6100;
+    background: #337ab7;
     color: #d1d1d1;
     font-size: 1.5em;
     line-height: 1.5em;
@@ -170,7 +171,7 @@ a.navbar-brand {
 
 .sidebar-span {
     display: block;
-    background: #52504b;
+    background: #286090;
     color: #fff;
     padding: 10px 10px 14px 18px;
     font-family: 'Signika Negative', sans-serif;
@@ -184,7 +185,7 @@ a.navbar-brand {
 }
 
 .menu li span:hover, .menu li span:active {
-    background: #ff6100;
+    background: #337ab7;
     -webkit-transition: background 0.10s ease-in;
     -o-transition: background 0.10s ease-in;
 }
@@ -195,6 +196,12 @@ a.navbar-brand {
 
 .orange-sidebar {
     background: #ff6100;
+    -webkit-transition: background 0.10s ease-in;
+    -o-transition: background 0.10s ease-in;
+}
+
+.blue-sidebar {
+    background: #337ab7;
     -webkit-transition: background 0.10s ease-in;
     -o-transition: background 0.10s ease-in;
 }
@@ -218,7 +225,7 @@ a.navbar-brand {
 }
 
 .incomplete {
-    background: orange;
+    background: #5cb85c;
     color: white;
 }
 
@@ -254,7 +261,7 @@ a.navbar-brand {
 /*标题样式*/
 h3.full-header {
     background: url(../images/full-header-line.png) repeat-x center left;
-    color: #ff6100;
+    color: #337ab7;
     font-weight: normal;
     font-size: 18px;
     margin: 5px 0;
@@ -303,11 +310,11 @@ a {
 }
 
 a:active {
-    color: #ffa500;
+    color: #337ab7;
 }
 
 a:hover {
-    color: #ffa500;
+    color: #337ab7;
     cursor: pointer;
     text-decoration: none;
 }
@@ -318,7 +325,7 @@ a:hover {
 }
 
 .selectDays {
-    color: #ffa500;
+    color: #337ab7;
 }
 
 /*统计数据查询结束*/
@@ -340,7 +347,7 @@ a:hover {
 #recommend-pic {
     display: block;
     float: left;
-    width: 38%;
+    width: 32%;
     /*height: 570px;*/
 }
 
@@ -351,7 +358,12 @@ a:hover {
 
 #detail-pic {
     float: left;
-    width: 60%;
+    width: 34%;
+}
+
+#list-pic {
+    float: left;
+    width: 33%;
 }
 
 .cropAreaRecommend {
@@ -365,9 +377,16 @@ a:hover {
 .cropAreaDetail {
     background: #E4E4E4;
     overflow: hidden;
-    width: 640px;
-    height: 420px;
+    width: 380px;
+    height: 250px;
     margin: 0 auto;
+}
+
+.cropAreaProduct {
+    background: #E4E4E4;
+    overflow: hidden;
+    width: 570px;
+    height: 375px;
 }
 
 .image-upload {
@@ -378,7 +397,7 @@ a:hover {
 .picDetailDescription {
     margin: 0 auto;
     margin-top: 10px;
-    width: 640px;
+    width: 380px;
 
 }
 
@@ -386,6 +405,11 @@ a:hover {
     margin: 0 auto;
     margin-top: 10px;
     width: 350px;
+}
+
+.picProductDescription {
+    margin-top: 10px;
+    width: 570px;
 }
 
 /*餐厅图文信息结束*/
@@ -402,8 +426,8 @@ a:hover {
     z-index: 3;
     color: #fff;
     cursor: default;
-    background-color: #FF7F00;
-    border-color: #d58512;
+    background-color: #337ab7;
+    border-color: #2e6da4;
 }
 
 /*预定信息table结束*/
@@ -425,12 +449,12 @@ a:hover {
 
 .reservation-content th {
     text-align: center;
-    background-color: #3c3c3c !important;
+    background-color: #286090 !important;
     color: white;
 }
 
 .reservation-content .btn {
-    width: 120px;
+    width: 100px;
 }
 
 .btn-order {
@@ -456,8 +480,8 @@ a:hover {
 .file {
     position: relative;
     display: inline-block;
-    background: #FF7F00;
-    border: 1px solid #FF7256;
+    background: #337ab7;
+    border: 1px solid #2e6da4;
     border-radius: 4px;
     padding: 4px 12px;
     overflow: hidden;
@@ -490,8 +514,8 @@ a:hover {
 }
 
 .file:hover {
-    background: #ec971f;
-    border-color: #d58512;
+    background: #286090;
+    border-color: #204d74;
     color: #FFFFFF;
     text-decoration: none;
 }
@@ -531,6 +555,13 @@ a:hover {
     color: #d58512;
     font-size: 12px;
     font-weight: 400;
+    /*padding-left: 20px;*/
+}
+
+.main-explain {
+    color: #337ab7;
+    font-size: 12px;
+    font-weight: 600;
     /*padding-left: 20px;*/
 }
 
@@ -923,4 +954,180 @@ ul li, ol li {
 
 .bootstrap-datetimepicker-widget {
     z-index: 10000;
+}
+
+.lty-pic-preview {
+    padding-left: 24px;
+    padding-right: 26px;
+    margin-bottom: 8px;
+}
+
+.lty-tag-a {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.lty-modify-pic-word {
+    background: #337ab7;
+    border: 1px solid #2e6da4;
+    border-radius: 4px;
+    color: #FFFFFF;
+    width: inherit;
+    margin-left: 0px;
+}
+
+.lty-modify-pic-block {
+    border: 2px dashed #337ab7;
+    min-height: 112px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    padding: 3px;
+    border-radius: 4px;
+    overflow: auto;
+    width: 100%;
+}
+
+
+/*.lty-modify-pic-list {*/
+    /*padding-top: 16px;*/
+    /*padding-bottom: 0px;*/
+    /*padding-left: 6px;*/
+    /*margin-top: 0px;*/
+/*}*/
+
+.lty-detail-pic {
+    border: 1px solid #337ab7;
+    width: 86px;
+    height: 69px;
+    margin: 3px;
+}
+
+.lty-btn{
+    margin: 0px auto;
+    text-align: center;
+    font-size: 16px;
+    color: #337ab7;
+    padding-top: 0px;
+    padding-bottom: 4px;
+}
+
+.lty-mlra{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.lty-product-management{
+    padding-bottom: 15px;
+}
+
+.lty-add-product {
+    width: 95%;
+    margin: 15px auto;
+
+}
+
+.lty-product-separator {
+    border-bottom: dashed 1px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.lty-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 12px;
+}
+
+.lty-product-discount{
+    border: dashed 2px #337ab7;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 160px;
+    height: 90px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+
+.lty-product-promotion {
+    border: dashed 2px #337ab7;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    width: 160px;
+    height: 90px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+
+.lty-align-horizontal-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lty-select-days{
+    display: inline-block;
+    width: 43%;
+}
+
+form input[type="checkbox"] {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 3px;
+}
+
+div.lty-product-discount p,  div.lty-product-promotion p{
+    font-size: 16px;
+    margin-top: 6px;
+    margin-bottom: 0px;
+}
+
+div.lty-product-discount > span, div.lty-product-promotion > span {
+    display: block;
+    margin-top: 6px;
+}
+
+div.lty-product-discount a.lty-btn,  div.lty-product-promotion a.lty-btn{
+    float: right;
+}
+
+.discount-table th{
+    text-align: center;
+}
+
+.discount-table>thead>tr th{
+    font-size: 18px;
+}
+
+.discount-table>tbody>tr th{
+    font-size: 14px;
+}
+
+.background-orange{
+    background-color: #d58512;
+}
+
+.background-blue {
+    background-color: #337ab7;
+}
+
+.background-green {
+    background-color: #5cb85c;
+}
+
+span.moment-picker {
+    position: relative !important;
+    display: inline-block !important;
+    width: 43%;
+}
+
+.moment-picker td.selected {
+    border-color: #337ab7 !important;
+    background: #286090 !important;
+    background-image: -webkit-linear-gradient(#337ab7,#286090) !important;
+    background-image: -moz-linear-gradient(#337ab7,#286090) !important;
+    background-image: -ms-linear-gradient(#337ab7,#286090) !important;
+    background-image: -o-linear-gradient(#337ab7,#286090) !important;
+    background-image: linear-gradient(#337ab7,#286090) !important;
 }
