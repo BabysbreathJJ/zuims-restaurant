@@ -501,7 +501,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             $scope.begin = $scope.myListCroppedPic.indexOf("base64") + 7;
             $scope.myUploadPic = $scope.myListCroppedPic.substr($scope.begin);
 
-            if ($scope.picDescription == null) {
+            if ($scope.listPicDescription == null) {
                 alert('图片描述不能为空!');
                 return;
             }
