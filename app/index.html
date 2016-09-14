@@ -57,7 +57,7 @@
 <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
 <script>
     $(document).ready(function () {
-        document.domain = 'zui.ms';//test crossDomain
+        //document.domain = 'zui.ms';
         $.cookie("loginPath", location.pathname);
         if ($.cookie("restaurantId") !== undefined && $.cookie("restaurantId") !== 'null') {
             window.location = "content.html";
