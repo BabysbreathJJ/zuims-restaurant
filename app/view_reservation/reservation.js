@@ -23,6 +23,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
     .factory('OrderService', ['$http', 'BaseUrl', 'merchantPort', function ($http, BaseUrl, merchantPort) {
         var restaurantBaseUrl = BaseUrl + merchantPort;
         //var restaurantBaseUrl = "http://202.120.40.175:21104";
+        var didi = "http://123.125.253.29:80";
 
         var getOderInfosRequest = function (restaurantId) {
             return $http({
@@ -44,6 +45,42 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                 url: restaurantBaseUrl + '/order/confirmOrder?orderId=' + orderId + "&opt=" + opt
             });
         };
+
+        var getDidiStatusRequest = function (orderId) {
+          return $http({
+            method:'GET',
+            url:restaurantBaseUrl + "/order/ddstatusByorderid?orderId=" + orderId
+          });
+        };
+
+        var getShopIdRequest = function(restaurantId) {
+          return $http({
+            method:'GET',
+            url:restaurantBaseUrl + "/didi/getShopId?restaurantId=" + restaurantId
+          });
+        };
+
+        var didiConfirmRequest = function(confirmCodeParameterContext) {
+          return $http({
+            method:'POST',
+            url:restaurantBaseUrl + "/order/ddConfirm",
+            data:confirmCodeParameterContext,
+            headers: {'Content-Type': 'application/json;charset=UTF-8'},
+            crossDomain:true
+          });
+        };
+
+        var confirmCouponRequest = function(token,appId,logId,couponCode,orderInfo) {
+          return $http({
+            method:'POST',
+            url: didi + "/cav/cavcouponcode",
+            dataType: 'JSONP',
+            data:{token,appId,logId,couponCode,orderInfo},
+            //headers: {'Content-Type': 'application/json;charset=UTF-8'},
+            crossDomain:true
+          });
+        };
+
         return {
             getOrderInfo: function (restaurantId) {
                 return getOderInfosRequest(restaurantId);
@@ -53,11 +90,23 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             },
             acceptOrder: function (orderId, opt) {
                 return acceptOrderRequest(orderId, opt);
+            },
+            getDidiStatus: function (orderId) {
+              return getDidiStatusRequest(orderId);
+            },
+            getShopId : function (restaurantId) {
+              return getShopIdRequest(restaurantId);
+            },
+            didiConfirm: function (confirmCodeParameterContext) {
+              return didiConfirmRequest(confirmCodeParameterContext);
+            },
+            confirmCoupon : function (token,appId,logId,couponCode,OrderInfo) {
+              return confirmCouponRequest(token,appId,logId,couponCode,OrderInfo);
             }
         }
 
     }])
-    .controller("ReservationCtrl", ["$scope", "Notification", "ngDialog", "OrderService", "$location", function ($scope, Notification, ngDialog, OrderService, $location) {
+    .controller("ReservationCtrl", ["$scope", "Notification", "ngDialog", "OrderService", "$location", function ($scope,Notification, ngDialog, OrderService, $location) {
 
         if ($.cookie("restaurantId") == null || $.cookie("restaurantId") == "" || $.cookie("restaurantId") == undefined) {
             window.location = $.cookie("loginPath");
@@ -67,53 +116,69 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
         $scope.rowCollection = [];
 
         OrderService.getOrderInfo($.cookie("restaurantId"))
-            .success(function (data) {
+            .success(function (order) {
                 //console.log("所有数据---" + data);
                 $scope.myNotifications = [];
                 $scope.removeIndex = [];
-                for (var i = 0; i < data.length; i++) {
 
-                    var dateTime = data[i].orderTime.split(" ");
-                    if (data[i].gender == 0) {
-                        data[i].gender = "女";
+                for (var i = 0; i < order.length; i++) {
+                  //console.log(i);
+
+                  (function(i){
+                    return OrderService.getDidiStatus(order[i].orderId).success(function(status){
+                      if(status.didi == "didi") {
+                        order[i].source = "滴滴";
+                        order[i].isDidi = true;
+                      }
+                      else {
+                        order[i].isDidi = false;
+                      }
+                    });
+                  })(i)
+
+                    var dateTime = order[i].orderTime.split(" ");
+                    if (order[i].gender == 0) {
+                        order[i].gender = "女";
                     }
                     else {
-                        data[i].gender = "男";
+                        order[i].gender = "男";
                     }
-                    data[i].orderDate = dateTime[0];
-                    data[i].orderTimer = dateTime[1].substr(0, 5);
+                    order[i].orderDate = dateTime[0];
+                    order[i].orderTimer = dateTime[1].substr(0, 5);
 
-                    if (data[i].state == "已就餐") {
-                        data[i].orderHandled = true;
+                    if (order[i].state == "已就餐") {
+                        order[i].orderHandled = true;
                         //console.log("已完成——" + data[i]);
 
                     }
-                    else if (data[i].state == "待确认") {
-                        var index = data.indexOf(data[i]);
-                        $scope.myNotifications.push(data[i]);
+                    else if (order[i].state == "待确认") {
+                        var index = order.indexOf(order[i]);
+                        $scope.myNotifications.push(order[i]);
                         $scope.removeIndex.push(index);
                         //console.log("未确认——" + data[i]);
                         continue;
                     }
-                    else if (data[i].state == "已拒绝") {
-                        data[i].orderHandled = true;
+                    else if (order[i].state == "已拒绝") {
+                        order[i].orderHandled = true;
+                    }
+                    else if (order[i].state == "已取消") {
+                      order[i].orderHandled = true;
                     }
                     else {
-                        data[i].orderHandled = false;
+                        order[i].orderHandled = false;
                         //console.log("未完成-" + data[i].orderHandled);
                     }
 
-                    $scope.rowCollection.push(data[i]);
+                    $scope.rowCollection.push(order[i]);
                 }
 
                 for (var j = 0; j < $scope.removeIndex.length; j++) {
                     var index = $scope.removeIndex[j];
-                    var dateTime = data[index].orderTime.split(" ");
-                    $scope.notify(data[index]);
+                    var dateTime = order[index].orderTime.split(" ");
+                    $scope.notify(order[index]);
                 }
 
             });
-
 
         //remove to the real data holder
         $scope.removeItem = function removeItem(row) {
@@ -140,6 +205,53 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                     $scope.rowCollection.push(data);
                 });
         };
+
+        $scope.completeDidiOrder = function(row) {
+          var newScope = $scope.$new(true);
+
+          ngDialog.open({
+              templateUrl: 'complete_didi_order.html',
+              scope: newScope
+          });
+
+          newScope.confirm = function () {
+            OrderService.getShopId($.cookie("restaurantId")).success(function(orderInfo) {
+              var appId = "200200";
+              var token = "YttHWH39iNtSAUFHGKZcEQ==";
+              var couponCode = document.getElementById("couponCode").value;
+
+              orderInfo.cavUserName = "";
+
+              OrderService.confirmCoupon(appId,token,0,couponCode,orderInfo).success(function(data) {
+                if(data.errorCode == 0) {
+                  alert("核销成功！");
+                  var confirmCodeParameterContext = {orderId:0,confirmCode:0,state:0};
+                  confirmCodeParameterContext.orderId = row.orderId;
+                  console.log(confirmCodeParameterContext.orderId);
+                  confirmCodeParameterContext.confirmCode = couponCode;
+                  console.log(confirmCodeParameterContext);
+                  confirmCodeParameterContext.state = 1;
+
+                  OrderService.didiConfirm(confirmCodeParameterContext).success(function(data) {
+                  });
+                  OrderService.updateOrderState(row.orderId)
+                      .success(function (data) {
+                          var dateTime = data.orderTime.split(" ");
+                          data.orderDate = dateTime[0];
+                          data.orderTimer = dateTime[1].substr(0, 5);
+                          data.orderHandled = true;
+                          $scope.rowCollection.push(data);
+                      });
+                }
+                else {
+                  alert("核销失败！");
+                }
+              });
+
+            });
+            newScope.$destroy();
+          }
+        }
 
         $scope.notifications = [];
         $scope.notificationNum = 1;
