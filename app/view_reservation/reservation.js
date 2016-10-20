@@ -60,23 +60,12 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
           });
         };
 
-        var didiConfirmRequest = function(confirmCodeParameterContext) {
+        var didiConfirmRequest = function(cavInfo) {
           return $http({
             method:'POST',
             url:restaurantBaseUrl + "/order/ddConfirm",
-            data:confirmCodeParameterContext,
+            data:JSON.stringify(cavInfo),
             headers: {'Content-Type': 'application/json;charset=UTF-8'},
-            crossDomain:true
-          });
-        };
-
-        var confirmCouponRequest = function(token,appId,logId,couponCode,orderInfo) {
-          return $http({
-            method:'POST',
-            url: didi + "/cav/cavcouponcode",
-            dataType: 'JSONP',
-            data:{token,appId,logId,couponCode,orderInfo},
-            //headers: {'Content-Type': 'application/json;charset=UTF-8'},
             crossDomain:true
           });
         };
@@ -97,12 +86,12 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             getShopId : function (restaurantId) {
               return getShopIdRequest(restaurantId);
             },
-            didiConfirm: function (confirmCodeParameterContext) {
-              return didiConfirmRequest(confirmCodeParameterContext);
-            },
-            confirmCoupon : function (token,appId,logId,couponCode,OrderInfo) {
-              return confirmCouponRequest(token,appId,logId,couponCode,OrderInfo);
+            didiConfirm: function (cavInfo) {
+              return didiConfirmRequest(cavInfo);
             }
+            /*confirmCoupon : function (token,appId,logId,couponCode,OrderInfo) {
+              return confirmCouponRequest(token,appId,logId,couponCode,OrderInfo);
+            }*/
         }
 
     }])
@@ -216,24 +205,15 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
 
           newScope.confirm = function () {
             OrderService.getShopId($.cookie("restaurantId")).success(function(orderInfo) {
-              var appId = "200200";
-              var token = "YttHWH39iNtSAUFHGKZcEQ==";
-              var couponCode = document.getElementById("couponCode").value;
+              var cavInfo = {orderId:"",appId:"",token:"",logId:"",couponCode:"",shopId:"",merchantId:"",cavUserName:""};
+              cavInfo.orderId = row.orderId;
+              cavInfo.couponCode = document.getElementById("couponCode").value;
+              cavInfo.shopId = orderInfo.shopId + "";
+              cavInfo.merchantId = orderInfo.merchantId + "";
 
-              orderInfo.cavUserName = "";
-
-              OrderService.confirmCoupon(appId,token,0,couponCode,orderInfo).success(function(data) {
-                if(data.errorCode == 0) {
+              OrderService.didiConfirm(cavInfo).success(function(data) {
+                if(data == true ) {
                   alert("核销成功！");
-                  var confirmCodeParameterContext = {orderId:0,confirmCode:0,state:0};
-                  confirmCodeParameterContext.orderId = row.orderId;
-                  console.log(confirmCodeParameterContext.orderId);
-                  confirmCodeParameterContext.confirmCode = couponCode;
-                  console.log(confirmCodeParameterContext);
-                  confirmCodeParameterContext.state = 1;
-
-                  OrderService.didiConfirm(confirmCodeParameterContext).success(function(data) {
-                  });
                   OrderService.updateOrderState(row.orderId)
                       .success(function (data) {
                           var dateTime = data.orderTime.split(" ");
