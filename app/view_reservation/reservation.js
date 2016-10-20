@@ -210,6 +210,7 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
               cavInfo.couponCode = document.getElementById("couponCode").value;
               cavInfo.shopId = orderInfo.shopId + "";
               cavInfo.merchantId = orderInfo.merchantId + "";
+              cavInfo.cavUserName = "最美食";
 
               OrderService.didiConfirm(cavInfo).success(function(data) {
                 if(data == true ) {
