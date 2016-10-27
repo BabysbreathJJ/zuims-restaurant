@@ -10,7 +10,7 @@ angular.module('myApp', [
         'myApp.basicInfo',
         'myApp.productManagement'
     ])
-    .constant('BaseUrl', 'http://api.bestfood.cc/')
+    .constant('BaseUrl', 'https://api.bestfood.cc/')
     .constant('userPort', 'api/operation')
     .constant('merchantPort', 'api/merchant')
     .constant('managementPort', 'api/operation')
