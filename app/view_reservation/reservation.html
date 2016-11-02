@@ -1,3 +1,7 @@
+<div class="config-item">
+    <span class="hint">说明：须为预订顾客保留就餐位，若顾客迟到，请保留其就餐位15分钟，若顾客超时未到请与顾客电话沟通
+</div>
+
 <div class="reservation-content">
     <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped"
            style="font-size: 12px">
@@ -11,7 +15,8 @@
             <th width="22%">预订人信息</th>
             <th width="7%">预定人数</th>
             <th width="8%">订单总金额</th>
-            <th width="10%">用户备注</th>
+            <th width="6%">用户备注</th>
+            <th width="4%">来源</th>
             <th width="8%">操作</th>
         </tr>
         <tr>
@@ -28,7 +33,7 @@
                                    type="text"/></th>
             <th colspan="1"><input st-search="phoneId" class="form-control search-input" placeholder="手机号" type="text"/>
             </th>
-            <th colspan="4"></th>
+            <th colspan="5"></th>
         </tr>
         </thead>
         <tbody>
@@ -38,18 +43,26 @@
             <td ng-if="row.state == '已订座'" class="incomplete">{{row.state}}</td>
             <td ng-if="row.state == '已就餐'">{{row.state}}</td>
             <td ng-if="row.state == '已拒绝'">{{row.state}}</td>
+            <td ng-if="row.state == '已取消'">{{row.state}}</td>
             <td>{{row.orderDate}}</td>
             <td>{{row.orderTimer}}</td>
             <td>{{row.userLastName}}{{row.userFirstName}},{{row.gender}},{{row.phoneId}},{{row.userVipLevel}}</td>
             <td>{{row.dinerNum}}</td>
             <td>{{row.dorderSum}}</td>
             <td>{{row.more}}</td>
+            <td>{{row.source}}</td>
             <td>
-                <button ng-show="!row.orderHandled" type="button" ng-click="completeOrder(row)"
+                <button ng-show="!row.orderHandled && !row.isDidi" type="button" ng-click="completeOrder(row)"
                         class="btn btn-sm btn-primary">
                     <i class="glyphicon glyphicon-check">
                     </i>
                     确认已就餐
+                </button>
+                <button ng-show="!row.orderHandled && row.isDidi" type="button" ng-click="completeDidiOrder(row)"
+                        class="btn btn-sm btn-primary">
+                      <i class="glyphicon glyphicon-check">
+                      </i>
+                      核销
                 </button>
                 <button ng-show="row.orderHandled" type="button" class="btn btn-sm" disabled>
                     <i class="glyphicon glyphicon-ok">
@@ -125,4 +138,12 @@
     <p>如无法接单,请立即与客人取得联系,说明原因并建议新的预约时间.</p>
     <button class="btn-primary" ng-click="closeThisDialog()">返回再次查看订单信息</button>
     <button ng-click="cancel()">联系过了,确认取消订单</button>
+</script>
+
+<script type="text/ng-template" id="complete_didi_order.html">
+    <p>请输入核销码</p>
+    <input type="number" id = "couponCode"></input>
+    <div class="message" style="float: right">
+        <a class="btn btn-small btn-primary" ng-click = confirm()>确认核销</a>
+    </div>
 </script>
