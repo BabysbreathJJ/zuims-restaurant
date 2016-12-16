@@ -11,11 +11,11 @@ angular.module('myApp', [
         'myApp.productManagement'
     ])
 
-    .constant('BaseUrl', 'https://api.bestfood.cc/')
-    .constant('userPort', 'api/operation')
-    .constant('merchantPort', 'api/merchant')
-    .constant('managementPort', 'api/operation')
-    .constant('restaurantPort', 'api/merchant')
+    //.constant('BaseUrl', 'https://api.bestfood.cc/')
+    //.constant('userPort', 'api/operation')
+    //.constant('merchantPort', 'api/merchant')
+    //.constant('managementPort', 'api/operation')
+    //.constant('restaurantPort', 'api/merchant')
 
 
     .constant('BaseUrl', 'http://115.159.87.129:')
