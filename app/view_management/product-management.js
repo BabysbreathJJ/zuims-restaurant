@@ -713,10 +713,10 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 return;
             }
 
-            if ($scope.picDescription.length > 20) {
+            /*if ($scope.picDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
                 return;
-            }
+            }*/
 
             $scope.uploadInfo = {
                 "imageValue": $scope.myUploadPic,
@@ -856,10 +856,10 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 return;
             }
 
-            if ($scope.picDescription.length > 20) {
+            /*if ($scope.picDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
                 return;
-            }
+            }*/
 
             $scope.uploadInfo = {
                 "imageValue": $scope.myUploadPic,
