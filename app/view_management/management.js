@@ -445,10 +445,10 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                 return;
             }
 
-            if ($scope.picDescription.length > 20) {
+            /*if ($scope.picDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
                 return;
-            }
+            }*/
 
             $scope.uploadPicInfo = {
                 "imageValue": $scope.myUploadPic,
@@ -506,10 +506,10 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                 return;
             }
 
-            if ($scope.listPicDescription.length > 20) {
+            /*if ($scope.listPicDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
                 return;
-            }
+            }*/
 
             $scope.uploadPicInfo = {
                 "imageValue": $scope.myUploadPic,
@@ -654,10 +654,10 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                 return;
             }
             
-            if ($scope.picDescription.length > 20) {
+            /*if ($scope.picDescription.length > 20) {
                 alert('图片描述不能超过20个字!');
                 return;
-            }
+            }*/
 
             $scope.uploadPicInfo = {
                 "imageValue": $scope.myUploadPic,
