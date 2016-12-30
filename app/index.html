@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -62,8 +62,10 @@
         if ($.cookie("restaurantId") !== undefined && $.cookie("restaurantId") !== 'null') {
             window.location = "content.html";
         }
-        var restaurantBaseUrl = "http://202.120.40.175:21104";
-        //var restaurantBaseUrl = "http://api.bestfood.cc/api/merchant";
+
+        //var restaurantBaseUrl = "http://202.120.40.175:21104";
+        var restaurantBaseUrl = "https://api.bestfood.cc/api/merchant";
+
         $("#loginBtn").click(function () {
             var restaurantInfo = {
                 "account": $("#account").val(),
