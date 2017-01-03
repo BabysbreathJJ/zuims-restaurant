@@ -231,15 +231,15 @@
             <div style="margin-top: 15px">
                 <span>折扣时间:</span>
                 <br>
-                <input type="checkbox" name="discountDays" ng-true-value="false" ng-false-value="false" ng-model="discount.days[0]">周一
-                <input type="checkbox" name="discountDays" ng-true-value="false" ng-false-value="false" ng-model="discount.days[1]">周二
-                <input type="checkbox" name="discountDays" ng-true-value="false" ng-false-value="false" ng-model="discount.days[2]">周三
-                <input type="checkbox" name="discountDays" ng-true-value="false" ng-false-value="false" ng-model="discount.days[3]">周四
-                <input type="checkbox" name="discountDays" ng-true-value="false" ng-false-value="false" ng-model="discount.days[4]">周五
-                <input type="checkbox" name="discountDays" ng-true-value="false" ng-false-value="false" ng-model="discount.days[5]">周六
-                <input type="checkbox" name="discountDays" ng-true-value="false" ng-false-value="false" ng-model="discount.days[6]">周日
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[0]">周一
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[1]">周二
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[2]">周三
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[3]">周四
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[4]">周五
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[5]">周六
+                <input type="checkbox" name="discountDays" ng-true-value="true" ng-false-value="false" ng-model="discount.days[6]">周日
                 <br>
-                <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-init="discount.beginTime='00:00'" ng-model="discount.beginTime">
+                <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-model="discount.beginTime">
                 </select>
                 <span style="width: 10%">&nbsp&nbsp 至 &nbsp&nbsp</span>
                 <select class="form-control lty-select-days" ng-options="days.key for days in intervals" ng-model="discount.endTime">
