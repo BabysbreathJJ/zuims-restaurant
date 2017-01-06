@@ -109,7 +109,9 @@
         <!--折扣信息结束-->
 
         <!--促销信息开始-->
-        <h4 class="lty-product-separator" style="padding-left: 0px">促销信息</h4>
+        <h4 class="lty-product-separator" style="padding-left: 0px">促销信息
+            <span class="explain" style="padding-left: 10px">可选</span>
+        </h4>
         <div>
             <div class="lty-product-promotion" ng-repeat="temp in showProduct.promotions" ng-style="{height: (90 + temp.promotionPeriods.length * 23), width: (160 + (temp.description.length > 8 ? (temp.description.length-8):0) * 8)}">
                 <a href="javascript:;" class="lty-btn" ng-click="deletePromotion(temp);">
@@ -119,7 +121,7 @@
                     {{temp.price}} 元
                     <span class="main-explain" style="padding-left: 10px; display:inline-block">{{temp.name}}</span>
                 </p>
-                <span class="main-explain" style="padding-left: 0px">描述: {{temp.description}}</span>
+                <!--span class="main-explain" style="padding-left: 0px">描述: {{temp.description}}</span!-->
                 <span class="main-explain" style="padding-left: 0px">{{temp.startDate}} 至 {{temp.endDate}}</span>
                 <span class="main-explain" style="padding-left: 0px" ng-repeat="period in temp.promotionPeriods">
                     {{period.startTime.key}} ~ {{period.endTime.key}}
@@ -153,10 +155,10 @@
                style="font-size: 12px">
             <thead>
             <tr>
-                <th width="14%">产品名</th>
-                <th width="20%">产品描述</th>
+                <th width="24%">产品名</th>
+                <!--th width="20%">产品描述</th!-->
                 <!--<th st-sort="orderDate" st-sort-default="reverse">预定时间</th>-->
-                <th width="14%" st-sort="originPrice">产品价格</th>
+                <th width="24%" st-sort="originPrice">产品价格</th>
                 <th width="10%" st-sort="discounts.length">折扣数量</th>
                 <th width="10%" st-sort="promotionProducts.length">促销数量</th>
                 <th width="20%">查看详情</th>
@@ -165,7 +167,7 @@
             <tr>
                 <th colspan="1"><input st-search="productName" class="form-control search-input" placeholder="产品名..." type="text"/>
                 </th>
-                <th colspan="1"><input st-search="description" class="form-control search-input" placeholder="产品描述..." type="text"/>
+                <!--th colspan="1"><input st-search="description" class="form-control search-input" placeholder="产品描述..." type="text"/!-->
                 </th>
                 <th colspan="1"><input st-search="originPrice" class="form-control search-input" placeholder="原价..." type="text"/>
                 </th>
@@ -183,7 +185,7 @@
             <tbody>
             <tr ng-repeat="row in displayedCollection">
                 <td width="14%">{{row.productName}}</td>
-                <td width="20%">{{row.description}}</td>
+                <!--td width="20%">{{row.description}}</td!-->
                 <td width="14%">{{row.originPrice}}</td>
                 <td width="10%">{{row.discounts.length}}</td>
                 <td width="10%">{{row.promotionProducts.length}}</td>
@@ -220,7 +222,7 @@
         <form>
             <div style="display: inline-block; width:48%">
                 <span>折扣额度: </span><span class="explain" style="padding-left: 10px">0~1之间的数字</span>
-                <input class="form-control" type="number" min="0" max="1" step="0.0000000001" ng-model="discount.discount"/>
+                <input class="form-control" type="number" value="1.0" min="0" max="1" step="0.0000000001" ng-init="discount.discount='1'" ng-model="discount.discount"/>
             </div>
             <div style="display: inline-block; width:48%">
                 <span>折后价格: </span>

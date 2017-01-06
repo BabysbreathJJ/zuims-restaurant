@@ -386,7 +386,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
             return " 计 " + (discount * originPrice).toFixed(2) + " 元";
         };
 
-        $scope.textDays = function(days){
+        $scope.text = function(days){
             var temp = ["一", "二", "三", "四", "五", "六", "日"];
             var result = "周";
             for(var i = 0; i < 7; i++){
@@ -450,11 +450,13 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 $scope.addPromotionError.info = "请正确填写促销价格";
                 return;
             }
-            if($scope.promotion.description == undefined || $scope.promotion.description == "" || $scope.promotion.description.length > 30){
+            /*if($scope.promotion.description == undefined || $scope.promotion.description == "" || $scope.promotion.description.length > 30){
                 $scope.addPromotionError.flag = true;
                 $scope.addPromotionError.info = "请正确填写促销描述";
                 return;
-            }
+            }*/
+            $scope.promotion.description == "";
+            
             if($scope.promotion.startDate == "" ||
                 $scope.promotion.startDate == undefined ||
                 $scope.promotion.endDate == "" ||
@@ -568,15 +570,15 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 return;
             }
 
-            if($scope.newProduct.description == undefined ||
+            /*if($scope.newProduct.description == undefined ||
                 $scope.newProduct.description == "" ||
                 $scope.newProduct.description.length > 30){
 
                 $scope.submitNewProductError.flag = true;
                 $scope.submitNewProductError.info = "请正确填写产品描述";
                 return;
-            }
-
+            }*/
+            $scope.newProduct.description == "";
 
             parseDiscounts($scope.newProduct.discounts, $scope.newProduct.discoutsTable);
             //upData.description = $scope.newProduct.description;
