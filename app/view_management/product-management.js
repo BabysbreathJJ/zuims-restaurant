@@ -152,7 +152,8 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
         //初始化添加折扣参数
         function initDiscount(){
             $scope.discount = {};
-            $scope.discount.days = [false, false, false, false, false, false, false];
+            $scope.discount.days = [true, true, true, true, true, true, true];
+            console.log($scope.intervals);
         };
 
         //初始化促销参数
