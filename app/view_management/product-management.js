@@ -153,7 +153,6 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
         function initDiscount(){
             $scope.discount = {};
             $scope.discount.days = [true, true, true, true, true, true, true];
-            console.log($scope.intervals);
         };
 
         //初始化促销参数
@@ -456,7 +455,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 $scope.addPromotionError.info = "请正确填写促销描述";
                 return;
             }*/
-            $scope.promotion.description == "";
+            $scope.promotion.description = "";
             
             if($scope.promotion.startDate == "" ||
                 $scope.promotion.startDate == undefined ||
@@ -579,7 +578,7 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 $scope.submitNewProductError.info = "请正确填写产品描述";
                 return;
             }*/
-            $scope.newProduct.description == "";
+            $scope.newProduct.description = "";
 
             parseDiscounts($scope.newProduct.discounts, $scope.newProduct.discoutsTable);
             //upData.description = $scope.newProduct.description;
