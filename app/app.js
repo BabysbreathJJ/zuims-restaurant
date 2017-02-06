@@ -24,11 +24,11 @@ angular.module('myApp', [
     //.constant('managementPort', '8008')
     //.constant('restaurantPort', '8004')
 
-    .constant('BaseUrl', 'http://202.120.40.175:')
+    .constant('BaseUrl', 'http://123.206.181.47.175:')
     .constant('userPort', '8001')
-    .constant('merchantPort', '21104')
-    .constant('managementPort', '21108')
-    .constant('restaurantPort', '21100')
+    .constant('merchantPort', '8004')
+    .constant('managementPort', '8008')
+    .constant('restaurantPort', '8000')
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/management'});
     }]);
