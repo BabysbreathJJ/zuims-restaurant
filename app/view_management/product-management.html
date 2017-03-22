@@ -27,10 +27,10 @@
                     原价<span class="explain" style="padding-left: 10px">请包含服务费</span>
                     <input class="form-control" type="number" min="0" ng-model="showProduct.originPrice">
                 </td>
-                <!--td width="40%">
+                <td width="40%">
                     产品描述<span class="explain" style="padding-left: 10px">限30字</span>
                     <input type="text" class="form-control" ng-model="showProduct.description">
-                </td!-->
+                </td>
             </tr>
         </table>
         <button class="btn btn-primary" ng-click="editProductInfo()" ng-show="showMode==2" style="margin-bottom: 15px">
@@ -156,7 +156,7 @@
             <thead>
             <tr>
                 <th width="24%">产品名</th>
-                <!--th width="20%">产品描述</th!-->
+                <th width="20%">产品描述</th>
                 <!--<th st-sort="orderDate" st-sort-default="reverse">预定时间</th>-->
                 <th width="24%" st-sort="originPrice">产品价格</th>
                 <th width="10%" st-sort="discounts.length">折扣数量</th>
@@ -167,7 +167,7 @@
             <tr>
                 <th colspan="1"><input st-search="productName" class="form-control search-input" placeholder="产品名..." type="text"/>
                 </th>
-                <!--th colspan="1"><input st-search="description" class="form-control search-input" placeholder="产品描述..." type="text"/!-->
+                <th colspan="1"><input st-search="description" class="form-control search-input" placeholder="产品描述..." type="text"/>
                 </th>
                 <th colspan="1"><input st-search="originPrice" class="form-control search-input" placeholder="原价..." type="text"/>
                 </th>
@@ -185,7 +185,7 @@
             <tbody>
             <tr ng-repeat="row in displayedCollection">
                 <td width="14%">{{row.productName}}</td>
-                <!--td width="20%">{{row.description}}</td!-->
+                <td width="20%">{{row.description}}</td>
                 <td width="14%">{{row.originPrice}}</td>
                 <td width="10%">{{row.discounts.length}}</td>
                 <td width="10%">{{row.promotionProducts.length}}</td>

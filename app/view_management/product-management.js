@@ -570,15 +570,15 @@ angular.module('myApp.productManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 return;
             }
 
-            /*if($scope.newProduct.description == undefined ||
+            if($scope.newProduct.description == undefined ||
                 $scope.newProduct.description == "" ||
                 $scope.newProduct.description.length > 30){
 
                 $scope.submitNewProductError.flag = true;
                 $scope.submitNewProductError.info = "请正确填写产品描述";
                 return;
-            }*/
-            $scope.newProduct.description = "";
+            }
+            //$scope.newProduct.description = "";
 
             parseDiscounts($scope.newProduct.discounts, $scope.newProduct.discoutsTable);
             //upData.description = $scope.newProduct.description;
