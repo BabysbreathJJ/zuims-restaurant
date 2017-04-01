@@ -8,7 +8,8 @@ angular.module('myApp', [
         'myApp.reservation',
         'myApp.chart',
         'myApp.basicInfo',
-        'myApp.productManagement'
+        'myApp.productManagement',
+        'myApp.menuManagement'
     ])
 
     //.constant('BaseUrl', 'https://api.bestfood.cc/')

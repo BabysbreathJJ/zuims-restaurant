@@ -10,6 +10,7 @@
                 <li ng-click="goto('reservation-table')"><span class="sidebar-span">预订信息</span></li>
                 <li ng-click="goto('data-statistics')"><span class="sidebar-span">预订数据统计</span></li>
                 <li ng-click="goto('product-management')"><span class="sidebar-span">产品管理</span></li>
+                <li ng-click="goto('menu-management')"><span class="sidebar-span">菜单管理</span></li>
                 <li ng-click="goto('info-management')"><span class="sidebar-span">商户信息管理</span></li>
                 <li ng-click="goto('faq')"><span class="sidebar-span">客服 FAQ</span></li>
                 <!-- END .menu -->
@@ -62,6 +63,14 @@
 
         </div>
         <!-- Product management end -->
+
+        <!--菜单管理开始 -->
+        <div id="menu-management" ng-controller="MenuCtrl" class="right-bg">
+            <h3 class="full-header"><span>菜单管理</span></h3>
+
+            <div ng-include="'view_management/menu.html'"></div>
+
+        </div>
 
         <!-- 商户信息管理开始 -->
         <div id="info-management" class="right-bg">

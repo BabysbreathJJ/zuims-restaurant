@@ -1002,6 +1002,13 @@ ul li, ol li {
     margin: 3px;
 }
 
+.lty-menu-pic {
+    border: 1px solid #337ab7;
+    width: 207px;
+    height: 207px;
+    margin: 3px;
+}
+
 .lty-btn{
     margin: 0px auto;
     text-align: center;
