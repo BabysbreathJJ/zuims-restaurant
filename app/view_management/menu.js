@@ -135,6 +135,7 @@ angular.module('myApp.menuManagement', ['ngDialog', 'moment-picker', 'ngImgCrop'
         }
 
         getMenu();
+        getCategory();
 
         $scope.menuList = function() {
             getMenu();
