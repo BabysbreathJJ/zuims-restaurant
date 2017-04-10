@@ -1,0 +1,81 @@
+<div class="lty-product-management">
+    <div class="btn-group" role="group">
+        <button class="btn btn-primary" style="margin-left: 30px" ng-click="allActivity()">
+            <span class="glyphicon glyphicon-th-list"></span>最美食活动
+        </button>
+        <button class="btn btn-primary" ng-click="myActivity()">
+            <span class="glyphicon glyphicon-th-list"></span>我的活动
+        </button>
+        
+    </div>
+    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+
+    <!--最美食活动开始-->
+    <div class="reservation-content" ng-show="showMode==0">
+        <table st-table="displayedCollection" st-safe-src="allActivityCollection" class="table table-striped"
+               style="font-size: 12px">
+            <thead>
+            <tr>
+                <th width="25%">活动名称</th>
+                <th width="25%">活动日期</th>
+                <!--<th st-sort="orderDate" st-sort-default="reverse">预定时间</th>-->
+                <th width="25%">活动内容</th>
+                <th width="25%">参加活动</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in allActivityCollection">
+                <td width="25%">{{row.name}}</td>
+                <td width="25%">{{row.date}}</td>
+                <td width="25%">{{row.content}}</td>
+                <td width="25%">
+                    <button ng-show="row.status" type="button" class="btn btn-sm" disabled>
+                        <i class="glyphicon glyphicon-ok">
+                        </i>
+                        已参加
+                    </button>
+                    <button ng-show="!row.status" class="btn btn-primary" style="width: 100px; padding: 5px 5px" ng-click="applyActivity(row)">
+                        <span class="glyphicon glyphicon-search"></span> 参加
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--最美食活动结束-->
+
+    <!--我的活动开始-->
+    <div class="reservation-content" ng-show="showMode==1">
+        <table st-table="displayedCollection" st-safe-src="myActivityCollection" class="table table-striped"
+               style="font-size: 12px">
+            <thead>
+            <tr>
+                <th width="20%">活动名称</th>
+                <th width="20%">活动日期</th>
+                <!--<th st-sort="orderDate" st-sort-default="reverse">预定时间</th>-->
+                <th width="20%">活动内容</th>
+                <th width="20%">查看详情</th>
+                <th width="20%">删除活动</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in myActivityCollection">
+                <td width="20%">{{row.name}}</td>
+                <td width="20%">{{row.date}}</td>
+                <td width="20%">{{row.content}}</td>
+                <td width="20%">
+                    <button class="btn btn-primary" style="width: 100px; padding: 5px 5px" ng-click="editActivity(row)">
+                        <span class="glyphicon glyphicon-search"></span> 修改
+                    </button>
+                </td>
+                <td width="20%">
+                    <button class="btn btn-primary" style="width: 70px; padding: 5px 5px" ng-click="deleteActivity(row)">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--我的活动结束-->
+</div>

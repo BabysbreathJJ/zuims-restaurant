@@ -12,6 +12,7 @@
                 <li ng-click="goto('product-management')"><span class="sidebar-span">产品管理</span></li>
                 <li ng-click="goto('menu-management')"><span class="sidebar-span">菜单管理</span></li>
                 <li ng-click="goto('info-management')"><span class="sidebar-span">商户信息管理</span></li>
+                <li ng-click="goto('activity-management')"><span class="sidebar-span">活动管理</span></li>
                 <li ng-click="goto('faq')"><span class="sidebar-span">客服 FAQ</span></li>
                 <!-- END .menu -->
             </ul>
@@ -71,6 +72,7 @@
             <div ng-include="'view_management/menu.html'"></div>
 
         </div>
+        <!--菜单管理结束 -->
 
         <!-- 商户信息管理开始 -->
         <div id="info-management" class="right-bg">
@@ -116,6 +118,15 @@
 
         </div>
         <!-- 商户信息管理结束 -->
+
+        <!-- 活动管理开始 -->
+        <div id="activity-management" ng-controller="ActivityCtrl" class="right-bg">
+            <h3 class="full-header"><span>活动管理</span></h3>
+
+            <div ng-include="'view_management/activity.html'"></div>
+
+        </div>
+        <!-- 活动管理结束 -->
 
         <div id="faq" class="right-bg">
             <h3 class="full-header"><span>客服FAQ</span></h3>
