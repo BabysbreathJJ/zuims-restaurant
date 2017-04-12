@@ -51,6 +51,16 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
             });
         };
 
+        factory.editActivity = function(activityInfo) {
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + '/activity/edit',
+                data: JSON.stringify(activityInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        };
+
         factory.deleteActivity = function(aid) {
             return $http({
                 method: "GET",
@@ -116,7 +126,28 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
         }
 
         $scope.editActivity = function(row) {
+            $scope.activityToHandle = {
+                "content": row.content,
+                "date": row.date,
+                "id": row.id,
+                "name": row.name,
+                "state": row.state,
+                "type": row.type
+            };
 
+            ngDialog.open({
+                templateUrl: 'edit_activity.html',
+                scope: $scope
+            });
+        }
+
+        $scope.updateActivity = function() {
+            ActivityService.editActivity($scope.activityToHandle)
+                .success(function(data) {
+                    alert("修改成功！");
+                    getMyActivity();
+                    ngDialog.close();
+                })
         }
 
         $scope.deleteActivity = function(row) {

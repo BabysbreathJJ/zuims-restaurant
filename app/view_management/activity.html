@@ -79,3 +79,20 @@
     </div>
     <!--我的活动结束-->
 </div>
+
+<script type="text/ng-template" id="edit_activity.html">
+    <div class="contacts-infos">
+        活动名称<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.name">
+        活动日期<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.date">
+        活动内容<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.content">
+    </div>
+
+    <div class="save-btn">
+        <button class="btn btn-primary" ng-click="updateActivity()">
+            <span class="glyphicon glyphicon-ok"></span>保存活动
+        </button>
+    </div>
+</script>
