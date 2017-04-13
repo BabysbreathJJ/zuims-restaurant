@@ -201,6 +201,14 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             });
         }
 
+        var getAllPicRequest = function(restaurantId) {
+            return $http({
+                method: 'GET',
+                url: restaurantBaseUrl + '/restaurant/Allnormalimage?id='+restaurantId,
+                crossDomain: true
+            });
+        }
+
         return {
             updatePwd: function (pwdInfo) {
                 return updatePwdRequest(pwdInfo);
@@ -258,6 +266,9 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             },
             setListImage: function(restaurantId, pictureId){
                 return setListImageRequest(restaurantId, pictureId);
+            },
+            getAllPic: function(restaurantId) {
+                return getAllPicRequest(restaurantId);
             }
         }
 
@@ -584,7 +595,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
 
     .controller('ImageDetailCtrl', function ($scope, ManageService, ngDialog, BaseUrl, restaurantPort) {
 
-        $scope.myDetailImage = '';
+        /*$scope.myDetailImage = '';
         $scope.myDetailCroppedImage = '';
         $scope.detailPicShow = false;
         var dialog;
@@ -659,7 +670,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                 return;
             }*/
 
-            $scope.uploadPicInfo = {
+            /*$scope.uploadPicInfo = {
                 "imageValue": $scope.myUploadPic,
                 "restaurantId": parseInt($.cookie("restaurantId")),
                 "pictureIntro": $scope.picDescription
@@ -736,8 +747,42 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
                     alert("修改成功");
                     dialog.close("editPic.html");
                 });
+        };*/
+
+        $scope.myDetailImage = '';
+        $scope.myDetailCroppedImage = '';
+        $scope.detailPicShow = false;
+        var dialog;
+
+        var HandleFileSelect = function (evt) {
+
+            var target = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
+
+            var file = target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                $scope.$apply(function ($scope) {
+                    $scope.myDetailImage = evt.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+            $scope.detailPicShow = true;
+
         };
 
+        angular.element(document.querySelector('#fileInputDetail')).on('change', HandleFileSelect);
+
+        function getDetail() {
+            $scope.ltyAllPic = {};
+            $scope.ltyAllPic.DetailPic = [];
+
+            ManageService.getAllPic($.cookie("restaurantId"))
+                .success(function (data) {
+                    $scope.ltyAllPic.DetailPic = data;
+                });
+        }
+
+        getDetail();
     })
     .controller('ContactCtrl', function ($scope, ManageService) {
 
