@@ -209,6 +209,84 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             });
         }
 
+        var getMenuRequest = function(restaurantId){
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/menu/getFoodByRidGroupByCateId?rid=" + restaurantId,
+                crossDomain: true
+            });
+        }
+
+        var getCategoryRequest = function(restaurantId) {
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/menu/getCategory?rid=" + restaurantId,
+                crossDomain: true
+            });
+        }
+
+        var deleteFoodRequest = function(fid) {
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + '/menu/deleteFood?fid=' + fid,
+                crossDomain: true,
+                transformResponse: function (data, headersGetter, status) {
+                    return {data: data};
+                }
+            });
+        }
+
+        var addFoodRequest = function(foodInfo) {
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + '/menu/addFood',
+                data: JSON.stringify(foodInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        }
+
+        var editFoodRequest = function(foodInfo) {
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + '/menu/editFood',
+                data: JSON.stringify(foodInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        }
+
+        var addCategoryRequest = function(cateInfo) {
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + '/menu/addCategory',
+                data: JSON.stringify(cateInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        }
+
+        var editCategoryRequest = function(cateInfo) {
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + '/menu/editCategory',
+                data: JSON.stringify(cateInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        }
+
+        var deleteCategoryRequest = function(cateId) {
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + '/menu/deleteCategory?cateId=' + cateId,
+                crossDomain: true,
+                transformResponse: function (data, headersGetter, status) {
+                    return {data: data};
+                }
+            });
+        }
+
         return {
             updatePwd: function (pwdInfo) {
                 return updatePwdRequest(pwdInfo);
@@ -269,6 +347,30 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             },
             getAllPic: function(restaurantId) {
                 return getAllPicRequest(restaurantId);
+            },
+            getMenu: function(restaurantId){
+                return getMenuRequest(restaurantId);
+            },
+            getCategory: function(restaurantId) {
+                return getCategoryRequest(restaurantId);
+            },
+            deleteFood: function(fid) {
+                return deleteFoodRequest(fid);
+            },
+            addFood: function(foodInfo) {
+                return addFoodRequest(foodInfo);
+            },
+            editFood: function(foodInfo) {
+                return editFoodRequest(foodInfo);
+            },
+            addCategory: function(cateInfo) {
+                return addCategoryRequest(cateInfo);
+            },
+            editCategory: function(cateInfo) {
+                return editCategoryRequest(cateInfo);
+            },
+            deleteCategory: function(cateId) {
+                return deleteCategoryRequest(cateId);
             }
         }
 
@@ -913,3 +1015,201 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
         };
 
     });
+    /*.controller('MenuCtrl', function ($scope, ngDialog, ManageService,BaseUrl, restaurantPort) {
+        $scope.rowCollection = [];
+        $scope.cateCollection = [];
+        $scope.showMode = 0;
+
+        $scope.menuImage = '';
+        $scope.menuCroppedPic = '';
+        $scope.menuPicShow = 0;
+        $scope.isNewPic = 0;
+
+        var handleFileSelect = function(evt) {
+            $scope.menuPicShow = 1;
+            var file=evt.currentTarget.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                $scope.$apply(function($scope){
+                $scope.menuImage = evt.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+        };
+
+        angular.element(document.querySelector('#fileInputMenu')).on('change', handleFileSelect);
+
+        function getMenu(){
+            $scope.rowCollection = [];
+            $scope.cateList = [];
+            $scope.foodList = [];
+
+            ManageService.getMenu($.cookie("restaurantId"))
+                .success(function (menu) {
+                    for(var i = 0;i < menu.cateList.length;i++) {
+                        var menuOfCate = {
+                            cate: menu.cateList[i],
+                            foodList : menu.foodInfoList[i]
+                        };
+                        $scope.rowCollection.push(menuOfCate);
+                    }
+                });
+        }
+
+        function getCategory(){
+            ManageService.getCategory($.cookie("restaurantId"))
+                .success(function (cate) {
+                    for(var i = 0;i < cate.length;i++) {
+                        cate[i].isEditCate = 0;
+                    }
+                    $scope.cateCollection = cate;
+                });
+        }
+
+        getMenu();
+        getCategory();
+
+        $scope.menuList = function() {
+            getMenu();
+            $scope.showMode = 0;
+        }
+
+        $scope.cate = function() {
+            getCategory();
+            $scope.showMode = 3;
+        }
+
+        $scope.addNewMenu = function(cate) {
+            $scope.showMode = 2;
+            $scope.showFood = {cateId: cate.cateId};
+        }
+
+        $scope.submitNewMenu = function(row) {
+            var foodInfo = {
+                cateId: row.cateId,
+                foodDescription: row.foodDescription,
+                foodName: row.foodName,
+                foodPrice: row.foodPrice,
+                picture: $scope.uploadPic,
+                resId: $.cookie("restaurantId")
+            };
+
+            ManageService.addFood(foodInfo)
+                .success(function (data) {
+                    alert("上传成功!");
+                    getMenu();
+                    $scope.showMode = 0;
+                    $scope.isNewPic = 0;
+                });
+        }
+
+        $scope.deleteFood = function(row) {
+            ManageService.deleteFood(row.fid)
+                .success(function (data) {
+                    alert("删除成功!");
+                    getMenu();
+                });
+        }
+
+        $scope.editFood = function(row) {
+            $scope.showMode = 1;
+            $scope.showFood = row;
+        }
+
+        $scope.updateMenu = function(row) {
+            if($scope.isNewPic == 0) {
+                var foodInfo = {
+                    cateId: row.cateId,
+                    fid: row.fid,
+                    foodDescription: row.foodDescription,
+                    foodName: row.foodName,
+                    foodPrice: row.foodPrice,
+                    isNewPic: 0,
+                    resId: $.cookie("restaurantId")
+                };
+            }
+            else if($scope.isNewPic == 1) {
+                var foodInfo = {
+                    cateId: row.cateId,
+                    fid: row.fid,
+                    foodDescription: row.foodDescription,
+                    foodName: row.foodName,
+                    foodPrice: row.foodPrice,
+                    isNewPic: 1,
+                    picture: $scope.uploadPic,
+                    resId: $.cookie("restaurantId")
+                };
+            }
+            
+            ManageService.editFood(foodInfo)
+                .success(function (data) {
+                    alert("修改成功！");
+                    $scope.isNewPic = 0;
+                });
+        }
+
+        $scope.uploadPic = function() {
+            $scope.showFood.pUrl = $scope.menuCroppedPic;
+            $scope.menuPicShow = 0;
+            $scope.isNewPic = 1;
+
+            $scope.begin = $scope.menuCroppedPic.indexOf("base64") + 7;
+            $scope.uploadPic = $scope.menuCroppedPic.substr($scope.begin);
+            console.log($scope.uploadPic);
+        }
+
+        $scope.removePic = function() {
+            $scope.menuImage = '';
+            $scope.menuCroppedPic = '';
+            $scope.menuPicShow = 0;
+        }
+
+        $scope.addNewCate = function() {
+            ngDialog.open({
+                templateUrl: 'addNewCate.html',
+                scope: $scope
+            });
+        }
+
+        $scope.submitNewCate = function() {
+            var cateInfo = {
+                cateName: document.getElementById("newCateName").value,
+                resId: $.cookie("restaurantId")
+            };
+
+            ManageService.addCategory(cateInfo)
+                .success(function (data) {
+                    alert("新建分类成功！");
+                    ngDialog.close();
+                    getCategory();
+                    getMenu();
+                });
+        }
+
+        $scope.editCate = function(row) {
+            row.isEditCate = 1;
+        }
+
+        $scope.updateCate = function(row) {
+            var cateInfo = {
+                cateId: row.cateId,
+                cateName: row.cateName,
+                resId: $.cookie("restaurantId")
+            };
+
+            ManageService.editCategory(cateInfo)
+                .success(function (data) {
+                    alert("修改成功！");
+                    row.isEditCate = 0;
+                });
+        }
+
+        $scope.deleteCate = function(row) {
+            MangeService.deleteCategory(row.cateId)
+                .success(function (data) {
+                    alert("删除成功!");
+                    getCategory();
+                });
+        }
+
+    });*/

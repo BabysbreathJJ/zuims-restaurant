@@ -107,6 +107,20 @@ angular.module('myApp.menuManagement', ['ngDialog', 'moment-picker', 'ngImgCrop'
         $scope.menuPicShow = 0;
         $scope.isNewPic = 0;
 
+        var handleFileSelect = function(evt) {
+            $scope.menuPicShow = 1;
+            var file=evt.currentTarget.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                $scope.$apply(function($scope){
+                $scope.menuImage = evt.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+        };
+
+        angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
+
         function getMenu(){
             $scope.rowCollection = [];
             $scope.cateList = [];
@@ -216,7 +230,7 @@ angular.module('myApp.menuManagement', ['ngDialog', 'moment-picker', 'ngImgCrop'
                 });
         }
 
-        $scope.HandleFileSelect = function(files) {
+        /*$scope.HandleFileSelect = function(files) {
             $scope.menuPicShow = 1;
             var reader = new FileReader(); 
             reader.readAsDataURL(files[0]);
@@ -225,15 +239,15 @@ angular.module('myApp.menuManagement', ['ngDialog', 'moment-picker', 'ngImgCrop'
                     $scope.menuImage = evt.target.result;
                 });
             };
-        }
+        }*/
 
         $scope.uploadPic = function() {
-            $scope.showFood.pUrl = $scope.menuImage;
+            $scope.showFood.pUrl = $scope.menuCroppedPic;
             $scope.menuPicShow = 0;
             $scope.isNewPic = 1;
 
-            $scope.begin = $scope.menuImage.indexOf("base64") + 7;
-            $scope.uploadPic = $scope.menuImage.substr($scope.begin);
+            $scope.begin = $scope.menuCroppedPic.indexOf("base64") + 7;
+            $scope.uploadPic = $scope.menuCroppedPic.substr($scope.begin);
         }
 
         $scope.removePic = function() {

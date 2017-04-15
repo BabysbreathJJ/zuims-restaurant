@@ -1,4 +1,4 @@
-<div class="lty-product-management">
+<div class="lty-product-management" ng-controller="MenuCtrl">
     <div class="btn-group" role="group">
         <button class="btn btn-primary" style="margin-left: 30px" ng-click="menuList()">
             <span class="glyphicon glyphicon-th-list"></span>菜单列表
@@ -12,9 +12,35 @@
         <button class="btn btn-primary" ng-click="addNewCate()">
             <span class="glyphicon glyphicon-plus"></span>新建分类
         </button>
+    </div>
+            <!--<div>图片预览:</div>-->
+            <!--div class="croppedPic" style="display: none"><img ng-src="{{myRecommendCroppedPic}}"/>
+            </div>
+            <div class="picRecommendDescription">
+                <input class="form-control" type="text" placeholder="图片描述,与图片同时显示在用户手机上"
+                       ng-model="picDescription"/>
+            </div>
+            <div class="image-upload">
+                <a href="javascript:;" class="file" ng-click="uploadPic()"><span
+                        class="glyphicon glyphicon-saved"></span>上传图片
+                </a>
+                <a href="javascript:;" class="file-cancel" ng-click="removePic()"><span
+                        class="glyphicon glyphicon-remove"></span>取消上传
+                </a>
+            </div>
+        </div>
+        <div class="image-upload" ng-hide="homePageShow">
+            <a href="javascript:;" class="file lty-tag-a"><span class="glyphicon glyphicon-picture"></span>选择图片
+                <input type="file" accept="image/*" name="recommend" id="fileInputRecommend">
+            </a>
+            <a href="javascript:;" class="file btn-primary lty-tag-a" ng-click="editHomePage()"><span
+                    class="glyphicon glyphicon-edit"></span>编辑图片
+            </a>
+
+        </div>
         
     </div>
-    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+    <!--div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
 
     <!--菜单列表开始-->
     <div class="reservation-content" ng-show="showMode==0">
@@ -96,13 +122,13 @@
         <h4 class="lty-product-separator" style="padding-left: 0px">图片管理</h4>
 
         <div ng-show="menuPicShow == 1">
-            <!--div class="cropAreaProduct">
-                <img-crop image="menuImage" area-type="rectangle" aspect-ratio="1.52380952" result-image-size='{w: 630,h: 420}' result-image='menuCroppedPic'
+            <div class="cropAreaProduct">
+                <img-crop image="menuImage" area-type="rectangle" aspect-ratio="1" result-image-size='{w: 600,h: 600}' result-image='menuCroppedPic'
                 ></img-crop>
 
-            </div!-->
+            </div>
 
-            <div class="croppedPic"><img ng-src="{{menuImage}}" class="per100 lty-menu-pic"/></div>
+            <!--div class="croppedPic"><img ng-src="{{menuCroppedPic}}" class="per100 lty-menu-pic"/></div-->
             <div class="image-upload" style="margin-left: 0px">
                 <a href="javascript:;" class="file" ng-click="uploadPic()" style="margin-left: 0px">
                     <span class="glyphicon glyphicon-saved"></span>上传图片
@@ -119,7 +145,7 @@
             </div>
             <a href="javascript:;" class="file" style="margin-right: 10px; margin-left: 0px">
                 <span class="glyphicon glyphicon-picture"></span>编辑图片
-                <input type="file" accept="image/*" onchange="angular.element(this).scope().HandleFileSelect(this.files)">
+                <input type="file" accept="image/*" id="fileInput">
             </a>
         </div> 
     </div>
