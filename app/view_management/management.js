@@ -881,10 +881,80 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             ManageService.getAllPic($.cookie("restaurantId"))
                 .success(function (data) {
                     $scope.ltyAllPic.DetailPic = data;
+                    if(data.length < 5) {
+                        $scope.uploadShow = true;
+                    }
                 });
         }
 
         getDetail();
+
+        $scope.uploadPic = function () {
+            if($scope.ltyAllPic.DetailPic.length == 4) {
+                $scope.uploadShow = false;
+            }
+
+
+            $scope.begin = $scope.myDetailCroppedPic.indexOf("base64") + 7;
+            $scope.myUploadPic = $scope.myDetailCroppedPic.substr($scope.begin);
+
+            if ($scope.picDescription == null) {
+                alert('图片描述不能为空!');
+                return;
+            }
+            
+            /*if ($scope.picDescription.length > 20) {
+                alert('图片描述不能超过20个字!');
+                return;
+            }*/
+
+            $scope.uploadPicInfo = {
+                "imageValue": $scope.myUploadPic,
+                "restaurantId": parseInt($.cookie("restaurantId")),
+                "pictureIntro": $scope.picDescription
+            };
+
+            $scope.uploadInfo = JSON.stringify($scope.uploadPicInfo);
+            //alert($scope.uploadInfo);
+            ManageService.uploadDetailPic($scope.uploadInfo)
+                .success(function (data, status) {
+                    if (data.success == true) {
+                        alert("图片上传成功!");
+                        $scope.picDescription = "";
+                        $scope.detailPicShow = false;
+                        getDetail();
+                    }
+                });
+        };
+
+        $scope.removePic = function () {
+            $scope.myDetailImage = '';
+            $scope.myDetailCroppedImage = '';
+            $scope.picDescription = '';
+            $scope.detailPicShow = false;
+        };
+
+        $scope.deletePic = function(detail){
+            ManageService.deleteDetail(detail.pictureId)
+                .success(function(data){
+                    alert("图片删除成功");
+                    getDetail();
+                });
+        };
+
+        $scope.setDetail = function(){
+            var setInfo = {};
+            setInfo.restaurantId = $.cookie("restaurantId");
+            setInfo.pictureIds = [];
+            for(var i = 0; i < $scope.ltyAllPic.DetailPic.length; i++){
+                setInfo.pictureIds.push($scope.ltyAllPic.ShowPic[i].pictureId);
+            }
+            ManageService.setDetailPic(setInfo)
+                .success(function(data){
+                    alert("修改成功");
+                    getDetail();
+                });
+        };
     })
     .controller('ContactCtrl', function ($scope, ManageService) {
 

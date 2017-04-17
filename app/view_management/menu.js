@@ -230,17 +230,6 @@ angular.module('myApp.menuManagement', ['ngDialog', 'moment-picker', 'ngImgCrop'
                 });
         }
 
-        /*$scope.HandleFileSelect = function(files) {
-            $scope.menuPicShow = 1;
-            var reader = new FileReader(); 
-            reader.readAsDataURL(files[0]);
-            reader.onload = function(evt) {
-                $scope.$apply(function(){
-                    $scope.menuImage = evt.target.result;
-                });
-            };
-        }*/
-
         $scope.uploadPic = function() {
             $scope.showFood.pUrl = $scope.menuCroppedPic;
             $scope.menuPicShow = 0;

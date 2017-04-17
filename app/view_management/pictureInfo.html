@@ -46,7 +46,7 @@
         <div class="clearfix"></div>
     </div>
 
-    <div id="list-pic" ng-controller="ImageListCtrl">
+    <!--div id="list-pic" ng-controller="ImageListCtrl">
         列表展示图片
         <div><span class="explain">建议:图片分辨率:640*420,横图</span></div>
 
@@ -133,28 +133,29 @@
         </div-->
         <!--div class="lty-modify-pic-block" ng-hide="detailPicShow"-->
         <div ng-hide="detailPicShow">
-            <div>
+            <div class="save-btn">
+                <a href="javascript:;" class="file btn-primary lty-tag-a" autofocus="false" ng-click="setDetail()">
+                <span class="glyphicon glyphicon-ok" autofocus="false"></span>保存修改
+                </a>
+            </div>
+            <div style="margin:0 auto">
                 <div ng-repeat="detail in ltyAllPic.DetailPic" style="float:left;display: inline-block">
                     <img src="{{detail.picname}}" class="per100 lty-detail-pic" change-pic>
-                    <!--a href="javascript:;" class="lty-btn" ng-click="showPic(detail)">
-                    展示
-                    </a-->
                     <div class="lty-mlra">
-                        <a href="javascript:;" class="file btn-primary lty-tag-a" ng-click="editDetail()">
-                            <span class="glyphicon glyphicon-edit"></span>
+                        <a href="javascript:;" class="file-cancel" ng-click="deletePic(detail)">
+                            <span class="glyphicon glyphicon-remove"></span>
                         </a>
                     </div>
                 </div>
-            </div>
-            <div style="float:left">
-                <img src="" class="per100 lty-detail-pic" change-pic>
-                <div class="lty-mlra">
-                    <a href="javascript:;" class="file lty-tag-a">
-                        <span class="glyphicon glyphicon-picture"></span>
-                        <input type="file" accept="image/*" name="detail" id="fileInputDetail">
-                    </a>
-                </div>
-            </div>
+                <div style="float:left" ng-show="uploadShow">
+                    <img src="" class="per100 lty-detail-pic" change-pic>
+                    <div class="lty-mlra">
+                        <a href="javascript:;" class="file lty-tag-a">
+                            <span class="glyphicon glyphicon-picture"></span>
+                            <input type="file" accept="image/*" name="detail" id="fileInputDetail">
+                        </a>
+                    </div>
+                </div>  
             </div>
         </div>
     </div>
