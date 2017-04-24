@@ -947,7 +947,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             setInfo.restaurantId = $.cookie("restaurantId");
             setInfo.pictureIds = [];
             for(var i = 0; i < $scope.ltyAllPic.DetailPic.length; i++){
-                setInfo.pictureIds.push($scope.ltyAllPic.ShowPic[i].pictureId);
+                setInfo.pictureIds.push($scope.ltyAllPic.DetailPic[i].pictureId);
             }
             ManageService.setDetailPic(setInfo)
                 .success(function(data){
