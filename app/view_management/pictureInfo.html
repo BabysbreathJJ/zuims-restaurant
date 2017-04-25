@@ -1,4 +1,7 @@
-<div class="handle-image" ng-controller="ImageRecommendCtrl">
+<div ng-controller="ImageRecommendCtrl">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>餐厅图文信息</legend>
+    </fieldset>
 
     <!--div id="recommend-pic">
         平台首页展示餐厅照片
@@ -91,9 +94,6 @@
     </div!-->
 
     <div id="detail-pic" ng-controller="ImageDetailCtrl">
-        餐厅详情图文
-        <div><span class="explain">建议:图片分辨率:640*420,横图</span></div>
-
         <div ng-show="detailPicShow">
             <div class="cropAreaDetail">
                 <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.52380952"
@@ -133,7 +133,7 @@
         </div-->
         <!--div class="lty-modify-pic-block" ng-hide="detailPicShow"-->
         <div ng-hide="detailPicShow">
-            <div class="save-btn">
+            <!--div class="save-btn">
                 <a href="javascript:;" class="file btn-primary lty-tag-a" autofocus="false" ng-click="setDetail()">
                 <span class="glyphicon glyphicon-ok" autofocus="false"></span>保存修改
                 </a>
@@ -156,6 +156,23 @@
                         </a>
                     </div>
                 </div>  
+            </div-->
+            <div class="restaurant_pic">
+                <ul>
+                    <li ng-repeat="detail in ltyAllPic.DetailPic"> 
+                        <img src="{{detail.picname}}" width="160" height="105">
+                        <input type="text" class="layui-input" style="width: 110px" ng-model="detail.introduction">
+                        <button class="layui-btn layui-btn-primary layui-btn-small" style="float:right; margin-top:2px;" ng-click="deletePic(detail)">
+                            <i class="layui-icon"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="div1" ng-show="uploadShow">
+                            <div class="div2"></div>
+                            <input type="file" accept="image/*" name="detail" id="fileInputDetail" class="inputstyle">
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

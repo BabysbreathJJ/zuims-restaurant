@@ -527,6 +527,35 @@ a:hover {
     text-decoration: none;
 }
 
+.div1{
+    float: left;
+    height: 105px;
+    background:#F0F0F0 url(../images/icon_add.png) no-repeat center ;
+    width: 160px;
+    position:relative;
+}
+
+.div2{
+    text-align:center;
+    padding-top:12px;
+    font-size:15px;
+    font-weight:800
+}
+
+.inputstyle{
+    width: 160px;
+    height: 105px;
+    cursor: pointer;
+    font-size: 30px;
+    outline: medium none;
+    position: absolute;
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    opacity:0; 
+    left:0px;
+    top: 0px;
+}
+
 /*上传图片结束*/
 
 /*数据图表开始*/

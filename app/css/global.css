@@ -420,7 +420,7 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 .restaurant_setting .layui-form-select i{ position:absolute; margin-top:12px;}
 
 .restaurant_pic ul{ margin:0; padding:0}
-.restaurant_pic ul li{ float:left; width:250px; height:350px; list-style:none; margin:6px; padding:5px; }
-.restaurant_pic ul li .addpic{ background:#F0F0F0 url(../images/icon_add.png) no-repeat center ; border:1px dotted #F90;width:250px; height:350px;}
+.restaurant_pic ul li{ float:left; width:160px; height:180px; list-style:none; margin:6px; padding:5px; }
+.restaurant_pic ul li .addpic{ background:#F0F0F0 url(../images/icon_add.png) no-repeat center ; border:1px dotted #F90;width:160px; height:105px;}
 .restaurant_pic ul li .addpic:hover{ background:#FFFFD2 url(../images/icon_add.png) no-repeat center ; border:1px dotted #F90;width:250px; height:350px;}
 .restaurant_pic ul li input{ width:160px; display:inline;}
