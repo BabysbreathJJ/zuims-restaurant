@@ -1,5 +1,28 @@
 <div class="autoAcceptConfig">
-    <div class="config-item">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>自动接单设置</legend>
+    </fieldset>
+
+    <div class="layui-form-item restaurant_setting"  >
+        <p>
+           <span style="float:left;">餐厅为最美食会员预留桌数最大值&nbsp;</span>
+           <input type="number" ng-model="persistInfo.persistTable" style="width:50px; font-size:14px; padding:5px; border:1px #CCC solid;">
+           <small>说明：如果系统内当日未完成预定超过预设值,则自动转为人工接单</small>
+        </p>
+    </div>
+    
+    <div class="layui-form-item restaurant_setting"  >
+        <p>
+            <span style="float:left;">用户发起预定时距离时间大于&nbsp;</span>
+            <input type="number" ng-model="persistInfo.persistTime" style="width:50px; font-size:14px; padding:5px; border:1px #CCC solid;">小时内的订单，系统自动订单
+        </p>
+    </div>
+
+    <div class="layui-form-item restaurant_setting"  >
+        <small>自动接单:在指定时间范围内的订单系统自动为商户确定订单,在指定时间范围外的订单需要餐厅联系人进行人工确认接单.</small>
+    </div>
+
+    <!--div class="config-item">
         餐厅为最美食会员预留桌数最大值<input class="config-input" type="number" ng-model="persistInfo.persistTable">
         <span class="explain">(说明:如果系统内当日未完成预定超过预设值,则自动转为人工接单)</span>
     </div>
@@ -8,7 +31,7 @@
     </div>
     <div class="config-item">
         <span class="explain">自动接单:在指定时间范围内的订单系统自动为商户确定订单,在指定时间范围外的订单需要餐厅联系人进行人工确认接单.</span>
-    </div>
+    </div-->
 </div>
 <div class="save-btn">
     <button class="btn btn-primary" ng-click="savePersistInfo()"><span
