@@ -1,12 +1,12 @@
 <div class="management-content">
     <!-- BEGIN .left-side -->
-    <div class="left-side">
+    <!--div class="left-side">
 
         <!-- BEGIN .left-block -->
-        <div class="left-block">
+        <!--div class="left-block">
 
             <!-- BEGIN .menu -->
-            <ul class="menu nav nav-divider">
+            <!--ul class="menu nav nav-divider">
                 <li ng-click="goto('reservation-table')"><span class="sidebar-span">预订信息</span></li>
                 <li ng-click="goto('data-statistics')"><span class="sidebar-span">预订数据统计</span></li>
                 <li ng-click="goto('product-management')"><span class="sidebar-span">产品管理</span></li>
@@ -15,9 +15,9 @@
                 <li ng-click="goto('activity-management')"><span class="sidebar-span">活动管理</span></li>
                 <li ng-click="goto('faq')"><span class="sidebar-span">客服 FAQ</span></li>
                 <!-- END .menu -->
-            </ul>
+            <!--/ul>
             <!-- END .left-block -->
-        </div>
+        <!--/div>
 
         <script type="text/javascript">
             $(function () {
@@ -32,13 +32,34 @@
             });
         </script>
         <!-- END .left-side -->
-    </div>
+    <!--/div-->
+    <ul class="layui-nav layui-nav-tree">
+        <li class="layui-nav-item layui-nav-itemed" ng-click="goto('reservation-table')">
+            <a>订单</a>
+        </li>
+        <li class="layui-nav-item" ng-click="goto('info-management')">
+            <a>餐厅</a>
+        </li>
+        <li class="layui-nav-item" ng-click="goto('menu-management')">
+            <a>单点</a>
+        </li>
+        <li class="layui-nav-item" ng-click="goto('product-management')">
+            <a>套餐</a>
+        </li>
+        <li class="layui-nav-item" ng-click="goto('activity-management')">
+            <a>活动</a>
+        </li>
+        <li class="layui-nav-item" ng-click="goto('data-statistics')">
+            <a>统计</a>
+        </li>
+    </ul>
 
-    <div class="right-content">
+    <div class="layui-body" style="bottom: 0;border-left: solid 2px #1AA094;">
+    <!--div class="right-content"-->
 
         <!--Reservation table begin-->
         <div id="reservation-table" ng-controller="ReservationCtrl" class="right-bg">
-            <h3 class="full-header"><span>预订信息</span></h3>
+            <!--h3 class="full-header"><span>预订信息</span></h3-->
 
             <div ng-include="'view_reservation/reservation.html'"></div>
         </div>
@@ -47,7 +68,7 @@
 
         <!--Data statistic chart begin-->
         <div id="data-statistics" ng-controller="ChartCtrl" class="right-bg">
-            <h3 class="full-header"><span>预订数据统计</span></h3>
+            <!--h3 class="full-header"><span>预订数据统计</span></h3-->
 
             <div ng-include="'view_management/data-statistics.html'"></div>
 
@@ -58,7 +79,7 @@
 
         <!-- Product management begin -->
         <div id="product-management" ng-controller="ProductCtrl" class="right-bg">
-            <h3 class="full-header"><span>产品管理</span></h3>
+            <!--h3 class="full-header"><span>产品管理</span></h3-->
 
             <div ng-include="'view_management/product-management.html'"></div>
 
@@ -67,7 +88,7 @@
 
         <!--菜单管理开始 -->
         <div id="menu-management" ng-controller="ImageRecommendCtrl" class="right-bg">
-            <h3 class="full-header"><span>菜单管理</span></h3>
+            <!--h3 class="full-header"><span>菜单管理</span></h3-->
 
             <div ng-include="'view_management/menu.html'"></div>
 
@@ -76,7 +97,7 @@
 
         <!-- 商户信息管理开始 -->
         <div id="info-management" class="right-bg">
-            <h3 class="full-header"><span>商户信息管理</span></h3>
+            <!--h3 class="full-header"><span>商户信息管理</span></h3-->
 
             <div ng-include="'view_management/basic-info.html'"></div>
 
@@ -84,7 +105,7 @@
 
             <!--餐厅图文上传开始-->
             <div class="image-uploads separator" class="right-bg">
-                <h4>餐厅图文信息<span style="padding-left: 40px"></span></h4>
+                <!--h4>餐厅图文信息<span style="padding-left: 40px"></span></h4-->
 
                 <div ng-include="'view_management/pictureInfo.html'"></div>
             </div>
@@ -92,7 +113,7 @@
 
             <!--自动接单设置开始-->
             <div class="autoAccept separator" ng-controller="PersistInfoCtrl">
-                <h4>自动接单设置</h4>
+                <!--h4>自动接单设置</h4-->
 
                 <div ng-include="'view_management/auto-accept.html'"></div>
             </div>
@@ -100,16 +121,16 @@
 
             <!--餐厅联系人设置开始-->
             <div class="contacts separator" ng-controller="ContactCtrl">
-                <h4>餐厅联系人设置 <span class="explain"
+                <!--h4>餐厅联系人设置 <span class="explain"
                                   style="padding-left: 20px;">至少两位联系人,请填写有效联系方式,否则系统无法正常传递预定信息</span>
-                </h4>
+                </h4-->
 
                 <div ng-include="'view_management/link-man.html'"></div>
             </div>
             <!--餐厅联系人设置结束-->
             <!--餐厅登录密码修改开始-->
             <div ng-controller="PwdCtrl">
-                <h4>登录密码修改</h4>
+                <!--h4>登录密码修改</h4-->
 
                 <div ng-include="'view_management/update-pwd.html'"></div>
 
@@ -121,7 +142,7 @@
 
         <!-- 活动管理开始 -->
         <div id="activity-management" ng-controller="ActivityCtrl" class="right-bg">
-            <h3 class="full-header"><span>活动管理</span></h3>
+            <!--h3 class="full-header"><span>活动管理</span></h3-->
 
             <div ng-include="'view_management/activity.html'"></div>
 
@@ -129,7 +150,7 @@
         <!-- 活动管理结束 -->
 
         <div id="faq" class="right-bg">
-            <h3 class="full-header"><span>客服FAQ</span></h3>
+            <!--h3 class="full-header"><span>客服FAQ</span></h3-->
 
             <p class="question"> 1. 为什么订单来了会有自动接单和人工接单2种方式？</p>
 
@@ -150,3 +171,11 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="plugins/layui/layui.js"></script>
+<script>
+    layui.use('element', function() {
+        var element = layui.element(); //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+    });
+</script>
