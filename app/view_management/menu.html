@@ -1,62 +1,45 @@
-<div class="lty-product-management" ng-controller="MenuCtrl">
+<!--div class="lty-product-management" ng-controller="MenuCtrl">
     <div class="btn-group" role="group">
         <button class="btn btn-primary" style="margin-left: 30px" ng-click="menuList()">
             <span class="glyphicon glyphicon-th-list"></span>菜单列表
         </button>
-        <!--button class="btn btn-primary" ng-click="addNewMenu()">
-            <span class="glyphicon glyphicon-plus"></span>新建菜单
-        </button-->
         <button class="btn btn-primary" ng-click="cate()">
             <span class="glyphicon glyphicon-th-list"></span>分类列表
         </button>
         <button class="btn btn-primary" ng-click="addNewCate()">
             <span class="glyphicon glyphicon-plus"></span>新建分类
         </button>
-    </div>
-            <!--<div>图片预览:</div>-->
-            <!--div class="croppedPic" style="display: none"><img ng-src="{{myRecommendCroppedPic}}"/>
-            </div>
-            <div class="picRecommendDescription">
-                <input class="form-control" type="text" placeholder="图片描述,与图片同时显示在用户手机上"
-                       ng-model="picDescription"/>
-            </div>
-            <div class="image-upload">
-                <a href="javascript:;" class="file" ng-click="uploadPic()"><span
-                        class="glyphicon glyphicon-saved"></span>上传图片
-                </a>
-                <a href="javascript:;" class="file-cancel" ng-click="removePic()"><span
-                        class="glyphicon glyphicon-remove"></span>取消上传
-                </a>
-            </div>
-        </div>
-        <div class="image-upload" ng-hide="homePageShow">
-            <a href="javascript:;" class="file lty-tag-a"><span class="glyphicon glyphicon-picture"></span>选择图片
-                <input type="file" accept="image/*" name="recommend" id="fileInputRecommend">
-            </a>
-            <a href="javascript:;" class="file btn-primary lty-tag-a" ng-click="editHomePage()"><span
-                    class="glyphicon glyphicon-edit"></span>编辑图片
-            </a>
+    </div-->
 
-        </div>
-        
-    </div>
-    <!--div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+<div class="admin-main" ng-controller="MenuCtrl">
+    <fieldset class="layui-elem-field">
+        <legend>菜单管理</legend>
+    
+    <blockquote class="layui-elem-quote">
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="menuList()">
+            <i class="layui-icon">&#xe615;</i> 菜单列表
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="cate()">
+            <i class="layui-icon">&#xe615;</i> 分类列表
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="addNewCate()">
+            <i class="layui-icon">&#xe608;</i> 新建分类
+        </a>
+    </blockquote>
 
     <!--菜单列表开始-->
-    <div class="reservation-content" ng-show="showMode==0">
+    <div class="layui-field-box" ng-show="showMode==0">
         <div ng-repeat="row in rowCollection">
         {{row.cate}}
-        <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped"
-               style="font-size: 12px">
+        <table st-table="displayedCollection" st-safe-src="rowCollection" class="site-table table-hover" style="font-size: 12px">
             <thead>
             <tr>
-                <th width="14%">菜名</th>
-                <th width="20%">描述</th>
-                <!--<th st-sort="orderDate" st-sort-default="reverse">预定时间</th>-->
-                <th width="14%" st-sort="originPrice">价格</th>
-                <th width="20%">分类</th>
-                <th width="20%">查看详情</th>
-                <th width="12%">删除产品</th>
+                <th width="14%" style="text-align:center">菜名</th>
+                <th width="20%" style="text-align:center">描述</th>
+                <th width="14%" st-sort="originPrice" style="text-align:center">价格</th>
+                <th width="20%" style="text-align:center">分类</th>
+                <th width="20%" style="text-align:center">查看详情</th>
+                <th width="12%" style="text-align:center">删除产品</th>
             </tr>
             </thead>
             <tbody>
@@ -77,14 +60,6 @@
                 </td>
             </tr>
             </tbody>
-            <!--tfoot>
-            <tr>
-                <td colspan="7" class="text-center">
-                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"
-                    ></div>
-                </td>
-            </tr>
-            </tfoot-->
         </table>
         </div>
     </div>
@@ -116,7 +91,6 @@
             </tr>
         </table>
     </div>
-
 
     <div class="lty-add-product" ng-show="showMode==1||showMode==2">
         <h4 class="lty-product-separator" style="padding-left: 0px">图片管理</h4>
@@ -162,16 +136,15 @@
     <!-- 菜单基本信息结束 -->
 
     <!-- 分类列表开始 -->
-    <div class="reservation-content" ng-show="showMode==3">
+    <div class="layui-field-box" ng-show="showMode==3">
         <div>
-        <table st-table="displayedCollection" st-safe-src="cateCollection" class="table table-striped"
-               style="font-size: 12px">
+        <table st-table="displayedCollection" st-safe-src="cateCollection" class="site-table table-hover" style="font-size: 12px">
             <thead>
             <tr>
-                <th width="20%">分类名</th>
-                <th width="20%">新增菜品</th>
-                <th width="20%">查看详情</th>
-                <th width="20%">删除</th>
+                <th width="20%" style="text-align:center">分类名</th>
+                <th width="20%" style="text-align:center">新增菜品</th>
+                <th width="20%" style="text-align:center">查看详情</th>
+                <th width="20%" style="text-align:center">删除</th>
             </tr>
             </thead>
             <tbody>
@@ -188,6 +161,7 @@
                     <button class="btn btn-primary" style="width: 100px; padding: 5px 5px" ng-click="addNewMenu(cate)">
                         <span class="glyphicon glyphicon-plus"></span> 新增菜品
                     </button>
+                </td>
                 <td width="20%">
                     <button class="btn btn-primary" style="width: 100px; padding: 5px 5px" ng-show="cate.isEditCate==0" ng-click="editCate(cate)">
                         <span class="glyphicon glyphicon-search"></span> 详情&修改
@@ -203,18 +177,11 @@
                 </td>
             </tr>
             </tbody>
-            <!--tfoot>
-            <tr>
-                <td colspan="7" class="text-center">
-                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"
-                    ></div>
-                </td>
-            </tr>
-            </tfoot-->
         </table>
         </div>
     </div>
     <!--分类列表结束 -->
+    </fieldset>
 </div>
 
 <!--新建分类对话框-->
