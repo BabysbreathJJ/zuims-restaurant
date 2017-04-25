@@ -1,4 +1,4 @@
-<div class="lty-product-management">
+<!--div class="lty-product-management">
     <div class="btn-group" role="group">
         <button class="btn btn-primary" style="margin-left: 30px" ng-click="productList()">
             <span class="glyphicon glyphicon-th-list"></span>产品列表
@@ -7,7 +7,20 @@
             <span class="glyphicon glyphicon-plus"></span>新建产品
         </button>
     </div>
-    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div-->
+
+<div class="admin-main">
+    <fieldset class="layui-elem-field">
+        <legend>套餐管理</legend>
+
+    <blockquote class="layui-elem-quote">
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="productList()">
+            <i class="layui-icon">&#xe615;</i> 产品列表
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="addNewProduct()">
+            <i class="layui-icon">&#xe608;</i> 新建产品
+        </a>
+    </blockquote>
 
     <!--showMode 0新建产品, 1产品列表, 2修改产品-->
 
@@ -150,19 +163,19 @@
     <!--新建产品结束-->
 
     <!--产品列表开始-->
-    <div class="reservation-content" ng-show="showMode==1">
-        <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped"
+    <div class="layui-field-box" ng-show="showMode==1">
+        <table st-table="displayedCollection" st-safe-src="rowCollection" class="site-table table-hover"
                style="font-size: 12px">
             <thead>
             <tr>
-                <th width="24%">产品名</th>
-                <th width="20%">产品描述</th>
+                <th width="24%" style="text-align:center">产品名</th>
+                <th width="20%" style="text-align:center">产品描述</th>
                 <!--<th st-sort="orderDate" st-sort-default="reverse">预定时间</th>-->
-                <th width="24%" st-sort="originPrice">产品价格</th>
-                <th width="10%" st-sort="discounts.length">折扣数量</th>
-                <th width="10%" st-sort="promotionProducts.length">促销数量</th>
-                <th width="20%">查看详情</th>
-                <th width="12%">删除产品</th>
+                <th width="24%" st-sort="originPrice" style="text-align:center">产品价格</th>
+                <th width="10%" st-sort="discounts.length" style="text-align:center">折扣数量</th>
+                <th width="10%" st-sort="promotionProducts.length" style="text-align:center">促销数量</th>
+                <th width="20%" style="text-align:center">查看详情</th>
+                <th width="12%" style="text-align:center">删除产品</th>
             </tr>
             <tr>
                 <th colspan="1"><input st-search="productName" class="form-control search-input" placeholder="产品名..." type="text"/>
@@ -212,6 +225,7 @@
         </table>
     </div>
     <!--产品列表结束-->
+    </fieldset>
 </div>
 
 <!--添加折扣对话框-->

@@ -67,7 +67,7 @@
 
     <!--菜单基本信息开始-->
     <div class="lty-add-product" ng-show="showMode==1||showMode==2">
-        <h4 class="lty-product-separator" style="padding-left: 0px">基本信息</h4>
+        <!--h4 class="lty-product-separator" style="padding-left: 0px">基本信息</h4>
         <table class="table table-bordered" style="margin-bottom: 23px">
             <tr>
                 <td width="25%">
@@ -89,11 +89,34 @@
                     </select>
                 </td>
             </tr>
-        </table>
+        </table-->
+        <div class="layui-form-item restaurant_setting"> 
+            <div class="layui-inline">
+                <p>菜名</p>
+                <input type="text" class="layui-input" ng-model="showFood.foodName">
+           </div>
+
+           <div class="layui-inline">
+                <p>原价</p>
+                <input type="number" class="layui-input" ng-model="showFood.foodPrice">
+           </div>
+
+           <div class="layui-inline">
+                <p>描述</p>
+                <input type="text" class="layui-input" ng-model="showFood.foodDescription">
+           </div>
+
+            <div class="layui-inline">
+                <p>分类</p>
+                <select class="form-control" ng-model="showFood.cateId">
+                    <option ng-repeat="x in cateCollection" value="{{x.cateId}}">{{x.cateName}}</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="lty-add-product" ng-show="showMode==1||showMode==2">
-        <h4 class="lty-product-separator" style="padding-left: 0px">图片管理</h4>
+        <!--h4 class="lty-product-separator" style="padding-left: 0px">图片管理</h4-->
 
         <div ng-show="menuPicShow == 1">
             <div class="cropAreaProduct">

@@ -1,4 +1,4 @@
-<div class="config-item">
+<!--div class="config-item">
     <span class="hint">说明：须为预订顾客保留就餐位，若顾客迟到，请保留其就餐位15分钟，若顾客超时未到请与顾客电话沟通
 </div>
 
@@ -6,9 +6,6 @@
     <button class="btn btn-primary" style="margin-left: 30px" ng-click="allOrder()">
         <span class="glyphicon glyphicon-th-list"></span>所有订单
     </button>
-    <!--button class="btn btn-primary" ng-click="addNewMenu()">
-        <span class="glyphicon glyphicon-plus"></span>新建菜单
-    </button-->
     <button class="btn btn-primary" ng-click="todayOrder()">
         <span class="glyphicon glyphicon-th-list"></span>今日订单
     </button>
@@ -17,11 +14,26 @@
     </button>
         
 </div>
-<div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+<div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div-->
 
-<div class="reservation-content" ng-show="showMode==0">
-    <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped"
-           style="font-size: 12px">
+<div class="admin-main">
+    <fieldset class="layui-elem-field">
+        <legend>预订信息</legend>
+
+    <blockquote class="layui-elem-quote">
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="allOrder()">
+            <i class="layui-icon">&#xe615;</i> 所有订单
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="allOrder()">
+            <i class="layui-icon">&#xe615;</i> 今日订单
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="handleOrder()">
+            <i class="layui-icon">&#xe615;</i> 待处理订单
+        </a>
+    </blockquote>
+
+<div class="layui-field-box" ng-show="showMode==0">
+    <table st-table="displayedCollection" st-safe-src="rowCollection" class="site-table table-hover" style="font-size: 12px">
         <thead>
         <tr>
             <th width="8%">订单号</th>
@@ -100,9 +112,8 @@
     </table>
 </div>
 
-<div class="reservation-content" ng-show="showMode==1">
-    <table st-table="displayedCollection" st-safe-src="todayCollection" class="table table-striped"
-           style="font-size: 12px">
+<div class="layui-field-box" ng-show="showMode==1">
+    <table st-table="displayedCollection" st-safe-src="todayCollection" class="site-table table-hover" style="font-size: 12px">
         <thead>
         <tr>
             <th width="8%">订单号</th>
@@ -181,9 +192,8 @@
     </table>
 </div>
 
-<div class="reservation-content" ng-show="showMode==2">
-    <table st-table="displayedCollection" st-safe-src="handleCollection" class="table table-striped"
-           style="font-size: 12px">
+<div class="layui-field-box" ng-show="showMode==2">
+    <table st-table="displayedCollection" st-safe-src="handleCollection" class="site-table table-hover" style="font-size: 12px">
         <thead>
         <tr>
             <th width="8%">订单号</th>
@@ -231,7 +241,11 @@
             <td>{{row.more}}</td>
             <td>{{row.source}}</td>
             <td></td>
+        </tr>
+        </tbody>
     </table>
+</div>
+</fieldset>
 </div>
 
 <script type="text/ng-template" id="custom_template.html">
