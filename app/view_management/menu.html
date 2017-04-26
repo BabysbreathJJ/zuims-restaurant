@@ -140,22 +140,24 @@
             <div>
                 <img src="{{showFood.pUrl}}" class="per100 lty-menu-pic"">
             </div>
-            <a href="javascript:;" class="file" style="margin-right: 10px; margin-left: 0px">
+            <!--a href="javascript:;" class="file" style="margin-right: 10px; margin-left: 0px">
                 <span class="glyphicon glyphicon-picture"></span>编辑图片
                 <input type="file" accept="image/*" id="fileInput">
-            </a>
+            </a-->
         </div> 
     </div>
 
     <div class="save-btn">
-        <button class="btn btn-primary" ng-click="updateMenu(showFood)" ng-show="showMode==1" style="margin-bottom: 15px">
+        <button class="layui-btn" ng-click="updateMenu(showFood)" ng-show="showMode==1" style="margin-bottom: 15px">
                <span class="glyphicon glyphicon-ok"></span>保存菜单
         </button>
     </div>
 
-    <button class="btn btn-primary" ng-click="submitNewMenu(showFood)" ng-show="showMode==2" style="margin-bottom: 15px">
+    <div class="save-btn">
+        <button class="layui-btn" ng-click="submitNewMenu(showFood)" ng-show="showMode==2" style="margin-bottom: 15px">
             <span class="glyphicon glyphicon-ok"></span>提交新建菜单
-    </button>
+        </button>
+    </div>
     <!-- 菜单基本信息结束 -->
 
     <!-- 分类列表开始 -->
@@ -209,9 +211,10 @@
 
 <!--新建分类对话框-->
 <script type="text/ng-template" id="addNewCate.html">
-    <p>请输入分类名</p>
+    <label>请输入分类名</label>
     <input type="text" id="newCateName"></input>
+
     <div class="message" style="float: right">
-        <a class="btn btn-small btn-primary" ng-click="submitNewCate()">提交</a>
+        <a class="layui-btn" ng-click="submitNewCate()">提交</a>
     </div>
 </script>
