@@ -20,7 +20,7 @@
     <fieldset class="layui-elem-field">
         <legend>预订信息</legend>
 
-    <blockquote class="layui-elem-quote">
+    <!--blockquote class="layui-elem-quote">
         <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="allOrder()">
             <i class="layui-icon">&#xe615;</i> 所有订单
         </a>
@@ -30,9 +30,9 @@
         <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="handleOrder()">
             <i class="layui-icon">&#xe615;</i> 待处理订单
         </a>
-    </blockquote>
+    </blockquote-->
 
-<div class="layui-field-box" ng-show="showMode==0">
+<div class="layui-field-box">
     <table st-table="displayedCollection" st-safe-src="rowCollection" class="site-table table-hover" style="font-size: 12px">
         <thead>
         <tr>
@@ -63,7 +63,7 @@
             <th colspan="1"><input st-search="phoneId" class="form-control search-input" placeholder="手机号" type="text"/>
             </th>
             <th colspan="5"></th>
-        </tr>
+        </tr-->
         </thead>
         <tbody>
         <tr ng-repeat="row in displayedCollection">
@@ -82,18 +82,18 @@
             <td>{{row.source}}</td>
             <td>
                 <button ng-show="!row.orderHandled && !row.isDidi" type="button" ng-click="completeOrder(row)"
-                        class="btn btn-sm btn-primary">
+                        class="layui-btn">
                     <i class="glyphicon glyphicon-check">
                     </i>
                     确认已就餐
                 </button>
                 <button ng-show="!row.orderHandled && row.isDidi" type="button" ng-click="completeDidiOrder(row)"
-                        class="btn btn-sm btn-primary">
+                        class="layui-btn">
                       <i class="glyphicon glyphicon-check">
                       </i>
                       核销
                 </button>
-                <button ng-show="row.orderHandled" type="button" class="btn btn-sm" disabled>
+                <button ng-show="row.orderHandled" type="button" class="layui-btn layui-btn-primary" disabled>
                     <i class="glyphicon glyphicon-ok">
                     </i>
                     订单已完成
@@ -112,7 +112,7 @@
     </table>
 </div>
 
-<div class="layui-field-box" ng-show="showMode==1">
+<!--div class="layui-field-box" ng-show="showMode==1">
     <table st-table="displayedCollection" st-safe-src="todayCollection" class="site-table table-hover" style="font-size: 12px">
         <thead>
         <tr>
@@ -244,7 +244,7 @@
         </tr>
         </tbody>
     </table>
-</div>
+</div-->
 </fieldset>
 </div>
 
