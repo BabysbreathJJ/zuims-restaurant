@@ -878,7 +878,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             $scope.ltyAllPic = {};
             $scope.ltyAllPic.DetailPic = [];
 
-            ManageService.getAllPic($.cookie("restaurantId"))
+            ManageService.getDetailShowPic($.cookie("restaurantId"))
                 .success(function (data) {
                     $scope.ltyAllPic.DetailPic = data;
                     if(data.length < 5) {
@@ -919,6 +919,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
             ManageService.uploadDetailPic($scope.uploadInfo)
                 .success(function (data, status) {
                     if (data.success == true) {
+                        console.log(data);
                         alert("图片上传成功!");
                         $scope.picDescription = "";
                         $scope.detailPicShow = false;
