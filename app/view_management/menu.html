@@ -34,20 +34,20 @@
         <table st-table="displayedCollection" st-safe-src="rowCollection" class="site-table table-hover" style="font-size: 12px">
             <thead>
             <tr>
-                <th width="14%" style="text-align:center">菜名</th>
-                <th width="20%" style="text-align:center">描述</th>
+                <th width="24%" style="text-align:center">菜名</th>
+                <th width="30%" style="text-align:center">描述</th>
                 <th width="14%" st-sort="originPrice" style="text-align:center">价格</th>
-                <th width="20%" style="text-align:center">分类</th>
+                <!--th width="20%" style="text-align:center">分类</th-->
                 <th width="20%" style="text-align:center">查看详情</th>
                 <th width="12%" style="text-align:center">删除产品</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="food in row.foodList">
-                <td width="14%">{{food.foodName}}</td>
-                <td width="20%">{{food.foodDescription}}</td>
+                <td width="24%">{{food.foodName}}</td>
+                <td width="30%">{{food.foodDescription}}</td>
                 <td width="14%">{{food.foodPrice}}</td>
-                <td width="20%">{{food.cateId}}</td>
+                <!--td width="20%">{{food.cateId}}</td-->
                 <td width="20%">
                     <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-click="editFood(food)">
                         <span class="glyphicon glyphicon-search"></span> 详情&修改
