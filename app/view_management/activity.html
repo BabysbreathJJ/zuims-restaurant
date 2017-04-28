@@ -21,6 +21,9 @@
         <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="myActivity()">
             <i class="layui-icon">&#xe615;</i> 我的活动
         </a>
+         <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="addActivity()">
+            <i class="layui-icon">&#xe608;</i> 新建我的活动
+        </a>
     </blockquote>
 
     <!--最美食活动开始-->
@@ -89,6 +92,23 @@
     <!--我的活动结束-->
     </fieldset>
 </div>
+
+<script type="text/ng-template" id="add_activity.html">
+    <div class="contacts-infos">
+        活动名称<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.name">
+        活动日期<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.date">
+        活动内容<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.content">
+    </div>
+
+    <div class="save-btn">
+        <button class="layui-btn" ng-click="submitActivity()">
+            <span class="glyphicon glyphicon-ok"></span>提交活动
+        </button>
+    </div>
+</script>
 
 <script type="text/ng-template" id="edit_activity.html">
     <div class="contacts-infos">

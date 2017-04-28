@@ -70,6 +70,16 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
 
         };
 
+        factory.addActivity = function(activityInfo) {
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + '/activity/add',
+                data: JSON.stringify(activityInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        }
+
         return factory;
     }])
     .controller('ActivityCtrl', ['$scope', 'ngDialog', 'ActivityService', function ($scope, ngDialog, ActivityService) {
@@ -81,6 +91,7 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
         function getAllActivity(){
             ActivityService.getAllActivity()
                 .success(function (activity) {
+                    console.log(activity);
                     for (var i = 0; i < activity.length; i++) {
                         (function(i){
                             return ActivityService.checkActivity(activity[i].id,$.cookie("restaurantId")).success(function(status){
@@ -96,6 +107,7 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
         function getMyActivity() {
             ActivityService.getMyActivity($.cookie("restaurantId"))
                 .success(function(activity) {
+                    console.log(activity);
                     $scope.myActivityCollection = activity;
                 });
 
@@ -149,6 +161,30 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
                     ngDialog.close();
                 })
         }
+
+        $scope.addActivity = function() {
+            $scope.activityToHandle = {
+                "content": "",
+                "date": "",
+                "name": "",
+                "type": $.cookie("restaurantId"),
+            };
+
+            ngDialog.open({
+                templateUrl: 'add_activity.html',
+                scope: $scope
+            });
+        }
+
+        $scope.submitActivity = function() {
+            ActivityService.addActivity($scope.activityToHandle)
+                .success(function(data) {
+                    alert("提交成功！");
+                    getMyActivity();
+                    ngDialog.close();
+                })
+        }
+
 
         $scope.deleteActivity = function(row) {
             ActivityService.deleteActivity(row.id)
