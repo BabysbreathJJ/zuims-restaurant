@@ -70,6 +70,13 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
           });
         };
 
+        var getOrderDetailsRequest = function(orderId) {
+            return $http({
+                method:'GET',
+                url:restaurantBaseUrl + "/menu/getFoodByOid?oid=" + orderId
+            });
+        };
+
         return {
             getOrderInfo: function (restaurantId) {
                 return getOderInfosRequest(restaurantId);
@@ -88,6 +95,9 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             },
             didiConfirm: function (cavInfo) {
               return didiConfirmRequest(cavInfo);
+            },
+            getOrderDetails: function (orderId) {
+                return getOrderDetailsRequest(orderId);
             }
             /*confirmCoupon : function (token,appId,logId,couponCode,OrderInfo) {
               return confirmCouponRequest(token,appId,logId,couponCode,OrderInfo);
@@ -128,7 +138,21 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                         order[i].isDidi = false;
                       }
                     });
-                  })(i)
+                  })(i);
+
+                    (function(i) {
+                        if (order[i].productName == null) {
+                            return OrderService.getOrderDetails(order[i].orderId).success(function(foodlist){
+                                var pro = "";
+                                for (var j = 0; j < foodlist.length; j++) {
+                                    pro += foodlist[j].foodInfo.foodName + "*" + foodlist[j].quantity + " ";
+                                }
+                                console.log(pro);
+                                order[i].productName = pro;
+                            })
+                        }
+                    })(i);
+
 
                     var dateTime = order[i].orderTime.split(" ");
                     if (order[i].gender == 0) {
