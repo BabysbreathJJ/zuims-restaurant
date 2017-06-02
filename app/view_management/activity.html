@@ -1,0 +1,128 @@
+<!--div class="lty-product-management">
+    <div class="btn-group" role="group">
+        <button class="btn btn-primary" style="margin-left: 30px" ng-click="allActivity()">
+            <span class="glyphicon glyphicon-th-list"></span>最美食活动
+        </button>
+        <button class="btn btn-primary" ng-click="myActivity()">
+            <span class="glyphicon glyphicon-th-list"></span>我的活动
+        </button>
+        
+    </div>
+    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div-->
+
+<div class="admin-main">
+    <fieldset class="layui-elem-field">
+        <legend>活动管理</legend>
+
+    <blockquote class="layui-elem-quote">
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="allActivity()">
+            <i class="layui-icon">&#xe615;</i> 最美食活动
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="myActivity()">
+            <i class="layui-icon">&#xe615;</i> 我的活动
+        </a>
+         <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="addActivity()">
+            <i class="layui-icon">&#xe608;</i> 新建我的活动
+        </a>
+    </blockquote>
+
+    <!--最美食活动开始-->
+    <div class="layui-field-box" ng-show="showMode==0">
+        <table st-table="displayedCollection" st-safe-src="allActivityCollection" class="site-table table-hover" style="font-size: 12px">
+            <thead>
+            <tr>
+                <th width="25%" style="text-align:center">活动名称</th>
+                <th width="25%" style="text-align:center">活动日期</th>
+                <th width="25%" style="text-align:center">活动内容</th>
+                <th width="25%" style="text-align:center">参加活动</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in allActivityCollection">
+                <td width="25%">{{row.name}}</td>
+                <td width="25%">{{row.date}}</td>
+                <td width="25%">{{row.content}}</td>
+                <td width="25%">
+                    <button ng-show="row.status" type="button" class="layui-btn layui-btn-primary" disabled>
+                        <i class="glyphicon glyphicon-ok">
+                        </i>
+                        已参加
+                    </button>
+                    <button ng-show="!row.status" class="layui-btn" style="width: 100px; padding: 5px 5px" ng-click="applyActivity(row)">
+                        <span class="glyphicon glyphicon-search"></span> 参加
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--最美食活动结束-->
+
+    <!--我的活动开始-->
+    <div class="layui-field-box" ng-show="showMode==1">
+        <table st-table="displayedCollection" st-safe-src="myActivityCollection" class="site-table table-hover" style="font-size: 12px">
+            <thead>
+            <tr>
+                <th width="20%" style="text-align:center">活动名称</th>
+                <th width="20%" style="text-align:center">活动日期</th>
+                <th width="20%" style="text-align:center">活动内容</th>
+                <th width="20%" style="text-align:center">查看详情</th>
+                <th width="20%" style="text-align:center">删除活动</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in myActivityCollection">
+                <td width="20%">{{row.name}}</td>
+                <td width="20%">{{row.date}}</td>
+                <td width="20%">{{row.content}}</td>
+                <td width="20%">
+                    <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-click="editActivity(row)">
+                        <span class="glyphicon glyphicon-search"></span> 修改
+                    </button>
+                </td>
+                <td width="20%">
+                    <button class="layui-btn" style="width: 70px; padding: 5px 5px" ng-click="deleteActivity(row)">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--我的活动结束-->
+    </fieldset>
+</div>
+
+<script type="text/ng-template" id="add_activity.html">
+    <div class="contacts-infos">
+        活动名称<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.name">
+        活动日期<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.date">
+        活动内容<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.content">
+    </div>
+
+    <div class="save-btn">
+        <button class="layui-btn" ng-click="submitActivity()">
+            <span class="glyphicon glyphicon-ok"></span>提交活动
+        </button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="edit_activity.html">
+    <div class="contacts-infos">
+        活动名称<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.name">
+        活动日期<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.date">
+        活动内容<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="activityToHandle.content">
+    </div>
+
+    <div class="save-btn">
+        <button class="layui-btn" ng-click="updateActivity()">
+            <span class="glyphicon glyphicon-ok"></span>保存活动
+        </button>
+    </div>
+</script>

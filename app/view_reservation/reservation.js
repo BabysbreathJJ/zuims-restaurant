@@ -70,6 +70,13 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
           });
         };
 
+        var getOrderDetailsRequest = function(orderId) {
+            return $http({
+                method:'GET',
+                url:restaurantBaseUrl + "/menu/getFoodByOid?oid=" + orderId
+            });
+        };
+
         return {
             getOrderInfo: function (restaurantId) {
                 return getOderInfosRequest(restaurantId);
@@ -88,6 +95,9 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
             },
             didiConfirm: function (cavInfo) {
               return didiConfirmRequest(cavInfo);
+            },
+            getOrderDetails: function (orderId) {
+                return getOrderDetailsRequest(orderId);
             }
             /*confirmCoupon : function (token,appId,logId,couponCode,OrderInfo) {
               return confirmCouponRequest(token,appId,logId,couponCode,OrderInfo);
@@ -103,12 +113,17 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
         //copy the references (you could clone ie angular.copy but then have to go through a dirty checking for the matches)
         //$scope.displayedCollection = [].concat($scope.rowCollection);
         $scope.rowCollection = [];
+        $scope.todayCollection = [];
+        $scope.handleCollection = [];
+        $scope.showMode = 0;
 
         OrderService.getOrderInfo($.cookie("restaurantId"))
             .success(function (order) {
                 //console.log("所有数据---" + data);
                 $scope.myNotifications = [];
                 $scope.removeIndex = [];
+
+                var myDate = new Date();
 
                 for (var i = 0; i < order.length; i++) {
                   //console.log(i);
@@ -123,7 +138,21 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                         order[i].isDidi = false;
                       }
                     });
-                  })(i)
+                  })(i);
+
+                    (function(i) {
+                        if (order[i].productName == null) {
+                            return OrderService.getOrderDetails(order[i].orderId).success(function(foodlist){
+                                var pro = "";
+                                for (var j = 0; j < foodlist.length; j++) {
+                                    pro += foodlist[j].foodInfo.foodName + "*" + foodlist[j].quantity + " ";
+                                }
+                                console.log(pro);
+                                order[i].productName = pro;
+                            })
+                        }
+                    })(i);
+
 
                     var dateTime = order[i].orderTime.split(" ");
                     if (order[i].gender == 0) {
@@ -144,7 +173,10 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                         var index = order.indexOf(order[i]);
                         $scope.myNotifications.push(order[i]);
                         $scope.removeIndex.push(index);
-                        //console.log("未确认——" + data[i]);
+                        console.log("未确认——" + data[i]);
+
+                        $scope.handleCollection.push(order[i]);
+
                         continue;
                     }
                     else if (order[i].state == "已拒绝") {
@@ -159,6 +191,10 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                     }
 
                     $scope.rowCollection.push(order[i]);
+
+                    if(order[i].orderDate==myDate.getYear()+"-"+myDate.getMonth()+"-"+myDate.getDay()){
+                        $scope.todayCollection.push(order[i]);
+                    }
                 }
 
                 for (var j = 0; j < $scope.removeIndex.length; j++) {
@@ -168,6 +204,18 @@ angular.module("myApp.reservation", ['ngRoute', 'smart-table', 'ui-notification'
                 }
 
             });
+
+        $scope.allOrder = function() {
+            $scope.showMode = 0;
+        }
+
+        $scope.todayOrder = function() {
+            $scope.showMode = 1;
+        }
+
+        $scope.handleOrder = function() {
+            $scope.showMode = 2;
+        }
 
         //remove to the real data holder
         $scope.removeItem = function removeItem(row) {

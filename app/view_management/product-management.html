@@ -1,4 +1,4 @@
-<div class="lty-product-management">
+<!--div class="lty-product-management">
     <div class="btn-group" role="group">
         <button class="btn btn-primary" style="margin-left: 30px" ng-click="productList()">
             <span class="glyphicon glyphicon-th-list"></span>产品列表
@@ -7,7 +7,20 @@
             <span class="glyphicon glyphicon-plus"></span>新建产品
         </button>
     </div>
-    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div>
+    <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px"></div-->
+
+<div class="admin-main">
+    <fieldset class="layui-elem-field">
+        <legend>套餐管理</legend>
+
+    <blockquote class="layui-elem-quote">
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="productList()">
+            <i class="layui-icon">&#xe615;</i> 产品列表
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="addNewProduct()">
+            <i class="layui-icon">&#xe608;</i> 新建产品
+        </a>
+    </blockquote>
 
     <!--showMode 0新建产品, 1产品列表, 2修改产品-->
 
@@ -17,7 +30,7 @@
 
         <!--产品基本信息开始-->
         <h4 class="lty-product-separator" style="padding-left: 0px">产品基本信息</h4>
-        <table class="table table-bordered" style="margin-bottom: 23px">
+        <!--table class="table table-bordered" style="margin-bottom: 23px">
             <tr>
                 <td width="30%">
                     产品名<span class="explain" style="padding-left: 10px">限15字</span>
@@ -27,13 +40,29 @@
                     原价<span class="explain" style="padding-left: 10px">请包含服务费</span>
                     <input class="form-control" type="number" min="0" ng-model="showProduct.originPrice">
                 </td>
-                <!--td width="40%">
+                <td width="40%">
                     产品描述<span class="explain" style="padding-left: 10px">限30字</span>
                     <input type="text" class="form-control" ng-model="showProduct.description">
-                </td!-->
+                </td>
             </tr>
-        </table>
-        <button class="btn btn-primary" ng-click="editProductInfo()" ng-show="showMode==2" style="margin-bottom: 15px">
+        </table-->
+        <div class="layui-form-item restaurant_setting"> 
+            <div class="layui-inline">
+                <p>产品名</p>
+                <input type="text" placeholder="示例:'xx人套餐''xx特色美食''xxx美食节'套餐注明适用人数" class="layui-input" ng-model="showProduct.productName">
+           </div>
+
+           <div class="layui-inline">
+                <p>原价</p>
+                <input type="number" min="0" class="layui-input" ng-model="showProduct.originPrice">
+           </div>
+
+           <div class="layui-inline">
+                <p>产品描述</p>
+                <input type="text" class="layui-input" ng-model="showProduct.description">
+           </div>
+        </div>
+        <button class="layui-btn" ng-click="editProductInfo()" ng-show="showMode==2" style="margin-bottom: 15px">
             <span class="glyphicon glyphicon-ok"></span>保存产品基本信息
         </button>
         <!--产品基本信息结束-->
@@ -98,10 +127,10 @@
                 <span class="main-explain" style="padding-left: 0px">{{textIntervals(temp.beginTime, temp.endTime)}}</span>
             </div>
             <div class="lty-product-discount" style="border: none; text-align: left; height: 90px">
-                <button class="btn btn-primary" ng-click="addDiscount()" >
+                <button class="layui-btn" ng-click="addDiscount()" >
                     <span class="glyphicon glyphicon-plus"></span>添加折扣
                 </button>
-                <button class="btn btn-primary" ng-click="previewDiscountTable()" style="margin-top: 15px; margin-bottom: 15px;">
+                <button class="layui-btn" ng-click="previewDiscountTable()" style="margin-top: 15px; margin-bottom: 15px;">
                     <span class="glyphicon glyphicon-search"></span>预览折扣信息
                 </button>
             </div>
@@ -128,7 +157,7 @@
                 </span>
             </div>
             <div class="lty-product-promotion" style="border: none; text-align: left">
-                <button class="btn btn-primary" ng-click="addPromotion()" style="margin-bottom: 60px">
+                <button class="layui-btn" ng-click="addPromotion()" style="margin-bottom: 60px">
                     <span class="glyphicon glyphicon-plus"></span>添加促销
                 </button>
             </div>
@@ -141,7 +170,7 @@
             <li style="color:red; font-size: 15px; margin-bottom: 12px" ng-show="submitNewProductError.flag">
                 {{submitNewProductError.info}}
             </li>
-            <button class="btn btn-primary" ng-click="submitNewProduct()" style="margin-bottom: 60px">
+            <button class="layui-btn" ng-click="submitNewProduct()" style="margin-bottom: 60px">
                 <span class="glyphicon glyphicon-upload"></span>提交新建产品信息
             </button>
         </div>
@@ -150,24 +179,24 @@
     <!--新建产品结束-->
 
     <!--产品列表开始-->
-    <div class="reservation-content" ng-show="showMode==1">
-        <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped"
+    <div class="layui-field-box" ng-show="showMode==1">
+        <table st-table="displayedCollection" st-safe-src="rowCollection" class="site-table table-hover"
                style="font-size: 12px">
             <thead>
             <tr>
-                <th width="24%">产品名</th>
-                <!--th width="20%">产品描述</th!-->
+                <th width="24%" style="text-align:center">产品名</th>
+                <th width="20%" style="text-align:center">产品描述</th>
                 <!--<th st-sort="orderDate" st-sort-default="reverse">预定时间</th>-->
-                <th width="24%" st-sort="originPrice">产品价格</th>
-                <th width="10%" st-sort="discounts.length">折扣数量</th>
-                <th width="10%" st-sort="promotionProducts.length">促销数量</th>
-                <th width="20%">查看详情</th>
-                <th width="12%">删除产品</th>
+                <th width="24%" st-sort="originPrice" style="text-align:center">产品价格</th>
+                <th width="10%" st-sort="discounts.length" style="text-align:center">折扣数量</th>
+                <th width="10%" st-sort="promotionProducts.length" style="text-align:center">促销数量</th>
+                <th width="20%" style="text-align:center">查看详情</th>
+                <th width="12%" style="text-align:center">删除产品</th>
             </tr>
             <tr>
                 <th colspan="1"><input st-search="productName" class="form-control search-input" placeholder="产品名..." type="text"/>
                 </th>
-                <!--th colspan="1"><input st-search="description" class="form-control search-input" placeholder="产品描述..." type="text"/!-->
+                <th colspan="1"><input st-search="description" class="form-control search-input" placeholder="产品描述..." type="text"/>
                 </th>
                 <th colspan="1"><input st-search="originPrice" class="form-control search-input" placeholder="原价..." type="text"/>
                 </th>
@@ -185,17 +214,17 @@
             <tbody>
             <tr ng-repeat="row in displayedCollection">
                 <td width="14%">{{row.productName}}</td>
-                <!--td width="20%">{{row.description}}</td!-->
+                <td width="20%">{{row.description}}</td>
                 <td width="14%">{{row.originPrice}}</td>
                 <td width="10%">{{row.discounts.length}}</td>
                 <td width="10%">{{row.promotionProducts.length}}</td>
                 <td width="20%">
-                    <button class="btn btn-primary" style="width: 100px; padding: 5px 5px" ng-click="modifyProduct(row)">
+                    <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-click="modifyProduct(row)">
                         <span class="glyphicon glyphicon-search"></span> 详情&修改
                     </button>
                 </td>
                 <td width="12%">
-                    <button class="btn btn-primary" style="width: 70px; padding: 5px 5px" ng-click="deleteProduct(row)">
+                    <button class="layui-btn" style="width: 70px; padding: 5px 5px" ng-click="deleteProduct(row)">
                         <span class="glyphicon glyphicon-trash"></span> 删除
                     </button>
                 </td>
@@ -212,12 +241,13 @@
         </table>
     </div>
     <!--产品列表结束-->
+    </fieldset>
 </div>
 
 <!--添加折扣对话框-->
 <script type="text/ng-template" id="addNewDiscount.html">
     <!--内容开始-->
-    <h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加折扣</span></h3>
+    <!--h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加折扣</span></h3-->
     <div class="pd15 mt70" style="margin-top: 20px">
         <form>
             <div style="display: inline-block; width:48%">
@@ -251,7 +281,7 @@
 
             </div>
             <div style="margin-top: 15px">
-                <button class="btn btn-primary" ng-click="saveNewDiscount()">
+                <button class="layui-btn" ng-click="saveNewDiscount()">
                     <span class="glyphicon glyphicon-ok"></span>确定
                 </button>
             </div>
@@ -262,7 +292,7 @@
 <!--添加促销对话框-->
 <script type="text/ng-template" id="addNewPromotion.html">
     <!--内容开始-->
-    <h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加促销</span></h3>
+    <!--h3 class="full-header" style="padding-left:20px"><span style="background-color: #eee;">添加促销</span></h3-->
     <div class="pd15 mt70" style="margin-top: 20px">
         <form>
             <div style="width:48%; display: inline-block">
@@ -318,7 +348,7 @@
                 </li>
             </div>
             <div style="margin-top: 15px">
-                <button class="btn btn-primary" ng-click="saveNewPromotion()">
+                <button class="layui-btn" ng-click="saveNewPromotion()">
                     <span class="glyphicon glyphicon-ok"></span>确定
                 </button>
             </div>

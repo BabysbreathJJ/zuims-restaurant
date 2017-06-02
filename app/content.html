@@ -47,32 +47,31 @@
     <link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="bower_components/angular-moment-picker/dist/angular-moment-picker.min.css">
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" href="plugins/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="css/global.css" media="all">
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
 
-<div class="content">
+<!--div class="content">
     <div class="banner">
 
         <!--header-->
-        <div class="container">
+        <!--div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"-->
-                        <!--data-target="#bs-example-navbar-collapse-1">-->
-                        <!--<span class="sr-only">Toggle navigation</span>-->
-                        <!--<span class="icon-bar"></span>-->
-                        <!--<span class="icon-bar"></span>-->
-                        <!--</button>-->
+                    <!--div class="navbar-header">
                         <a class="navbar-brand" href="index.html"> <img src="images/logo.png" alt=""
                                                                         style="height: 50px"/> </a>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
-                    <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!--<li><a href="#/reservation">预定管理</a></li>-->
-                        <!--<li><a href="#/management">商户后台管理</a></li>-->
+                    <!--ul class="nav navbar-nav navbar-right">
                         <span id="restaurantName" style="color: #ffffff;font-size: 18px"></span>
 
                         <div class="btn-group" style="padding-left: 15px">
@@ -84,7 +83,6 @@
                                 <li><span class="seller-info">姓名:</span><span id="sellerName"></span></li>
                                 <li><span class="seller-info">手机:</span><span id="sellerTel"></span></li>
                                 <li><span class="seller-info">邮箱:</span><span id="sellerEmail"></span></li>
-                                <!--<li role="separator" class="divider"></li>-->
                             </ul>
                         </div>
                         <div style="float: right;padding-left: 15px">
@@ -95,11 +93,37 @@
                     </ul>
                 </div>
                 <div class="clearfix"></div>
-                <!--</div>-->
             </nav>
         </div>
     </div>
     <!--//header-->
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header header header-demo">
+        <div class="layui-main">
+            <div class="admin-login-box">
+                <a class="logo" style="left: 0;">
+                    <img src="images/logo1.png" > 
+                </a>
+                <div class="admin-side-toggle">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </div>
+            </div>
+
+            <ul class="layui-nav admin-header-item">
+                <li class="layui-nav-item">
+                    <span id="restaurantName" style="color: #000000;font-size: 18px"></span>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="admin-header-user">
+                        <img src="images/0.jpg" />
+                        <button type="button" class="btn btn-danger" id="logout">
+                            登出
+                        </button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <div ng-view class="main-content"></div>
 
@@ -107,6 +131,7 @@
         Copyright © 最美食
     </div>
 </div>
+
 <!--<script src="http://cdn.rawgit.com/nnnick/Chart.js/master/Chart.min.js"></script>-->
 <script src="js/jquery.min.js"></script>
 <script src="bower_components/moment/min/moment.min.js"></script>
@@ -136,6 +161,8 @@
 <script src="view_management/data-statistics.js"></script>
 <script src="view_management/basic-info.js"></script>
 <script src="view_management/product-management.js"></script>
+<script src="view_management/menu.js"></script>
+<script src="view_management/activity.js"></script>
 <script src="bower_components/angular-sortable-view/src/angular-sortable-view.min.js"></script>
 <script src="bower_components/angular-moment-picker/dist/angular-moment-picker.min.js"></script>
 </body>

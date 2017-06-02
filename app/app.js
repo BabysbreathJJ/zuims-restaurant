@@ -8,7 +8,9 @@ angular.module('myApp', [
         'myApp.reservation',
         'myApp.chart',
         'myApp.basicInfo',
-        'myApp.productManagement'
+        'myApp.productManagement',
+        'myApp.menuManagement',
+        'myApp.activityManagement'
     ])
 
     .constant('BaseUrl', 'https://api.bestfood.cc/')
@@ -24,11 +26,12 @@ angular.module('myApp', [
     //.constant('managementPort', '8008')
     //.constant('restaurantPort', '8004')
 
-    //.constant('BaseUrl', 'http://123.206.181.47:')
-    //.constant('userPort', '8001')
-    //.constant('merchantPort', '8004')
-    //.constant('managementPort', '8008')
-    //.constant('restaurantPort', '8000')
+
+    // .constant('BaseUrl', 'http://123.206.181.47:')
+    // .constant('userPort', '8001')
+    // .constant('merchantPort', '8004')
+    // .constant('managementPort', '8008')
+    // .constant('restaurantPort', '8000')
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/management'});
     }]);

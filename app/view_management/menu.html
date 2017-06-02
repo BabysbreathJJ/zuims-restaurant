@@ -1,0 +1,220 @@
+<!--div class="lty-product-management" ng-controller="MenuCtrl">
+    <div class="btn-group" role="group">
+        <button class="btn btn-primary" style="margin-left: 30px" ng-click="menuList()">
+            <span class="glyphicon glyphicon-th-list"></span>菜单列表
+        </button>
+        <button class="btn btn-primary" ng-click="cate()">
+            <span class="glyphicon glyphicon-th-list"></span>分类列表
+        </button>
+        <button class="btn btn-primary" ng-click="addNewCate()">
+            <span class="glyphicon glyphicon-plus"></span>新建分类
+        </button>
+    </div-->
+
+<div class="admin-main" ng-controller="MenuCtrl">
+    <fieldset class="layui-elem-field">
+        <legend>菜单管理</legend>
+    
+    <blockquote class="layui-elem-quote">
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="menuList()">
+            <i class="layui-icon">&#xe615;</i> 菜单列表
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="cate()">
+            <i class="layui-icon">&#xe615;</i> 分类列表
+        </a>
+        <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="addNewCate()">
+            <i class="layui-icon">&#xe608;</i> 新建分类
+        </a>
+    </blockquote>
+
+    <!--菜单列表开始-->
+    <div class="layui-field-box" ng-show="showMode==0">
+        <div ng-repeat="row in rowCollection">
+        {{row.cate}}
+        <table st-table="displayedCollection" st-safe-src="rowCollection" class="site-table table-hover" style="font-size: 12px">
+            <thead>
+            <tr>
+                <th width="24%" style="text-align:center">菜名</th>
+                <th width="30%" style="text-align:center">描述</th>
+                <th width="14%" st-sort="originPrice" style="text-align:center">价格</th>
+                <!--th width="20%" style="text-align:center">分类</th-->
+                <th width="20%" style="text-align:center">查看详情</th>
+                <th width="12%" style="text-align:center">删除产品</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="food in row.foodList">
+                <td width="24%">{{food.foodName}}</td>
+                <td width="30%">{{food.foodDescription}}</td>
+                <td width="14%">{{food.foodPrice}}</td>
+                <!--td width="20%">{{food.cateId}}</td-->
+                <td width="20%">
+                    <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-click="editFood(food)">
+                        <span class="glyphicon glyphicon-search"></span> 详情&修改
+                    </button>
+                </td>
+                <td width="12%">
+                    <button class="layui-btn" style="width: 70px; padding: 5px 5px" ng-click="deleteFood(food)">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <!--菜单列表结束-->
+
+    <!--菜单基本信息开始-->
+    <div class="lty-add-product" ng-show="showMode==1||showMode==2">
+        <h4 class="lty-product-separator" style="padding-left: 0px">基本信息</h4>
+        <!--table class="table table-bordered" style="margin-bottom: 23px">
+            <tr>
+                <td width="25%">
+                    菜名<span class="explain" style="padding-left: 10px">限15字</span>
+                    <input type="text" class="form-control" ng-model="showFood.foodName">
+                </td>
+                <td width="25%">
+                    原价<span class="explain" style="padding-left: 10px">请包含服务费</span>
+                    <input class="form-control" type="number" min="0" ng-model="showFood.foodPrice">
+                </td>
+                <td width="25%">
+                    描述<span class="explain" style="padding-left: 10px">限30字</span>
+                    <input type="text" class="form-control" ng-model="showFood.foodDescription">
+                </td>
+                <td width="25%">
+                    分类<span class="explain" style="padding-left: 10px"></span>
+                    <select ng-model="showFood.cateId">
+                    <option ng-repeat="x in cateCollection" value="{{x.cateId}}">{{x.cateName}}</option>
+                    </select>
+                </td>
+            </tr>
+        </table-->
+        <div class="layui-form-item restaurant_setting"> 
+            <div class="layui-inline">
+                <p>菜名</p>
+                <input type="text" class="layui-input" ng-model="showFood.foodName">
+           </div>
+
+           <div class="layui-inline">
+                <p>原价</p>
+                <input type="number" class="layui-input" ng-model="showFood.foodPrice">
+           </div>
+
+           <div class="layui-inline">
+                <p>描述</p>
+                <input type="text" class="layui-input" ng-model="showFood.foodDescription">
+           </div>
+
+            <div class="layui-inline">
+                <p>分类</p>
+                <select class="form-control" ng-model="showFood.cateId">
+                    <option ng-repeat="x in cateCollection" value="{{x.cateId}}">{{x.cateName}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="lty-add-product" ng-show="showMode==1||showMode==2">
+        <h4 class="lty-product-separator" style="padding-left: 0px">图片管理</h4>
+
+        <div ng-show="menuPicShow == 1">
+            <div class="cropAreaProduct">
+                <img-crop image="menuImage" area-type="rectangle" aspect-ratio="1" result-image-size='{w: 600,h: 600}' result-image='menuCroppedPic'
+                ></img-crop>
+
+            </div>
+
+            <!--div class="croppedPic"><img ng-src="{{menuCroppedPic}}" class="per100 lty-menu-pic"/></div-->
+            <div class="image-upload" style="margin-left: 0px">
+                <a href="javascript:;" class="file" ng-click="uploadPic()" style="margin-left: 0px">
+                    <span class="glyphicon glyphicon-saved"></span>上传图片
+                </a>
+                <a href="javascript:;" class="file-cancel" ng-click="removePic()">
+                    <span class="glyphicon glyphicon-remove"></span>取消上传
+                </a>
+            </div>
+        </div>
+
+        <div ng-show="menuPicShow == 0">
+            <div>
+                <img src="{{showFood.pUrl}}" class="per100 lty-menu-pic"">
+            </div>
+            <a href="javascript:;" class="file" style="margin-right: 10px; margin-left: 0px">
+                <span class="glyphicon glyphicon-picture"></span>编辑图片
+                <input type="file" accept="image/*" id="fileInput">
+            </a>
+        </div> 
+    </div>
+
+    <div class="save-btn">
+        <button class="layui-btn" ng-click="updateMenu(showFood)" ng-show="showMode==1" style="margin-bottom: 15px">
+               <span class="glyphicon glyphicon-ok"></span>保存菜单
+        </button>
+    </div>
+
+    <div class="save-btn">
+        <button class="layui-btn" ng-click="submitNewMenu(showFood)" ng-show="showMode==2" style="margin-bottom: 15px">
+            <span class="glyphicon glyphicon-ok"></span>提交新建菜单
+        </button>
+    </div>
+    <!-- 菜单基本信息结束 -->
+
+    <!-- 分类列表开始 -->
+    <div class="layui-field-box" ng-show="showMode==3">
+        <div>
+        <table st-table="displayedCollection" st-safe-src="cateCollection" class="site-table table-hover" style="font-size: 12px">
+            <thead>
+            <tr>
+                <th width="20%" style="text-align:center">分类名</th>
+                <th width="20%" style="text-align:center">新增菜品</th>
+                <th width="20%" style="text-align:center">查看详情</th>
+                <th width="20%" style="text-align:center">删除</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="cate in cateCollection">
+                <td width="20%">
+                    <div ng-show="cate.isEditCate==0">
+                        {{cate.cateName}}
+                    </div>
+                    <div ng-show="cate.isEditCate==1">
+                        <input type="text" class="form-control" ng-model="cate.cateName">
+                    </div>
+                </td>
+                <td width="20%">
+                    <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-click="addNewMenu(cate)">
+                        <span class="glyphicon glyphicon-plus"></span> 新增菜品
+                    </button>
+                </td>
+                <td width="20%">
+                    <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-show="cate.isEditCate==0" ng-click="editCate(cate)">
+                        <span class="glyphicon glyphicon-search"></span> 详情&修改
+                    </button>
+                    <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-show="cate.isEditCate==1" ng-click="updateCate(cate)">
+                        <span class="glyphicon glyphicon-ok"></span> 保存修改
+                    </button>
+                </td>
+                <td width="20%">
+                    <button class="layui-btn" style="width: 70px; padding: 5px 5px" ng-click="deleteCate(cate)">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <!--分类列表结束 -->
+    </fieldset>
+</div>
+
+<!--新建分类对话框-->
+<script type="text/ng-template" id="addNewCate.html">
+    <label>请输入分类名</label>
+    <input type="text" id="newCateName"></input>
+
+    <div class="message" style="float: right">
+        <a class="layui-btn" ng-click="submitNewCate()">提交</a>
+    </div>
+</script>

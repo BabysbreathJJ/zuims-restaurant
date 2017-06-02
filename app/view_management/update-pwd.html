@@ -1,8 +1,25 @@
 <div class="changePwd" ng-controller="PwdCtrl">
-    旧密码:<input type="password" class="pwd-input" ng-model="oldPwd"/>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>登录密码修改</legend>
+    </fieldset>
+        <div class="layui-inline">
+            <label>旧密码</label>
+            <input type="password" class="layui-input" ng-model="oldPwd" style="width: 100px">
+        </div>
+        <div class="layui-inline">
+            <label>新密码</label>
+            <input type="password" class="layui-input" ng-model="newPwd" style="width: 100px">
+        </div>
+        <div class="layui-inline">
+            <label>重复输入新密码</label>
+            <input type="password" class="layui-input" ng-model="newPwdRepeat" style="width: 100px">
+    </div>
+
+
+    <!--input type="password" class="pwd-input" ng-model="oldPwd"/>
     新密码:<input type="password" class="pwd-input" ng-model="newPwd"/>
-    重复新密码:<input type="password" class="pwd-input" ng-model="newPwdRepeat"/>
-    <button style="margin-left: 10px" class="btn btn-primary" ng-click="updatePwd()"><span
+    重复新密码:<input type="password" class="pwd-input" ng-model="newPwdRepeat"/-->
+    <button style="margin-left: 10px" class="layui-btn" ng-click="updatePwd()"><span
             class="glyphicon glyphicon-ok"></span>修改密码
     </button>
 </div>

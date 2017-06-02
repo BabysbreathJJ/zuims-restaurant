@@ -1,4 +1,7 @@
-<div class="handle-image" ng-controller="ImageRecommendCtrl">
+<div ng-controller="ImageRecommendCtrl">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>餐厅图文信息</legend>
+    </fieldset>
 
     <!--div id="recommend-pic">
         平台首页展示餐厅照片
@@ -46,7 +49,7 @@
         <div class="clearfix"></div>
     </div>
 
-    <div id="list-pic" ng-controller="ImageListCtrl">
+    <!--div id="list-pic" ng-controller="ImageListCtrl">
         列表展示图片
         <div><span class="explain">建议:图片分辨率:640*420,横图</span></div>
 
@@ -91,9 +94,6 @@
     </div!-->
 
     <div id="detail-pic" ng-controller="ImageDetailCtrl">
-        餐厅详情图文
-        <div><span class="explain">建议:图片分辨率:640*420,横图</span></div>
-
         <div ng-show="detailPicShow">
             <div class="cropAreaDetail">
                 <img-crop image="myDetailImage" area-type="rectangle" aspect-ratio="1.52380952"
@@ -117,7 +117,7 @@
                 </a>
             </div>
         </div>
-        <div class="image-upload" ng-hide="detailPicShow">
+        <!--div class="image-upload" ng-hide="detailPicShow">
             <a href="javascript:;" class="file lty-tag-a"><span
                     class="glyphicon glyphicon-picture"></span>选择图片
                 <input type="file" accept="image/*" name="detail" id="fileInputDetail" >
@@ -130,6 +130,56 @@
             <a href="javascript:;" class="file btn-primary lty-pic-preview lty-tag-a" ng-click="previewDetail()" >
                 <span class="glyphicon glyphicon-search"></span>餐厅详细图文信息预览
             </a>
+        </div-->
+        <!--div class="lty-modify-pic-block" ng-hide="detailPicShow"-->
+        <div ng-hide="detailPicShow">
+            <!--div class="save-btn">
+                <a href="javascript:;" class="file btn-primary lty-tag-a" autofocus="false" ng-click="setDetail()">
+                <span class="glyphicon glyphicon-ok" autofocus="false"></span>保存修改
+                </a>
+            </div>
+            <div style="margin:0 auto">
+                <div ng-repeat="detail in ltyAllPic.DetailPic" style="float:left;display: inline-block">
+                    <img src="{{detail.picname}}" class="per100 lty-detail-pic" change-pic>
+                    <div class="lty-mlra">
+                        <a href="javascript:;" class="file-cancel" ng-click="deletePic(detail)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </div>
+                </div>
+                <div style="float:left" ng-show="uploadShow">
+                    <img src="" class="per100 lty-detail-pic" change-pic>
+                    <div class="lty-mlra">
+                        <a href="javascript:;" class="file lty-tag-a">
+                            <span class="glyphicon glyphicon-picture"></span>
+                            <input type="file" accept="image/*" name="detail" id="fileInputDetail">
+                        </a>
+                    </div>
+                </div>  
+            </div-->
+            <div class="save-btn">
+                <a href="javascript:;" class="layui-btn" autofocus="false" ng-click="setDetail()">
+                <span class="glyphicon glyphicon-ok" autofocus="false"></span>保存修改
+                </a>
+            </div>
+
+            <div class="restaurant_pic">
+                <ul>
+                    <li ng-repeat="detail in ltyAllPic.DetailPic"> 
+                        <img src="{{detail.picname}}" width="160" height="105">
+                        <input type="text" class="layui-input" style="width: 110px" ng-model="detail.introduction">
+                        <button class="layui-btn layui-btn-primary layui-btn-small" style="float:right; margin-top:2px;" ng-click="deletePic(detail)">
+                            <i class="layui-icon"></i>
+                        </button>
+                    </li>
+                    <li>
+                        <div class="div1" ng-show="uploadShow">
+                            <div class="div2"></div>
+                            <input type="file" accept="image/*" name="detail" id="fileInputDetail" class="inputstyle">
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -251,7 +301,7 @@
     <div>
         <a class="lty-modify-pic-word">展示图片</a>
     </div>
-    <div class="lty-modify-pic-block" sv-root>
+    <!--div class="lty-modify-pic-block" sv-root>
         <div sv-part="ltyAllPic.ShowPic">
             <div ng-repeat="show in ltyAllPic.ShowPic" style="display: inline-block" sv-element>
                 <img src="{{show.picname}}" class="per100 lty-detail-pic">
@@ -265,16 +315,24 @@
     </div>
     <div>
         <a class="lty-modify-pic-word">已上传图片</a>
-    </div>
-    <div class="lty-modify-pic-block" >
+    </div-->
+
+    <div class="lty-modify-pic-block">
         <div ng-repeat="detail in ltyAllPic.DetailPic" style="display: inline-block" >
             <img src="{{detail.picname}}" class="per100 lty-detail-pic" change-pic>
             <div class="lty-mlra">
-                <a href="javascript:;" class="lty-btn" ng-click="showPic(detail)">
+                <!--a href="javascript:;" class="lty-btn" ng-click="showPic(detail)">
                     展示
-                </a>
-                <a href="javascript:;" class="lty-btn" ng-click="deletePic(detail)">
+                </a-->
+                <a href="javascript:;" class="lty-btn" ng-show="detail.pictype!=0" ng-click="deletePic(detail)">
                     删除
+                </a>
+                <a href="javascript:;" class="lty-btn" ng-show="detail.pictype==0" ng-click="deletePic(detail)">
+                    上传
+                </a>
+                <a href="javascript:;" class="file" style="margin-right: 10px; margin-left: 0px">
+                    <span class="glyphicon glyphicon-picture"></span>编辑图片
+                    <input type="file" accept="image/*" onchange="angular.element(this).scope().HandleFileSelect(this.files)">
                 </a>
             </div>
         </div>
