@@ -163,22 +163,24 @@
                 </a>
             </div>
 
-            <div class="restaurant_pic">
-                <ul>
-                    <li ng-repeat="detail in ltyAllPic.DetailPic"> 
-                        <img src="{{detail.picname}}" width="160" height="105">
-                        <input type="text" class="layui-input" style="width: 110px" ng-model="detail.introduction">
-                        <button class="layui-btn layui-btn-primary layui-btn-small" style="float:right; margin-top:2px;" ng-click="deletePic(detail)">
-                            <i class="layui-icon"></i>
-                        </button>
-                    </li>
-                    <li>
-                        <div class="div1" ng-show="uploadShow">
-                            <div class="div2"></div>
-                            <input type="file" accept="image/*" name="detail" id="fileInputDetail" class="inputstyle">
-                        </div>
-                    </li>
-                </ul>
+            <div class="restaurant_pic" sv-root>
+                <div sv-part="ltyAllPic.DetailPic">
+                    <ul>
+                        <li ng-repeat="detail in ltyAllPic.DetailPic" sv-element>
+                            <img src="{{detail.picname}}" width="160" height="105">
+                            <input type="text" class="layui-input" style="width: 110px" ng-model="detail.introduction">
+                            <button class="layui-btn layui-btn-primary layui-btn-small" style="float:right; margin-top:2px;" ng-click="deletePic(detail)">
+                                <i class="layui-icon"></i>
+                            </button>
+                        </li>
+                        <li>
+                            <div class="div1" ng-show="uploadShow">
+                                <div class="div2"></div>
+                                <input type="file" accept="image/*" name="detail" id="fileInputDetail" class="inputstyle">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
