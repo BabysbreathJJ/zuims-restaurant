@@ -10,7 +10,8 @@ angular.module('myApp', [
         'myApp.basicInfo',
         'myApp.productManagement',
         'myApp.menuManagement',
-        'myApp.activityManagement'
+        'myApp.activityManagement',
+        'myApp.voucherManagement'
     ])
 
     //.constant('BaseUrl', 'https://api.bestfood.cc/')
