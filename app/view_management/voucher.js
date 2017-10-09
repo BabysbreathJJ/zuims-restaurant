@@ -238,18 +238,18 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 $scope.submitVoucherError.info="请选择绑定套餐";
                 return;
             }
-            if($scope.newDateCollection.startYear>$scope.newDateCollection.endYear){
+            if(+$scope.newDateCollection.startYear>+$scope.newDateCollection.endYear){
                 $scope.updateVoucherError.flag=true;
                 $scope.updateVoucherError.info="请确定结束日期是否合理";
                 return;
             }
-            if(($scope.newDateCollection.startYear==$scope.newDateCollection.endYear)&&($scope.newDateCollection.startMonth>$scope.newDateCollection.endMonth)){
+            if(($scope.newDateCollection.startYear==$scope.newDateCollection.endYear)&&(+$scope.newDateCollection.startMonth>+$scope.newDateCollection.endMonth)){
                 $scope.updateVoucherError.flag=true;
                 $scope.updateVoucherError.info="请确定结束日期是否合理";
                 return;
             }
             if(($scope.newDateCollection.startYear==$scope.newDateCollection.endYear) &&($scope.newDateCollection.startMonth==$scope.newDateCollection.endMonth)
-                &&($scope.newDateCollection.startDay>=$scope.newDateCollection.endDay)){
+                &&(+$scope.newDateCollection.startDay>=+$scope.newDateCollection.endDay)){
                 $scope.updateVoucherError.flag=true;
                 $scope.updateVoucherError.info="请确定结束日期是否合理";
                 return;
@@ -260,16 +260,16 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
 
 
             //日期规范化
-           if($scope.newDateCollection["startMonth"]>0 && $scope.newDateCollection["startMonth"]<10){
+           if(+$scope.newDateCollection["startMonth"]>0 && +$scope.newDateCollection["startMonth"]<10){
                $scope.newDateCollection["startMonth"]="0"+$scope.newDateCollection["startMonth"];
            }
-            if($scope.newDateCollection["startDay"]>0 && $scope.newDateCollection["startDay"]<10){
+            if(+$scope.newDateCollection["startDay"]>0 && +$scope.newDateCollection["startDay"]<10){
                 $scope.newDateCollection["startDay"]="0"+$scope.newDateCollection["startDay"];
             }
-            if($scope.newDateCollection["endMonth"]>0 && $scope.newDateCollection["endMonth"]<10){
+            if(+$scope.newDateCollection["endMonth"]>0 && +$scope.newDateCollection["endMonth"]<10){
                 $scope.newDateCollection["endMonth"]="0"+$scope.newDateCollection["endMonth"];
             }
-            if($scope.newDateCollection["endDay"]>0 && $scope.newDateCollection["endDay"]<10){
+            if(+$scope.newDateCollection["endDay"]>0 && +$scope.newDateCollection["endDay"]<10){
                 $scope.newDateCollection["endDay"]="0"+$scope.newDateCollection["endDay"];
             }
             $scope.voucherToHandle["startDate"]=$scope.newDateCollection["startYear"]+"-"+$scope.newDateCollection["startMonth"]
@@ -379,18 +379,18 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 $scope.submitVoucherError.info="请选择绑定套餐";
                 return;
             }
-            if($scope.dateCollection.startYear>$scope.dateCollection.endYear){
+            if(+$scope.dateCollection.startYear>+$scope.dateCollection.endYear){
                 $scope.submitVoucherError.flag=true;
                 $scope.submitVoucherError.info="请确定结束日期是否合理";
                 return;
             }
-            if(($scope.dateCollection.startYear==$scope.dateCollection.endYear)&&($scope.dateCollection.startMonth>$scope.dateCollection.endMonth)){
+            if(($scope.dateCollection.startYear==$scope.dateCollection.endYear)&&(+$scope.dateCollection.startMonth>+$scope.dateCollection.endMonth)){
                 $scope.submitVoucherError.flag=true;
                 $scope.submitVoucherError.info="请确定结束日期是否合理";
                 return;
             }
             if(($scope.dateCollection.startYear==$scope.dateCollection.endYear) &&($scope.dateCollection.startMonth==$scope.dateCollection.endMonth)
-                &&($scope.dateCollection.startDay>=$scope.dateCollection.endDay)){
+                &&(+$scope.dateCollection.startDay>=+$scope.dateCollection.endDay)){
                 $scope.submitVoucherError.flag=true;
                 $scope.submitVoucherError.info="请确定结束日期是否合理";
                 return;
@@ -400,16 +400,16 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
 
 
             //规范日期格式
-            if($scope.dateCollection["startMonth"]>0 &&$scope.dateCollection["startMonth"]<10){
+            if(+$scope.dateCollection["startMonth"]>0 && +$scope.dateCollection["startMonth"]<10){
                 $scope.dateCollection["startMonth"]="0"+$scope.dateCollection["startMonth"];
             }
-            if($scope.dateCollection["startDay"]>0 &&$scope.dateCollection["startDay"]<10){
+            if(+$scope.dateCollection["startDay"]>0 && +$scope.dateCollection["startDay"]<10){
                 $scope.dateCollection["startDay"]="0"+$scope.dateCollection["startDay"];
             }
-            if($scope.dateCollection["endMonth"]>0 &&$scope.dateCollection["endMonth"]<10){
+            if(+$scope.dateCollection["endMonth"]>0 && +$scope.dateCollection["endMonth"]<10){
                 $scope.dateCollection["endMonth"]="0"+$scope.dateCollection["endMonth"];
             }
-            if($scope.dateCollection["endDay"]>0 &&$scope.dateCollection["endDay"]<10){
+            if(+$scope.dateCollection["endDay"]>0 && +$scope.dateCollection["endDay"]<10){
                 $scope.dateCollection["endDay"]="0"+$scope.dateCollection["endDay"];
             }
             $scope.voucherToHandle["startDate"]=$scope.dateCollection["startYear"]+"-"+$scope.dateCollection["startMonth"]+
