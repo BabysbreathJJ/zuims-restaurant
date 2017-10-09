@@ -243,12 +243,12 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 $scope.updateVoucherError.info="请确定结束日期是否合理";
                 return;
             }
-            if(($scope.newDateCollection.startYear=$scope.newDateCollection.endYear)&&($scope.newDateCollection.startMonth>$scope.newDateCollection.endMonth)){
+            if(($scope.newDateCollection.startYear==$scope.newDateCollection.endYear)&&($scope.newDateCollection.startMonth>$scope.newDateCollection.endMonth)){
                 $scope.updateVoucherError.flag=true;
                 $scope.updateVoucherError.info="请确定结束日期是否合理";
                 return;
             }
-            if(($scope.newDateCollection.startYear=$scope.newDateCollection.endYear) &&($scope.newDateCollection.startMonth=$scope.newDateCollection.endMonth)
+            if(($scope.newDateCollection.startYear==$scope.newDateCollection.endYear) &&($scope.newDateCollection.startMonth==$scope.newDateCollection.endMonth)
                 &&($scope.newDateCollection.startDay>=$scope.newDateCollection.endDay)){
                 $scope.updateVoucherError.flag=true;
                 $scope.updateVoucherError.info="请确定结束日期是否合理";
@@ -384,12 +384,12 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 $scope.submitVoucherError.info="请确定结束日期是否合理";
                 return;
             }
-            if(($scope.dateCollection.startYear=$scope.dateCollection.endYear)&&($scope.dateCollection.startMonth>$scope.dateCollection.endMonth)){
+            if(($scope.dateCollection.startYear==$scope.dateCollection.endYear)&&($scope.dateCollection.startMonth>$scope.dateCollection.endMonth)){
                 $scope.submitVoucherError.flag=true;
                 $scope.submitVoucherError.info="请确定结束日期是否合理";
                 return;
             }
-            if(($scope.dateCollection.startYear=$scope.dateCollection.endYear) &&($scope.dateCollection.startMonth=$scope.dateCollection.endMonth)
+            if(($scope.dateCollection.startYear==$scope.dateCollection.endYear) &&($scope.dateCollection.startMonth==$scope.dateCollection.endMonth)
                 &&($scope.dateCollection.startDay>=$scope.dateCollection.endDay)){
                 $scope.submitVoucherError.flag=true;
                 $scope.submitVoucherError.info="请确定结束日期是否合理";
