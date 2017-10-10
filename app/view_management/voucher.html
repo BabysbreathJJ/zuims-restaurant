@@ -193,7 +193,7 @@
             var year = parseInt(this.selYear.value);
             var month = parseInt(this.selMonth.value);
             var daysInMonth = DateSelector.DaysInMonth(year, month);
-            this.selDay.options.length = 0;
+            this.selDay.options.length = 1;
             for (var i = 1; i <= daysInMonth; i++) {
                 var op = window.document.createElement("OPTION");
                 op.value = i;
@@ -226,7 +226,7 @@
             var selYear = window.document.getElementById("startYear");
             var selMonth = window.document.getElementById("startMonth");
             var selDay = window.document.getElementById("startDay");
-            new DateSelector(selYear, selMonth, selDay, 2017, 01, 01);
+            new DateSelector(selYear, selMonth, selDay, 2017, 1, 1);
         </script>
     </div>
     <div>
@@ -306,7 +306,7 @@
                     var selYear = window.document.getElementById("newStartYear");
                     var selMonth = window.document.getElementById("newStartMonth");
                     var selDay = window.document.getElementById("newStartDay");
-                    new DateSelector(selYear, selMonth, selDay, 2017, 01, 01);
+                    new DateSelector(selYear, selMonth, selDay, 2017, 1, 1);
                     </script>
              </div>
             </div>
@@ -322,7 +322,7 @@
                         var selYear = window.document.getElementById("newEndYear");
                         var selMonth = window.document.getElementById("newEndMonth");
                         var selDay = window.document.getElementById("newEndDay");
-                        new DateSelector(selYear, selMonth, selDay, 2017, 01, 01);
+                        new DateSelector(selYear, selMonth, selDay, 2017, 1, 1);
                     </script>
                 </div>
             </div>
