@@ -78,7 +78,42 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
                 headers: {'Content-Type': 'application/json;charset=UTF-8'},
                 crossDomain: true
             });
-        }
+        };
+
+        factory.addActivityToPro = function(activityToProInfo) {
+            return $http({
+                method: "POST",
+                url: BaseUrl + merchantPort + '/activity/addPro',
+                data: JSON.stringify(activityToProInfo),
+                headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                crossDomain: true
+            });
+        };
+
+        factory.deleteActivityToPro = function(id) {
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/activity/deletePro?id=" + id,
+                crossDomain: true
+            });
+
+        };
+
+        factory.getProByActivity = function(activityId){
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/activity/getProByActivity?activityId=" + activityId,
+                crossDomain: true
+            });
+        };
+
+        factory.getProduct = function(restaurantId){
+            return $http({
+                method: "GET",
+                url: BaseUrl + merchantPort + "/product?restaurantId=" + restaurantId,
+                crossDomain: true
+            });
+        };
 
         return factory;
     }])
@@ -86,7 +121,10 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
 
         $scope.allActivityCollection = [];
         $scope.myActivityCollection = [];
+        $scope.ProCollection = [];
         $scope.showMode = 0;
+        $scope.isShow = 0;
+        var activityId = -1;
 
         function getAllActivity(){
             ActivityService.getAllActivity()
@@ -174,7 +212,7 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
                 templateUrl: 'add_activity.html',
                 scope: $scope
             });
-        }
+        };
 
         $scope.submitActivity = function() {
             ActivityService.addActivity($scope.activityToHandle)
@@ -183,7 +221,7 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
                     getMyActivity();
                     ngDialog.close();
                 })
-        }
+        };
 
 
         $scope.deleteActivity = function(row) {
@@ -192,6 +230,71 @@ angular.module('myApp.activityManagement', ['ngDialog', 'moment-picker', 'ngImgC
                     alert("删除成功！");
                     getMyActivity();
                 })
+        };
+
+        $scope.proToActivity = function(row) {
+            activityId = row.id;
+            ActivityService.getProByActivity(row.id)
+                .success(function (data) {
+                    $scope.ProCollection = data;
+                });
+
+            ngDialog.open({
+                templateUrl: 'proToActivity.html',
+                scope: $scope
+            });
+        };
+
+        $scope.deleteProToActivity = function(row) {
+            ActivityService.deleteActivityToPro(row.id)
+                .success(function(data) {
+                    alert("删除成功！");
+                    ActivityService.getProByActivity(row.activityId)
+                        .success(function (data) {
+                            $scope.ProCollection = data;
+                        });
+                })
+        };
+
+        $scope.showAddPro = function() {
+
+            $scope.ProToHandle = {
+                "activityId": activityId,
+                "productId": ""
+            };
+
+            $scope.isShow = 1;
+            ActivityService.getProduct($.cookie("restaurantId"))
+                .success(function (product) {
+                    var proList = $scope.ProCollection;
+                    for (var i = 0; i < proList.length; i++) {
+                        for (var j = 0; j < product.length; j++) {
+                            if(product[j].productId == proList[i].productId){
+                                product.splice(j, 1);
+                                j = j-1;
+                            }
+                        }
+                    }
+                    $scope.productCollection = product;
+                });
+        };
+
+        $scope.addPro = function () {
+
+            if ($scope.ProToHandle.productId != "") {
+                ActivityService.addActivityToPro($scope.ProToHandle)
+                    .success(function () {
+                        alert("添加成功！");
+                        $scope.isShow = 0;
+                        ActivityService.getProByActivity(activityId)
+                            .success(function (data) {
+                                $scope.ProCollection = data;
+                            });
+                    });
+            }
+            else {
+                $scope.isShow = 0;
+            }
         }
 
     }]);

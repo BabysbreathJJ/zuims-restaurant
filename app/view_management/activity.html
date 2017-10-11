@@ -63,24 +63,30 @@
         <table st-table="displayedCollection" st-safe-src="myActivityCollection" class="site-table table-hover" style="font-size: 12px">
             <thead>
             <tr>
-                <th width="20%" style="text-align:center">活动名称</th>
-                <th width="20%" style="text-align:center">活动日期</th>
-                <th width="20%" style="text-align:center">活动内容</th>
-                <th width="20%" style="text-align:center">查看详情</th>
-                <th width="20%" style="text-align:center">删除活动</th>
+                <th width="16%" style="text-align:center">活动名称</th>
+                <th width="16%" style="text-align:center">活动日期</th>
+                <th width="16%" style="text-align:center">活动内容</th>
+                <th width="16%" style="text-align:center">查看详情</th>
+                <th width="16%" style="text-align:center">参与产品</th>
+                <th width="16%" style="text-align:center">删除活动</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="row in myActivityCollection">
-                <td width="20%">{{row.name}}</td>
-                <td width="20%">{{row.date}}</td>
-                <td width="20%">{{row.content}}</td>
-                <td width="20%">
+                <td width="16%">{{row.name}}</td>
+                <td width="16%">{{row.date}}</td>
+                <td width="16%">{{row.content}}</td>
+                <td width="16%">
                     <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-click="editActivity(row)">
                         <span class="glyphicon glyphicon-search"></span> 修改
                     </button>
                 </td>
-                <td width="20%">
+                <td width="16%">
+                    <button class="layui-btn" style="width: 100px; padding: 5px 5px" ng-click="proToActivity(row)">
+                        <span class="glyphicon glyphicon-search"></span> 修改
+                    </button>
+                </td>
+                <td width="16%">
                     <button class="layui-btn" style="width: 70px; padding: 5px 5px" ng-click="deleteActivity(row)">
                         <span class="glyphicon glyphicon-trash"></span> 删除
                     </button>
@@ -124,5 +130,55 @@
         <button class="layui-btn" ng-click="updateActivity()">
             <span class="glyphicon glyphicon-ok"></span>保存活动
         </button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="proToActivity.html">
+    <div class="layui-field-box">
+        <table st-table="displayedCollection" st-safe-src="ProCollection" class="site-table table-hover" style="font-size: 12px">
+            <thead>
+            <tr>
+                <th width="50%" style="text-align:center">产品名称</th>
+                <th width="50%" style="text-align:center">删除</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in ProCollection">
+                <td width="16%">{{row.productName}}</td>
+                <td width="16%">
+                    <button class="layui-btn" style="width: 70px; padding: 5px 5px" ng-click="deleteProToActivity(row)">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="layui-btn" style="width: 70px; padding: 5px 5px" ng-click="showAddPro()" ng-show="isShow==0">
+             添加活动
+        </button>
+
+        <div ng-show="isShow==1">
+            <h4 class="lty-product-separator" style="padding-left: 0px">绑定套餐选择</h4>
+            <table st-table="displayedCollection" st-safe-src="productCollection"  class="site-table table-hover"  style="font-size:12px">
+                <thead>
+                <tr>
+                    <th width="50%" style="text-align: center">套餐名称</th>
+                    <th width="50%" style="text-align: center">选择</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in productCollection">
+                    <td width="50%" >{{row.productName}}</td>
+                    <td width="50%" ><input type="radio"  value="{{row.productId}}"  ng-model="ProToHandle.productId" required>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="save-btn">
+                <button class="layui-btn" ng-click="addPro()">
+                    <span class="glyphicon glyphicon-ok"></span>确定
+                </button>
+            </div>
+        </div>
     </div>
 </script>
