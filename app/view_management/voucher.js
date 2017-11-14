@@ -1,4 +1,4 @@
-angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCrop', 'angular-sortable-view'])
+angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCrop', 'angular-sortable-view', 'smart-table'])
     .directive('changePic', function () {
         return {
             restrict: 'A',
@@ -126,7 +126,22 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
             VoucherService.getOrder($.cookie("restaurantId"))
                 .success(function (order) {
                     console.log(order);
-                    $scope.orderVoucherCollection=order;
+                    // let o = [];
+                    //
+                    // let myDate = new Date();
+                    //
+                    // for (let i = 0 ; i < order.length; i++) {
+                    //     if (order[i].orderTime.substr(0, 10) === myDate.getFullYear()+"-"+myDate.getMonth()+"-"+myDate.getDay()) {
+                    //         o.push(order[i]);
+                    //         order.splice(i, 1);
+                    //     }
+                    // }
+                    //
+                    // for (let j = 0; j < order.length; j++) {
+                    //     o.push(order[j]);
+                    // }
+
+                    $scope.orderVoucherCollection = order;
                 });
         }
 

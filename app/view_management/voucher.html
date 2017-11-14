@@ -96,19 +96,38 @@
     <table st-table="displayedCollection" st-safe-src="orderVoucherCollection" class="site-table table-hover" style="font-size:12px">
         <thead>
         <tr>
-            <th width="30%" style="text-align: center">优惠券名称</th>
-            <th width="30%" style="text-align: center">宾馆名称</th>
-            <th width="40%" style="text-align: center">预定时间</th>
+            <th width="25%" style="text-align: center">预定手机号</th>
+            <th width="25%" style="text-align: center">优惠券名称</th>
+            <th width="25%" style="text-align: center">宾馆名称</th>
+            <th width="25%" st-sort="orderTime" st-sort-default="reverse" style="text-align: center">预定时间</th>
+        </tr>
+        <tr>
+            <th colspan="1"><input st-search="phoneId" class="form-control search-input" placeholder="手机号" type="text"/>
+            </th>
+            <th colspan="2">
+            </th>
+            <th colspan="1"><input st-search="orderTime" class="form-control search-input" placeholder="XXXX-XX-XX"
+                                   type="text"/>
+            </th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="row in orderVoucherCollection">
-            <td width="30%" >{{row.content}}</td>
-            <td width="30%" >{{row.hotelName}}</td>
-            <td width="40%" >{{row.orderTime}}</td>
+        <tr ng-repeat="row in displayedCollection">
+            <td width="25%" >{{row.phoneId}}</td>
+            <td width="25%" >{{row.content}}</td>
+            <td width="25%" >{{row.hotelName}}</td>
+            <td width="25%" >{{row.orderTime}}</td>
 
         </tr>
         </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="9" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </div>
      <!--客户电子券订单结束-->
