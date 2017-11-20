@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('myApp.basicInfo', [])
+angular.module('myApp.basicInfo', ['monospaced.qrcode',])
     .factory('BasicInfoService', ['$http', 'BaseUrl', 'merchantPort', 'managementPort', function ($http, BaseUrl, merchantPort, managementPort) {
         var restaurantBaseUrl = BaseUrl + merchantPort;
 
@@ -67,6 +67,10 @@ angular.module('myApp.basicInfo', [])
 
     }])
     .controller('BasicInfoCtrl', function ($scope, BasicInfoService) {
+        // $scope.codeUrl = "http://123.206.181.47:8002/details.html?id="+$.cookie("restaurantId");
+        // $scope.codeHref = "http://123.206.181.47:8002/details.html?id="+$.cookie("restaurantId");
+        $scope.codeUrl = "https://ka.bestfood.cc/details.html?id="+$.cookie("restaurantId");
+        $scope.codeHref = "https://ka.bestfood.cc/details.html?id="+$.cookie("restaurantId");
         $scope.saveBasicInfo = function () {
             BasicInfoService.updateBasicInfo($scope.basicInfo)
                 .success(function (data) {

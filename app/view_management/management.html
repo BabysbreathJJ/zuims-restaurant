@@ -49,6 +49,9 @@
         <li class="layui-nav-item" ng-click="goto('activity-management')">
             <a>活动</a>
         </li>
+        <li class="layui-nav-item" ng-click="goto('voucher-management')">
+            <a>电子券</a>
+        </li>
         <li class="layui-nav-item" ng-click="goto('data-statistics')">
             <a>统计</a>
         </li>
@@ -148,6 +151,15 @@
 
         </div>
         <!-- 活动管理结束 -->
+
+        <!--卡券管理开始-->
+        <div id="voucher-management" ng-controller="VoucherCtrl" class="right-bg">
+            <!--h3 class="full-header"><span>活动管理</span></h3-->
+
+            <div ng-include="'view_management/voucher.html'"></div>
+
+        </div>
+        <!--卡券管理结束-->
 
         <div id="faq" class="right-bg">
             <!--h3 class="full-header"><span>客服FAQ</span></h3-->

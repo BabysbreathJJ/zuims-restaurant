@@ -1,0 +1,386 @@
+<div class="admin-main">
+    <fieldset class="layui-elem-field">
+        <legend>电子卡券管理</legend>
+
+        <blockquote class="layui-elem-quote">
+            <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="myVoucher()">
+            <i class="layui-icon">&#xe615</i>我的优惠券
+            </a>
+            <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="endVoucher()">
+                <i class="layui-icon">&#xe615</i>过期优惠券
+            </a>
+            <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="orderVoucher()">
+                <i class="layui-icon">&#xe615</i>优惠券订单
+            </a>
+            <a href="javascript:;" class="layui-btn layui-btn-small" ng-click="addVoucher()">
+                <i class="layui-icon">&#xe615</i>新建优惠券
+            </a>
+
+        </blockquote>
+
+        <!--卡券管理-->
+
+        <!--我的优惠卡券-->
+        <div class="layui-field-box" ng-show="showMode==0">
+            <table st-table="displayedCollection" st-safe-src="myVoucherCollection" class="site-table table-hover" style="font-size:12px">
+                <thead>
+                <tr>
+                    <th width="20%" style="text-align: center">优惠券名称</th>
+                    <th width="10%" style="text-align: center">价值</th>
+                    <th width="20%" style="text-align: center">领取限制/每人</th>
+                    <th width="20%" style="text-align: center">有效期</th>
+                    <th width="10%" style="text-align: center">剩余数</th>
+                    <th width="10%" style="text-align: center">编辑</th>
+                    <th width="10%" style="text-align: center">取消</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in myVoucherCollection">
+                    <td width="20%" >{{row.content}}</td>
+                    <td width="10%" >{{row.description}}</td>
+                    <td width="10%" >{{row.maxNumPerUser}}</td>
+                    <td width="20%" >{{row.startDate}}~{{row.endDate}}</td>
+                    <td width="10%" >{{row.leftQuantity}}</td>
+                    <td width="10%">
+                        <button class="layui-btn" style="width:100px;padding: 5px 5px" ng-click="editVoucher(row)">
+                            <span class="glyphicon glyphicon-search"></span>编辑
+                        </button>
+                    </td>
+                    <td width="10%">
+                        <button class="laiyui-btn" style="width:70px; padding: 5px 5px" ng-click="deleteVoucher(row)">
+                            <span class="glyphicon glyphicon-disable"></span>删除
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <!--过期-->
+        <div class="layui-field-box" ng-show="showMode==1">
+            <table st-table="displayedCollection" st-safe-src="endVoucherCollection" class="site-table table-hover" style="font-size:12px">
+                <thead>
+                <tr>
+                    <th width="20%" style="text-align: center">优惠券名称</th>
+                    <th width="20%" style="text-align: center">详情</th>
+                    <th width="20%" style="text-align: center">领取限制/每人</th>
+                    <th width="20%" style="text-align: center">有效期</th>
+                    <th width="20%" style="text-align: center">剩余数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in usedVoucherCollection">
+                    <td width="20%" >{{row.content}}</td>
+                    <td width="20%" >{{row.description}}</td>
+                    <td width="20%" >{{row.maxNumPerUser}}张</td>
+                    <td width="20%" >{{row.startDate}}至{{row.endDate}}</td>
+                    <td width="10%" >{{row.leftQuantity}}</td>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </fieldset>
+</div>
+    <!--卡券管理结束-->
+
+
+
+
+
+     <!--客户电子券订单开始-->
+<div class="layui-field-box" ng-show="showMode==3">
+    <table st-table="displayedCollection" st-safe-src="orderVoucherCollection" class="site-table table-hover" style="font-size:12px">
+        <thead>
+        <tr>
+            <th width="25%" style="text-align: center">预定手机号</th>
+            <th width="25%" style="text-align: center">优惠券名称</th>
+            <th width="25%" style="text-align: center">宾馆名称</th>
+            <th width="25%" st-sort="orderTime" st-sort-default="reverse" style="text-align: center">预定时间</th>
+        </tr>
+        <tr>
+            <th colspan="1"><input st-search="phoneId" class="form-control search-input" placeholder="手机号" type="text"/>
+            </th>
+            <th colspan="2">
+            </th>
+            <th colspan="1"><input st-search="orderTime" class="form-control search-input" placeholder="XXXX-XX-XX"
+                                   type="text"/>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in displayedCollection">
+            <td width="25%" >{{row.phoneId}}</td>
+            <td width="25%" >{{row.content}}</td>
+            <td width="25%" >{{row.hotelName}}</td>
+            <td width="25%" >{{row.orderTime}}</td>
+
+        </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="9" class="text-center">
+                    <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+     <!--客户电子券订单结束-->
+
+<!--新建优惠券-->
+
+
+<div class="layui-form-item restaurant_setting" ng-show="showMode==2">
+    <div class="layui-inline">
+        <p>电子券名称</p>
+        <input class="layui-input" type="text" placeholder="如：299元健身卡" ng-model="voucherToHandle.content" >
+    </div>
+
+    <div class="layui-inline">
+        <p>电子券发放量</p>
+        <input class="layui-input" type="text" ng-model="voucherToHandle.quantity" >
+    </div>
+
+    <div class="layui-inline">
+        <p>详情 &nbsp;</p>
+        <input class="layui-input" type="text" placeholder="如：免费健身一次" ng-model="voucherToHandle.description">
+    </div>
+
+    <div class="layui-inline">
+        <p>每人领取限制</p>
+        <input class="layui-input" type="text" placeholder="如：100张" ng-model="voucherToHandle.maxNumPerUser">
+    </div>
+</div>
+
+
+<div ng-show="showMode==2" class="layui-form-item restaurant_setting">
+    <script>
+        function DateSelector(selYear, selMonth, selDay) {
+            this.selYear = selYear;
+            this.selMonth = selMonth;
+            this.selDay = selDay;
+            this.selYear.Group = this;
+            this.selMonth.Group = this;
+            if (window.document.all != null) // IE
+            {
+                this.selYear.attachEvent("onchange", DateSelector.Onchange);
+                this.selMonth.attachEvent("onchange", DateSelector.Onchange);
+            }
+            else
+            {
+                this.selYear.addEventListener("change", DateSelector.Onchange, false);
+                this.selMonth.addEventListener("change", DateSelector.Onchange, false);
+            }
+            if (arguments.length == 4)
+                this.InitSelector(arguments[3].getFullYear(), arguments[3].getMonth() + 1, arguments[3].getDate());
+            else if (arguments.length == 6)
+                this.InitSelector(arguments[3], arguments[4], arguments[5]);
+            else
+            {
+                var dt = new Date();
+                this.InitSelector(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
+            }
+        }
+        DateSelector.prototype.MinYear =(new Date()).getFullYear() ;
+        DateSelector.prototype.MaxYear =(new Date()).getFullYear()+10;
+        DateSelector.prototype.InitYearSelect = function () {
+            for (var i = this.MaxYear; i >= this.MinYear; i--) {
+                var op = window.document.createElement("OPTION");
+                op.value = i;
+                op.innerHTML = i;
+                this.selYear.appendChild(op);
+            }
+        }
+        DateSelector.prototype.InitMonthSelect = function () {
+            for (var i = 1; i < 13; i++) {
+                var op = window.document.createElement("OPTION");
+                op.value = i;
+                op.innerHTML = i;
+                this.selMonth.appendChild(op);
+            }
+        }
+        DateSelector.DaysInMonth = function (year, month) {
+            var date = new Date(year, month, 0);
+            return date.getDate();
+        }
+        DateSelector.prototype.InitDaySelect = function () {
+            var year = parseInt(this.selYear.value);
+            var month = parseInt(this.selMonth.value);
+            var daysInMonth = DateSelector.DaysInMonth(year, month);
+            this.selDay.options.length = 1;
+            for (var i = 1; i <= daysInMonth; i++) {
+                var op = window.document.createElement("OPTION");
+                op.value = i;
+                op.innerHTML = i;
+                this.selDay.appendChild(op);
+            }
+        }
+
+        DateSelector.Onchange = function (e) {
+            var selector = window.document.all != null ? e.srcElement : e.target;
+            selector.Group.InitDaySelect();
+        }
+        DateSelector.prototype.InitSelector = function (year, month, day) {
+            this.selYear.options.length = 0;
+            this.selMonth.options.length = 0;
+            this.InitYearSelect();
+            this.InitMonthSelect();
+            this.selYear.selectedIndex = this.MaxYear - year;
+            this.selMonth.selectedIndex = month - 1;
+            this.InitDaySelect();
+            this.selDay.selectedIndex = day - 1;
+        }
+    </script>
+    <div>
+        <p>开始日期</p>
+        <select id="startYear" ng-model="dateCollection.startYear"></select>
+        <select id="startMonth" ng-model="dateCollection.startMonth"></select>
+        <select id="startDay" ng-model="dateCollection.startDay"></select>
+        <script type="text/javascript">
+            var selYear = window.document.getElementById("startYear");
+            var selMonth = window.document.getElementById("startMonth");
+            var selDay = window.document.getElementById("startDay");
+            new DateSelector(selYear, selMonth, selDay, 2017, 1, 1);
+        </script>
+    </div>
+    <div>
+        <p>结束日期</p>
+        <select id="endYear" ng-model="dateCollection.endYear"></select>
+        <select id="endMonth" ng-model="dateCollection.endMonth"></select>
+        <select id="endDay" ng-model="dateCollection.endDay"></select>
+        <script type="text/javascript">
+            var selYear = window.document.getElementById("endYear");
+            var selMonth = window.document.getElementById("endMonth");
+            var selDay = window.document.getElementById("endDay");
+            new DateSelector(selYear, selMonth, selDay, 2004, 2, 29);
+        </script>
+    </div>
+</div>
+
+
+
+
+<div ng-show="showMode==2">
+    <h4 class="lty-product-separator" style="padding-left: 0px">绑定套餐选择</h4>
+    <table st-table="displayedCollection" st-safe-src="productCollection"  class="site-table table-hover"  style="font-size:12px">
+        <thead>
+        <tr>
+            <th width="50%" style="text-align: center">套餐名称</th>
+            <th width="50%" style="text-align: center">选择</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in productCollection">
+            <td width="50%" >{{row.productName}}</td>
+            <td width="50%" ><input type="radio"  value="{{row.productId}}"  ng-model="voucherToHandle.productId" required>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px" ng-show="showMode == 2"></div>
+<div style="text-align: center" ng-show="showMode == 2">
+    <li style="color:red; font-size: 15px; margin-bottom: 12px" ng-show="submitVoucherError.flag">
+        {{submitVoucherError.info}}
+    </li>
+    <div class="save-btn">
+        <button type="submit" value="保存" class="layui-btn" ng-click="submitVoucher()" >
+            <span class="glyphicon glyphicon-ok"></span>提交
+        </button>
+    </div>
+</div>
+
+
+<!--新建优惠券结束-->
+
+
+    <!--编辑-->
+    <div ng-show="showMode==4">
+    <div class="contacts-infos">
+        优惠券名称<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="voucherToHandle.content">
+        发放数量<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="voucherToHandle.quantity">
+        详情<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="voucherToHandle.description">
+        领取限制<span class="explain" style="padding-left: 10px"></span>
+        <input class="form-control" type="text" ng-model="voucherToHandle.maxNumPerUser">
+        <div class="layui-form-item restaurant_setting" ng-show="showMode==4">
+            <div class="layui-inline">
+            开始日期：{{voucherToHandle.startDate}}<span class="explain" style="padding-left: 10px"></span>
+            <div>
+                修改开始日期:<span class="explain" style="padding-left: 10px"></span>
+                <select id="newStartYear" ng-model="newDateCollection.startYear"></select>
+                <select id="newStartMonth" ng-model="newDateCollection.startMonth"></select>
+                <select id="newStartDay" ng-model="newDateCollection.startDay"></select>
+                <script type="text/javascript">
+                    var selYear = window.document.getElementById("newStartYear");
+                    var selMonth = window.document.getElementById("newStartMonth");
+                    var selDay = window.document.getElementById("newStartDay");
+                    new DateSelector(selYear, selMonth, selDay, 2017, 1, 1);
+                    </script>
+             </div>
+            </div>
+
+            <div class="layui-inline">
+                结束日期：{{voucherToHandle.endDate}}<span class="explain" style="padding-left: 10px"></span>
+                <div>
+                    修改结束日期:<span class="explain" style="padding-left: 10px"></span>
+                    <select id="newEndYear" ng-model="newDateCollection.endYear"></select>
+                    <select id="newEndMonth" ng-model="newDateCollection.endMonth"></select>
+                    <select id="newEndDay" ng-model="newDateCollection.endDay"></select>
+                    <script type="text/javascript">
+                        var selYear = window.document.getElementById("newEndYear");
+                        var selMonth = window.document.getElementById("newEndMonth");
+                        var selDay = window.document.getElementById("newEndDay");
+                        new DateSelector(selYear, selMonth, selDay, 2017, 1, 1);
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="showMode==4">
+            <h4 class="lty-product-separator" style="padding-left: 0px">绑定套餐选择</h4>
+            <table st-table="displayedCollection" st-safe-src="productCollection"  class="site-table table-hover"  style="font-size:12px">
+                <thead>
+                <tr>
+                    <th width="50%" style="text-align: center">套餐名称</th>
+                    <th width="50%" style="text-align: center">选择</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in productCollection">
+                    <td width="50%" >{{row.productName}}</td>
+                    <td width="50%" ><input type="radio"  value="{{row.productId}}"  ng-model="voucherToHandle.productId" required>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div style="border-bottom: dotted 1px; width: 100%; margin: 15px 0px" ng-show="showMode == 4"></div>
+        <div style="text-align: center" ng-show="showMode == 4">
+            <li style="color:red; font-size: 15px; margin-bottom: 12px" ng-show="updateVoucherError.flag">
+                {{updateVoucherError.info}}
+            </li>
+        <div class="save-btn">
+            <button class="layui-btn" ng-click="updateVoucher()">
+                <span class="glyphicon glyphicon-ok"></span>保存活动
+            </button>
+        </div>
+        </div>
+
+    <!--编辑结束-->
+
+
+
+
