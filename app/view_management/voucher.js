@@ -298,6 +298,9 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                     ngDialog.close();
                     $scope.showMode=0;
                 })
+                .error(function (error) {
+                    alert(error.message);
+                })
         }
 
         //新增电子券
@@ -441,6 +444,9 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                         getMyVoucher();
                         ngDialog.close();
                         $scope.showMode=0
+                    })
+                    .error(function (error) {
+                        alert(error.message);
                     });
         }
 
@@ -451,6 +457,9 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 .success(function (data) {
                     alert("删除成功!");
                     getMyVoucher();
+                })
+                .error(function (error) {
+                    alert(error.message);
                 })
         }
 
