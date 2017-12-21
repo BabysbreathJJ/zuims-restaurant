@@ -961,7 +961,7 @@ angular.module('myApp.management', ['ngRoute', 'ngImgCrop', 'ngDialog', 'angular
 
         function checkMobile(phone) {
             var sMobile = phone;
-            if (!(/^1\d{0,20}$/.test(sMobile))) {
+            if (!(/d{0,20}$/.test(sMobile))) {
                 alert(sMobile + "不是正确的号码");
                 return false;
             }
