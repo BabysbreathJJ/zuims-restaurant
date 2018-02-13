@@ -72,6 +72,15 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
             });
         };
 
+        factory.verifyVoucher = function (oid) {
+            return $http({
+                method:"GET",
+                dataType:"text",
+                url:BaseUrl+merchantPort+"/voucher/changeVerificationStatus?oid=" + oid,
+                crossdomain:true
+            });
+        };
+
         return factory;
     }])
 
@@ -457,6 +466,17 @@ angular.module('myApp.voucherManagement', ['ngDialog', 'moment-picker', 'ngImgCr
                 .success(function (data) {
                     alert("删除成功!");
                     getMyVoucher();
+                })
+                .error(function (error) {
+                    alert(error.message);
+                })
+        }
+
+        $scope.verifyVoucher = function (id) {
+            VoucherService.verifyVoucher(id)
+                .success(function (data) {
+                    alert("核销成功!");
+                    getOrder();
                 })
                 .error(function (error) {
                     alert(error.message);

@@ -96,10 +96,11 @@
     <table st-table="displayedCollection" st-safe-src="orderVoucherCollection" class="site-table table-hover" style="font-size:12px">
         <thead>
         <tr>
-            <th width="25%" style="text-align: center">预定手机号</th>
-            <th width="25%" style="text-align: center">优惠券名称</th>
-            <th width="25%" style="text-align: center">宾馆名称</th>
-            <th width="25%" st-sort="orderTime" st-sort-default="reverse" style="text-align: center">预定时间</th>
+            <th width="20%" style="text-align: center">预定手机号</th>
+            <th width="20%" style="text-align: center">优惠券名称</th>
+            <th width="20%" style="text-align: center">酒店名称</th>
+            <th width="20%" st-sort="orderTime" st-sort-default="reverse" style="text-align: center">预定时间</th>
+            <th width="10%" style="text-align: center">核销</th>
         </tr>
         <tr>
             <th colspan="1"><input st-search="phoneId" class="form-control search-input" placeholder="手机号" type="text"/>
@@ -113,11 +114,23 @@
         </thead>
         <tbody>
         <tr ng-repeat="row in displayedCollection">
-            <td width="25%" >{{row.phoneId}}</td>
-            <td width="25%" >{{row.content}}</td>
-            <td width="25%" >{{row.hotelName}}</td>
-            <td width="25%" >{{row.orderTime}}</td>
-
+            <td width="20%" >{{row.phoneId}}</td>
+            <td width="20%" >{{row.content}}</td>
+            <td width="20%" >{{row.hotelName}}</td>
+            <td width="20%" >{{row.orderTime}}</td>
+            <td>
+                <button ng-show="!row.verificationStatus" type="button" ng-click="verifyVoucher(row.id)"
+                        class="layui-btn">
+                    <i class="glyphicon glyphicon-check">
+                    </i>
+                    核销
+                </button>
+                <button ng-show="row.verificationStatus" type="button"  class="layui-btn layui-btn-primary" disabled>
+                    <i class="glyphicon glyphicon-check">
+                    </i>
+                    已核销
+                </button>
+            </td>
         </tr>
         </tbody>
 
